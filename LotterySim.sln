@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotterySim", "LotterySim\LotterySim.csproj", "{5C9EAC7B-DFCB-45A7-870E-525FE28EF3E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotterySim.Business", "LotterySim.Business\LotterySim.Business.csproj", "{CE3618B4-C40A-476E-9F47-CDB1D2B48569}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C9EAC7B-DFCB-45A7-870E-525FE28EF3E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C9EAC7B-DFCB-45A7-870E-525FE28EF3E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C9EAC7B-DFCB-45A7-870E-525FE28EF3E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C9EAC7B-DFCB-45A7-870E-525FE28EF3E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE3618B4-C40A-476E-9F47-CDB1D2B48569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE3618B4-C40A-476E-9F47-CDB1D2B48569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE3618B4-C40A-476E-9F47-CDB1D2B48569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE3618B4-C40A-476E-9F47-CDB1D2B48569}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A86D7CD5-5761-4626-AFAF-5929C1DCD450}
+	EndGlobalSection
+EndGlobal
