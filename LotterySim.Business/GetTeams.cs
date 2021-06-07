@@ -207,8 +207,7 @@ namespace LotterySim.Business
                         team.TopPickOdds = "0.5%";
                         break;
 
-                    default:
-                        break;
+                    
                 }
             }
         }
