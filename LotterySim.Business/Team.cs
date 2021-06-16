@@ -12,6 +12,8 @@ namespace LotterySim.Business
         Random random = new Random();
         public string TeamName { get; set; }
 
+        public string TeamImage { get; set; }
+
         public int PickNumber { get; set; }
         public int TeamRank { get; set; }
         public int LotteryNumber { get; set; }
@@ -46,6 +48,8 @@ namespace LotterySim.Business
 
         public string TopFourPickOdds { get; set; }
         public string TopPickOdds { get; set; }
+
+        public int TieBreakerGroupPosition { get; set; }
 
 
 

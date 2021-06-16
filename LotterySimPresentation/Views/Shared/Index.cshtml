@@ -1,0 +1,94 @@
+﻿@using LotterySim.Business
+
+@model List<LotterySim.Business.Team>
+
+
+
+
+
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            
+  
+            <th scope="col">Pick</th>
+            <th scope="col">Team</th>
+            <th scope="col">Record</th>
+            <th scope="col">WIN %</th>
+            <th scope="col">GB</th>
+            <th scope="col">Streak</th>
+            <th scope="col">L10</th>
+            <th scope="col">Top 4</th>
+            <th scope="col">#1 OVR</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var team in Model)
+        {
+        <tr>
+
+            <td>@team.PickNumber</td>
+           
+            <td>
+                @{
+                    if (team.NewTeamName == null)
+                    {
+                        <img src=@Url.Content(team.TeamImage) width="50" height="50" />@team.TeamName
+                    }
+                    else
+                    {
+                        <img src=@Url.Content(team.TeamImage) width="50" height="50" />@team.OriginalTeamName
+                        @(" to ") <img src=@Url.Content(@GetTeamImage(team.NewTeamName)) width="50" height="50" />@team.NewTeamName 
+
+
+                    }
+
+                }
+
+
+            </td>
+
+            <td>@team.WinLossRecord</td>
+            <td>@team.WinPercentage</td>
+            <td> @team.LotteryGamesBack</td>
+            <td><span class="@GetWinLossStreakColor(team)">@team.WinLossStreak</span></td>
+            <td>@team.LastTenGamesRecord</td>
+            <td>@team.TopFourPickOdds</td>
+            <td>@team.TopPickOdds</td>
+        </tr>
+                    }
+
+       
+           
+
+
+
+    </tbody>
+</table>
+
+
+
+@{ 
+    string GetWinLossStreakColor(Team team)
+    {
+        if (team.WinorLossStreak && team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
+        if (team.WinorLossStreak && team.ConsecutiveWinLoss >= 5) return "text-danger";
+        if (!team.WinorLossStreak && team.ConsecutiveWinLoss > 3) return "text-success";
+        return "";
+    }
+   
+
+
+    string GetTeamImage(string teamname)
+    {
+        return "~/Content/Images/" + teamname.Replace(" ", "") + ".svg";
+
+    }
+
+}

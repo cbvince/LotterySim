@@ -13,6 +13,10 @@ namespace LotterySim.Business
             DetermineProtection(teams, 4, "Houston", "Oklahoma City");
             DetermineProtection(teams, 3, "Minnesota", "Golden State");
             DetermineProtection(teams, 4, "Chicago", "Orlando");
+            DetermineProtection(teams, 14, "Portland", "Houston");
+            DetermineProtection(teams, 9, "Milwaukee", "Houston");
+            DetermineProtection(teams, 0, "Dallas", "New York");
+            DetermineProtection(teams, 16, "Detroit", "Houston");
         }
 
 
@@ -32,6 +36,7 @@ namespace LotterySim.Business
             else
             {
                teamToConvey.TeamName = originalTeam;
+                teamToConvey.NewTeamName = null;
             }
            
         }

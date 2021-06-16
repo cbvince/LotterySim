@@ -82,17 +82,17 @@ namespace LotterySim.Business
                 
                 if (movementAmount > 0)
                 {
-                    team.LotteryMovement = string.Format("Up {0}", Math.Abs(movementAmount));
+                    team.LotteryMovement = string.Format("+{0}", Math.Abs(movementAmount));
                 }
 
                 if (movementAmount < 0)
                 {
-                    team.LotteryMovement = string.Format("Down {0}", Math.Abs(movementAmount));
+                    team.LotteryMovement = string.Format("-{0}", Math.Abs(movementAmount));
                 }
 
                 if (movementAmount == 0)
                 {
-                    team.LotteryMovement = "No Change";
+                    team.LotteryMovement = "";
                 }
 
             }

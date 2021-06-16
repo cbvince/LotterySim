@@ -39,9 +39,11 @@ namespace LotterySim.Business
                 var i = 1;
                 foreach (var team in teamdata.league.standard.teams)
                 {
+                    string teamName = team.teamSitesOnly.teamName;
                     //result += team.win + " " + team.loss + " " + team.teamSitesOnly.teamName + " " + team.teamSitesOnly.teamNickname + "</br>";
                     teams.Add(new Team()
                     {
+                        
                         TeamName = team.teamSitesOnly.teamName,
                         //+ " "
                         //+ team.teamSitesOnly.teamNickName,
@@ -55,6 +57,7 @@ namespace LotterySim.Business
                         ConsecutiveWinLoss = team.streak,
                         WinorLossStreak = team.isWinStreak,
                         ConferenceRank = team.confRank,
+                        TieBreakerGroupPosition = SetTieBreakerGroups(teamName),
                         TeamRank = i++
 
                     }) ;
@@ -71,39 +74,53 @@ namespace LotterySim.Business
         public static List<Team> GetLotteryTeams()
         {
             var lotteryTeams = new List<Team>();
-            int i = 14;
-            foreach (var team in ConvertTeamData().Where(p => p.ConferenceRank > 8).OrderBy(p => p.ConferenceRank))
+            var i = 14;
+            var x = 30;
+            foreach (var team in ConvertTeamData().Where(p => p.ConferenceRank > 8).OrderByDescending(p => p.Wins).ThenByDescending(p => p.TieBreakerGroupPosition))
+                
+                
             {
                 team.TeamRank = i--;
                 lotteryTeams.Add(team);
             }
 
-           
-            lotteryTeams.Reverse();
+            foreach (var team in ConvertTeamData().Where(p => p.ConferenceRank <= 8).OrderByDescending(p => p.Wins).ThenByDescending(p => p.TieBreakerGroupPosition))
+
+
+            {
+                team.TeamRank = x--;
+                lotteryTeams.Add(team);
+            }
+
+
+
+            //lotteryTeams.Reverse();
+
             DetermineGamesBack(lotteryTeams);
             DetermineWinLossStreak(lotteryTeams);
             SetPickNumberFromRanking(lotteryTeams);
             AddTopFourPickOdds(lotteryTeams);
             AddTopOnePickOdds(lotteryTeams);
+            GetTeamImages(lotteryTeams);
             PickProtections.PickProtection(lotteryTeams);
             return lotteryTeams;
         }
 
+        
+
         private static void DetermineGamesBack(List<Team> teams)
         {
-            var topGamesBehind = teams.FirstOrDefault().GamesBack;
-            var leadingLotteryTeamWins = teams.FirstOrDefault().Wins;
-            var leadingLotteryTeamLosses = teams.FirstOrDefault().Losses;
-            var leadingLotteryTeamWinLossDifference = leadingLotteryTeamLosses - leadingLotteryTeamWins;
-
-
+            
+            var highestNumberOfLosses = teams.OrderByDescending(p => p.Losses).FirstOrDefault().Losses;
+            var lowestNumberOfWins = teams.OrderBy(p => p.Wins).FirstOrDefault().Wins;
+            var winLostDifferenceForWorstTeam =  highestNumberOfLosses - lowestNumberOfWins;
+          
 
             foreach (var team in teams)
-            {
-                team.LotteryGamesBack = topGamesBehind - team.GamesBack;
+            {      
                 var teamWinLossDifference = team.Losses - team.Wins;
-
-               team.LotteryGamesBack = (leadingLotteryTeamWinLossDifference - teamWinLossDifference) / 2;
+  
+                team.LotteryGamesBack = (winLostDifferenceForWorstTeam - teamWinLossDifference) / 2;
             }
 
             
@@ -220,6 +237,61 @@ namespace LotterySim.Business
             }
         }
 
+        private static int SetTieBreakerGroups(string teamname)
+        {
+            var tieBreakerPosition = 0;
+                
+                    
+                    switch (teamname)
+                
+                {
+                    case "Chicago": tieBreakerPosition = 1;
+                        break;
+                    case "Sacramento":
+                        tieBreakerPosition = 2;
+                        break;
+                    case "New Orleans":
+                        tieBreakerPosition = 3;
+                        break;
+                case "Charlotte":
+                    tieBreakerPosition = 4;
+                    break;
+                case "San Antonio":
+                    tieBreakerPosition = 5;
+                    break;
+                case "New York":
+                    tieBreakerPosition = 6;
+                    break;
+                case "Atlanta":
+                    tieBreakerPosition = 7;
+                    break;
+                case "Dallas":
+                    tieBreakerPosition = 8;
+                    break;
+                case "Los Angeles":
+                    tieBreakerPosition = 9;
+                    break;
+                case "Portland":
+                    tieBreakerPosition = 10;
+                    break;
+                case "LA":
+                    tieBreakerPosition = 11;
+                    break;
+                case "Denver":
+                    tieBreakerPosition = 12;
+                    break;
+                default:
+                    tieBreakerPosition = 0;
+                    break;
+                        
+
+                    
+                
+            }
+            return tieBreakerPosition;
+            
+        }
+
         public static void SetPickNumberFromLotteryNumber(List<Team> teams)
         {
              foreach (var team in teams)
@@ -227,6 +299,19 @@ namespace LotterySim.Business
                 team.PickNumber = team.LotteryNumber;
             }
 }
+
+        public static void GetTeamImages(List<Team> teams)
+        {
+
+            var teamName = string.Empty;
+            foreach (var team in teams)
+               
+            {
+               teamName =  (team.NewTeamName == null) ? team.TeamName : team.NewTeamName;
+                team.TeamImage = string.Format("~/Content/Images/{0}.svg", teamName.Replace(" ", ""));
+              
+            }
+        }
 
     }
 
