@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
 using LotterySim;
-
+using System.Runtime.Caching;
 
 namespace LotterySim.Business
 {
@@ -20,15 +20,36 @@ namespace LotterySim.Business
             var client = new RestClient("http://data.nba.net/10s/prod/v1/current/standings_all.json");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
-            request.AddHeader("Cookie", "akacd_data_nba_net_ems=1621084730~rv=28~id=4da39e50afa2126a661150d0ddc688e8");
+            //request.AddHeader("Cookie", "akacd_data_nba_net_ems=1621084730~rv=28~id=4da39e50afa2126a661150d0ddc688e8");
             IRestResponse response = client.Execute(request);
             return JsonConvert.DeserializeObject(response.Content).ToString();
 
         }
 
+        private static string GetTeamDataFromCache()
+        {
+
+            ObjectCache cache = MemoryCache.Default;
+            if (cache.Contains("teams"))
+            {
+                var teams = cache.GetCacheItem("teams").Value.ToString();
+                return teams;
+            }
+
+            else
+            {
+                cache.Add("teams", GetTeamData(), DateTimeOffset.Now.AddMinutes(30));
+                return GetTeamDataFromCache();
+            }
+
+
+            
+        }
+
         private static List<Team> ConvertTeamData()
         {
-            string strJSON = GetTeamData();
+            //string strJSON = GetTeamData();
+            string strJSON = GetTeamDataFromCache();
             var teamdata = JsonConvert.DeserializeObject<dynamic>(strJSON);
 
       
