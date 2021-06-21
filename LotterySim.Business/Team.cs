@@ -10,7 +10,11 @@ namespace LotterySim.Business
     {
 
         Random random = new Random();
+
+        public int TeamID { get; set; }
         public string TeamName { get; set; }
+
+        public string TeamNickName { get; set; }
 
         public string TeamImage { get; set; }
 
@@ -44,6 +48,9 @@ namespace LotterySim.Business
 
         public bool WinorLossStreak { get; set; }
 
+        public int LastTenWins { get; set; }
+
+        public int LastTenLosses { get; set; }
         public string LastTenGamesRecord { get; set; }
 
         public string TopFourPickOdds { get; set; }

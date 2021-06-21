@@ -1,0 +1,16 @@
+﻿@using LotterySim.Business
+
+@model LotterySim.Business.Team
+
+
+@{
+    ViewBag.Title = Model.OriginalTeamName;
+}
+
+<img src=@Url.Content(@Model.TeamImage) width="150" height="150" />
+<h2>@Model.OriginalTeamName @Model.TeamNickName </h2>
+<hr />
+<h5>Record: @Model.WinLossRecord | Last 10: @Model.LastTenGamesRecord  |  Streak: @Model.WinLossStreak</h5>
+
+
+

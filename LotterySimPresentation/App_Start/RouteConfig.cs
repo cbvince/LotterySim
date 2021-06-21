@@ -21,23 +21,39 @@ namespace LotterySimPresentation
                //new { controller = "Home", action = "GenerateLottery" }
                );
             */
-            
+/*
+         routes.MapRoute(
+         name: "Main",
+         url: "",
+         //new { controller = "Lottery", action = "Index" }
+         new { controller = "Home", action = "Index" }
+         );
 
-            /*
+
+*/
+/*
             routes.MapRoute(
               name: "Lottery2",
               url: "",
               //new { controller = "Lottery", action = "Index" }
               new { controller = "Home", action = "GenerateLottery" }
               );
+   */         
+            /*
+            routes.MapRoute(
+              name: "Main",
+              url: "",
+              //new { controller = "Lottery", action = "Index" }
+              new { controller = "Home", action = "Index" }
+              );
             */
-
+            
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-
+            
            
         }
     }

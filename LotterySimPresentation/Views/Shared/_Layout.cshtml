@@ -6,35 +6,16 @@
     <title>@ViewBag.Title - NBA Lottery Generator</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
 </head>
 <body>
-
-    <div align="center">
-        <h1>NBA Lottery Generator</h1>
-        <p></p>
-    </div>
-
-    <div class="container" align="center">
-
-
-        <input type="button" value="Generate" class="btn btn-primary" onclick="location.href='@Url.Action("GenerateLottery", "Home")'" />&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="button" value="Generate Same Page" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Lottery")'" />&nbsp;&nbsp;&nbsp;&nbsp;
-
-        <input type="submit" name="btnReset" class="btn btn-primary" value="Reset" onclick="location.href='@Url.Action("Index", "Home")'" />
-
-    </div>
-
-
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+ 
     <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

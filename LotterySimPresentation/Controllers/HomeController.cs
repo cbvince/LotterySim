@@ -16,22 +16,28 @@ namespace LotterySimPresentation.Controllers
             return View(lotteryTeams);
         }
 
-        /*
-        [HttpPost]
-        public ActionResult Index(List<Team> lotteryteams)
-        {
-            //var lotteryTeams = GetTeams.GetLotteryTeams();
-            Lottery.RunLottery(lotteryteams);
-            return View(lotteryteams);
-        }
-        */
-
 
         public ActionResult GenerateLottery()
         {
             var lotteryTeams = GetTeams.GetLotteryTeams();
             Lottery.RunLottery(lotteryTeams);
-            return View(lotteryTeams);
+            //return View(lotteryTeams);
+            return View("Index", lotteryTeams);
+        
+        }
+
+
+        public ActionResult TeamDetail(string teamname)
+        {
+
+            if (teamname == null)
+            {
+                return View("Index", GetTeams.GetLotteryTeams());
+            }
+
+            var teams = GetTeams.GetLotteryTeams();
+            var team = teams.FirstOrDefault(p => p.OriginalTeamName == teamname);
+            return View(team);
         }
     }
 }

@@ -18,9 +18,8 @@ namespace LotterySim.Business
         private static string GetTeamData()
         {
             var client = new RestClient("http://data.nba.net/10s/prod/v1/current/standings_all.json");
-            client.Timeout = -1;
+            client.Timeout = 20000;
             var request = new RestRequest(Method.GET);
-            //request.AddHeader("Cookie", "akacd_data_nba_net_ems=1621084730~rv=28~id=4da39e50afa2126a661150d0ddc688e8");
             IRestResponse response = client.Execute(request);
             return JsonConvert.DeserializeObject(response.Content).ToString();
 
@@ -61,13 +60,13 @@ namespace LotterySim.Business
                 foreach (var team in teamdata.league.standard.teams)
                 {
                     string teamName = team.teamSitesOnly.teamName;
-                    //result += team.win + " " + team.loss + " " + team.teamSitesOnly.teamName + " " + team.teamSitesOnly.teamNickname + "</br>";
+                    
                     teams.Add(new Team()
                     {
                         
-                        TeamName = team.teamSitesOnly.teamName,
-                        //+ " "
-                        //+ team.teamSitesOnly.teamNickName,
+                        TeamName = team.teamSitesOnly.teamName,   
+                        TeamID = team.teamId,
+                        TeamNickName = team.teamSitesOnly.teamNickname,
                         OriginalTeamName = team.teamSitesOnly.teamName,
                         Wins = team.win,
                         Losses = team.loss,
@@ -75,6 +74,8 @@ namespace LotterySim.Business
                         WinPercentage = team.winPct,
                         GamesBack = team.gamesBehind,
                         LastTenGamesRecord = team.lastTenWin + "-" + team.lastTenLoss,
+                        LastTenLosses = team.lastTenLoss,
+                        LastTenWins = team.lastTenWin,
                         ConsecutiveWinLoss = team.streak,
                         WinorLossStreak = team.isWinStreak,
                         ConferenceRank = team.confRank,
@@ -91,7 +92,6 @@ namespace LotterySim.Business
             return teams;
 
         }
-
         public static List<Team> GetLotteryTeams()
         {
             var lotteryTeams = new List<Team>();
@@ -126,8 +126,6 @@ namespace LotterySim.Business
             PickProtections.PickProtection(lotteryTeams);
             return lotteryTeams;
         }
-
-        
 
         private static void DetermineGamesBack(List<Team> teams)
         {

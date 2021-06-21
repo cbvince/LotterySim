@@ -17,6 +17,7 @@ namespace LotterySim.Business
             DetermineProtection(teams, 9, "Milwaukee", "Houston");
             DetermineProtection(teams, 0, "Dallas", "New York");
             DetermineProtection(teams, 16, "Detroit", "Houston");
+            DetermineProtection(teams, 0, "Boston", "Oklahoma City");
         }
 
 
