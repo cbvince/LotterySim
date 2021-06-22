@@ -7,10 +7,30 @@
     ViewBag.Title = Model.OriginalTeamName;
 }
 
-<img src=@Url.Content(@Model.TeamImage) width="150" height="150" />
-<h2>@Model.OriginalTeamName @Model.TeamNickName </h2>
-<hr />
-<h5>Record: @Model.WinLossRecord | Last 10: @Model.LastTenGamesRecord  |  Streak: @Model.WinLossStreak</h5>
+<div class="container">
 
+
+    <div class="row">
+        <div class="col">
+            <img src=@Url.Content(@Model.TeamImage) width="150" height="150" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <h2>@Model.OriginalTeamName @Model.TeamNickName </h2>
+        </div>
+        <div class="col">
+            <input type="button" name="btnReset" class="btn btn-primary" value="Back to Lottery" onclick="location.href='@Url.Action("Index", "Home")'" />
+         
+        </div>
+
+    </div>
+    <div class="row">
+        <hr />
+        <h5>Record: @Model.WinLossRecord | Last 10: @Model.LastTenGamesRecord  |  Streak: @Model.WinLossStreak</h5>
+    </div>
+
+
+</div>
 
 

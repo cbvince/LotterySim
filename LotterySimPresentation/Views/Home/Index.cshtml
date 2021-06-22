@@ -22,12 +22,12 @@
     }
 </style>
 
-<div align ="center">
+<div align="center">
     <h1 class="mb-3">NBA Lottery Generator</h1>
 </div>
 
 <div class="container" align="center">
-  
+
     <p></p>
 
     <input type="button" value="Generate" class="btn btn-primary" onclick="location.href='@Url.Action("GenerateLottery", "Home")'" />&nbsp;&nbsp;&nbsp;&nbsp;
@@ -57,29 +57,57 @@
         </thead>
         <tbody>
 
-            @foreach (var team in Model.OrderBy(p => p.PickNumber))
+            @foreach (var team in Model.Where(p => p.PickNumber < 15).OrderBy(p => p.PickNumber))
             {
-            <tr>
+                <tr>
 
-                <td>@team.PickNumber</td>
-                <td align="right"><span class=@GetLotteryMovementColor(team)>@team.LotteryMovement</span></td>
+                    <td>@team.PickNumber</td>
+                    <td align="right"><span class=@GetLotteryMovementColor(team)>@team.LotteryMovement</span></td>
 
-                <td>@Html.Raw(GetTeamName(team))</td>
-                <td>@team.WinLossRecord</td>
-                <td>@team.WinPercentage</td>
-                <td> @team.LotteryGamesBack</td>
-                <td><span class="@GetWinLossStreakColor(team)">@team.WinLossStreak</span></td>
-                <td><span class="@GetLast10WinLossColor(team)">@team.LastTenGamesRecord</span></td>
-                <td>@team.TopFourPickOdds</td>
-                <td>@team.TopPickOdds</td>
-            </tr>
+                    <td>@Html.Raw(GetTeamName(team))</td>
+                    <td>@team.WinLossRecord</td>
+                    <td>@team.WinPercentage</td>
+                    <td> @team.LotteryGamesBack</td>
+                    <td><span class="@GetWinLossStreakColor(team)">@team.WinLossStreak</span></td>
+                    <td><span class="@GetLast10WinLossColor(team)">@team.LastTenGamesRecord</span></td>
+                    <td>@team.TopFourPickOdds</td>
+                    <td>@team.TopPickOdds</td>
+                </tr>
             }
+            <tr>
+                <td colspan="10" align="center"><strong>END&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOTTERY</strong></td>
+            </tr>
+
+
+            @foreach (var team in Model.Where(p => p.PickNumber >= 15).OrderBy(p => p.PickNumber))
+            {
+                <tr>
+
+                    <td>@team.PickNumber</td>
+                    <td align="right"><span class=@GetLotteryMovementColor(team)>@team.LotteryMovement</span></td>
+
+                    <td>@Html.Raw(GetTeamName(team))</td>
+                    <td>@team.WinLossRecord</td>
+                    <td>@team.WinPercentage</td>
+                    <td> @team.LotteryGamesBack</td>
+                    <td><span class="@GetWinLossStreakColor(team)">@team.WinLossStreak</span></td>
+                    <td><span class="@GetLast10WinLossColor(team)">@team.LastTenGamesRecord</span></td>
+                    <td>@team.TopFourPickOdds</td>
+                    <td>@team.TopPickOdds</td>
+                </tr>
+            }
+
+
         </tbody>
     </table>
 </div>
 
 
+
 @{
+
+
+
     string GetWinLossStreakColor(Team team)
     {
         if (team.WinorLossStreak && team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
@@ -87,8 +115,6 @@
         if (!team.WinorLossStreak && team.ConsecutiveWinLoss > 3) return "text-success";
         return "";
     }
-
-
 
     string GetTeamImage(string teamname)
     {
