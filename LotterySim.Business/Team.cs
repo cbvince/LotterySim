@@ -23,11 +23,12 @@ namespace LotterySim.Business
         public int LotteryNumber { get; set; }
 
         public string LotteryMovement { get; set; }
-
         public string OriginalTeamName { get; set; }
         public string NewTeamName { get; set; }
 
+        public string TeamPickOwedToName { get; set; }
 
+        public PickSwapType PickSwapType { get; set; }
         public bool Assigned { get; set; }
 
         public int Wins { get; set; }
@@ -59,6 +60,14 @@ namespace LotterySim.Business
         public int TieBreakerGroupPosition { get; set; }
 
 
+
+    }
+
+    public enum PickSwapType
+    {
+        None,
+        Swapped,
+        Protected
 
     }
 }

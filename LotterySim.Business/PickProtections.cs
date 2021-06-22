@@ -10,7 +10,7 @@ namespace LotterySim.Business
     {
         public static void PickProtection(List<Team> teams)
         {
-            //DetermineProtection(teams, 4, "Houston", "Oklahoma City");
+            DetermineProtection(teams, 4, "Houston", "Oklahoma City");
             DetermineProtection(teams, 3, "Minnesota", "Golden State");
             DetermineProtection(teams, 4, "Chicago", "Orlando");
             DetermineProtection(teams, 14, "Portland", "Houston");
@@ -26,12 +26,14 @@ namespace LotterySim.Business
         {
 
             var teamToConvey = teams.FirstOrDefault(p => p.OriginalTeamName == originalTeam);
+            teamToConvey.TeamPickOwedToName = newTeam;
 
             if (teamToConvey.PickNumber > protectionThreshold)
 
             {
                 teamToConvey.TeamName = string.Format("{0} to {1}", originalTeam, newTeam);
                 teamToConvey.NewTeamName = newTeam;
+                teamToConvey.PickSwapType = PickSwapType.Swapped;
             }
 
 
@@ -39,6 +41,7 @@ namespace LotterySim.Business
             {
                 teamToConvey.TeamName = originalTeam;
                 teamToConvey.NewTeamName = null;
+                teamToConvey.PickSwapType = PickSwapType.Protected;
             }
 
         }
@@ -83,10 +86,12 @@ namespace LotterySim.Business
             {
                 return;
             }
-            
-            
+
+
+            fromteam.TeamPickOwedToName = toteam.OriginalTeamName;
             fromteam.NewTeamName = toteam.OriginalTeamName;
             fromteam.TeamName = string.Format("{0} to {1}", fromteam.OriginalTeamName, toteam.OriginalTeamName);
+            fromteam.PickSwapType = PickSwapType.Swapped;
         }
         
         

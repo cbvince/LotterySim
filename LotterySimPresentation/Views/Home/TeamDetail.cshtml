@@ -21,7 +21,7 @@
         </div>
         <div class="col">
             <input type="button" name="btnReset" class="btn btn-primary" value="Back to Lottery" onclick="location.href='@Url.Action("Index", "Home")'" />
-         
+
         </div>
 
     </div>
@@ -32,5 +32,145 @@
 
 
 </div>
+<p></p>
+
+<div class="container">
+    <div class="row"><h2>Incoming Picks</h2><hr /></div>
+
+    @if (IncomingPicks().Count == 0)
+    {
+        <h5>None</h5>
+    }
+
+    <div class="card-deck">
+        <div class="row">
+            @foreach (var team in IncomingPicks())
+
+            {
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <a href="@Url.Action("TeamDetail", "Home",  new { teamname = team.OriginalTeamName })">
+                        <img class="card-img-top" src=@GetTeamImageHelper(team.OriginalTeamName) alt="@team.OriginalTeamName" width="150" height="150" />
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">Pick# @team.PickNumber</h5>
+                            <p class="card-text"></p>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+<p></p>
+<div class="container">
+
+
+    <div class="row"><h2>Outgoing Picks</h2><hr /></div>
+
+    @if (OutGoingPicks().Count == 0)
+    {
+        <h5>None</h5>
+    }
+
+
+    <div class="card-deck">
+        <div class="row">
+
+
+
+            @foreach (var team in OutGoingPicks())
+
+            {
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <a href="@Url.Action("TeamDetail", "Home",  new { teamname = team.NewTeamName })">
+                            <img class="card-img-top" src=@GetTeamImageHelper(@team.NewTeamName) alt="@team.NewTeamName" width="150" height="150">
+                        </a>
+                            <div class="card-body">
+                                <h5 class="card-title">Pick# @team.PickNumber</h5>
+                                <p class="card-text"></p>
+
+                            </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+
+<p></p>
+<div class="container">
+    <div class="row"><h2>Non-Conveyed Picks</h2><hr /></div>
+
+    @if (NonConveyedPicks().Count == 0)
+    {
+        <h5>None</h5>
+    }
+
+
+    <div class="card-deck">
+        <div class="row">
+
+
+
+            @foreach (var team in NonConveyedPicks())
+
+            {
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <a href="@Url.Action("TeamDetail", "Home",  new { teamname = team.OriginalTeamName })">
+                            <img class="card-img-top" src=@GetTeamImageHelper(@team.OriginalTeamName) alt="@team.OriginalTeamName" width="150" height="150">
+                        </a>
+                            <div class="card-body">
+                                <h5 class="card-title">Pick# @team.PickNumber</h5>
+                                <p class="card-text"></p>
+
+                            </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+@helper GetTeamImageHelper(string teamname)
+{
+    var imageString = "~/Content/Images/" + teamname.Replace(" ", "") + ".svg";
+    @Url.Content(imageString)
+}
+
+@{
+
+    List<Team> OutGoingPicks()
+    {
+        return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.OriginalTeamName == Model.OriginalTeamName && p.NewTeamName != null).ToList();
+    }
+
+
+    List<Team> IncomingPicks()
+    {
+        return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => (p.OriginalTeamName == Model.OriginalTeamName && p.NewTeamName == null) || p.NewTeamName == Model.OriginalTeamName).OrderBy(p => p.PickNumber).ToList();
+    }
+
+    List<Team> NonConveyedPicks()
+    {
+        return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.TeamPickOwedToName == Model.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
+    }
+
+}
+
+
+
+
+
 
 
