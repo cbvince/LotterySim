@@ -107,15 +107,6 @@
 @{
 
 
-
-    string GetWinLossStreakColor(Team team)
-    {
-        if (team.WinorLossStreak && team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
-        if (team.WinorLossStreak && team.ConsecutiveWinLoss >= 5) return "text-danger";
-        if (!team.WinorLossStreak && team.ConsecutiveWinLoss > 3) return "text-success";
-        return "";
-    }
-
     string GetTeamImage(string teamname)
     {
         return "~/Content/Images/" + teamname.Replace(" ", "") + ".svg";
@@ -157,6 +148,14 @@
 
 
 
+    }
+
+    string GetWinLossStreakColor(Team team)
+    {
+        if (team.WinorLossStreak && team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
+        if (team.WinorLossStreak && team.ConsecutiveWinLoss >= 5) return "text-danger";
+        if (!team.WinorLossStreak && team.ConsecutiveWinLoss > 3) return "text-success";
+        return "";
     }
 
     string GetLotteryMovementColor(Team team)

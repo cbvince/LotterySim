@@ -332,12 +332,10 @@ namespace LotterySim.Business
             }
         }
 
-
         public static List<Team> OutGoingPicks(Team team)
         {
             return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName != null).ToList();
         }
-
 
         public static List<Team> IncomingPicks(Team team)
         {
