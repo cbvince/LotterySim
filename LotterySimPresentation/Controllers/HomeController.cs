@@ -15,16 +15,37 @@ namespace LotterySimPresentation.Controllers
         
         public ActionResult Index()
         {
-            var lotteryTeams = GetTeams.GetLotteryTeams();
-            return View(lotteryTeams);
+
+            try
+            {
+                var lotteryTeams = GetTeams.GetLotteryTeams();
+                return View(lotteryTeams);
+            }
+            catch (Exception ex)
+            {
+               
+
+                return View("Error", new HandleErrorInfo(ex, "Index", "Home"));
+            }
+
+            
         }
 
         public ActionResult GenerateLottery()
         {
-            var lotteryTeams = GetTeams.GetLotteryTeams();
-            Lottery.RunLottery(lotteryTeams);
-            //return View(lotteryTeams);
-            return View("Index", lotteryTeams);
+            try
+            {
+                var lotteryTeams = GetTeams.GetLotteryTeams();
+                Lottery.RunLottery(lotteryTeams);
+                return View("Index", lotteryTeams);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new HandleErrorInfo(ex, "Index", "Home"));
+            }
+            
+          
         
         }
 

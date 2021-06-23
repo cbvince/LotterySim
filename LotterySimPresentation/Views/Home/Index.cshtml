@@ -59,20 +59,9 @@
 
             @foreach (var team in Model.Where(p => p.PickNumber < 15).OrderBy(p => p.PickNumber))
             {
-                <tr>
 
-                    <td>@team.PickNumber</td>
-                    <td align="right"><span class=@GetLotteryMovementColor(team)>@team.LotteryMovement</span></td>
+                @Html.Partial("~/Views/Shared/_LotteryResults.cshtml", team);
 
-                    <td>@Html.Raw(GetTeamName(team)) @DisplayHelper.DisplayLockIcon(team)</td>
-                    <td>@team.WinLossRecord</td>
-                    <td>@team.WinPercentage</td>
-                    <td> @team.LotteryGamesBack</td>
-                    <td><span class="@GetWinLossStreakColor(team)">@team.WinLossStreak</span></td>
-                    <td><span class="@GetLast10WinLossColor(team)">@team.LastTenGamesRecord</span></td>
-                    <td>@team.TopFourPickOdds</td>
-                    <td>@team.TopPickOdds</td>
-                </tr>
             }
             <tr>
                 <td colspan="10" align="center"><strong>END&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOTTERY</strong></td>
@@ -81,20 +70,7 @@
 
             @foreach (var team in Model.Where(p => p.PickNumber >= 15).OrderBy(p => p.PickNumber))
             {
-                <tr>
-
-                    <td>@team.PickNumber</td>
-                    <td align="right"><span class=@GetLotteryMovementColor(team)>@team.LotteryMovement</span></td>
-
-                    <td>@Html.Raw(GetTeamName(team)) @DisplayHelper.DisplayLockIcon(team)</td>
-                    <td>@team.WinLossRecord</td>
-                    <td>@team.WinPercentage</td>
-                    <td> @team.LotteryGamesBack</td>
-                    <td><span class="@GetWinLossStreakColor(team)">@team.WinLossStreak</span></td>
-                    <td><span class="@GetLast10WinLossColor(team)">@team.LastTenGamesRecord</span></td>
-                    <td>@team.TopFourPickOdds</td>
-                    <td>@team.TopPickOdds</td>
-                </tr>
+                @Html.Partial("~/Views/Shared/_LotteryResults.cshtml", team);
             }
 
 
@@ -104,88 +80,3 @@
 
 
 
-@{
-
-
-    string GetTeamImage(string teamname)
-    {
-        return "~/Content/Images/" + teamname.Replace(" ", "") + ".svg";
-
-    }
-
-    string GetTeamName(Team team)
-    {
-
-
-        if (team.NewTeamName == null)
-        {
-            return BuildTeamAndImageString(team.TeamName);
-        }
-
-        else
-        {
-            var result = BuildTeamAndImageString(team.OriginalTeamName) + " to " + BuildTeamAndImageString(team.NewTeamName);
-            return result;
-
-
-        }
-
-    }
-
-    string BuildTeamAndImageString(string teamname)
-    {
-        var teamImageUrl = Url.Content(GetTeamImage(teamname));
-
-
-        StringBuilder sb = new StringBuilder();
-        sb.Append("<img src =");
-        sb.Append(teamImageUrl);
-        sb.Append(" width = \"30\" height = \"30\" />");
-        //sb.Append(teamname);
-        sb.Append(@Html.ActionLink(teamname, "TeamDetail", new { teamname = teamname }, new { @class = "teamlink" }));
-        return sb.ToString();
-
-
-
-
-    }
-
-    string GetWinLossStreakColor(Team team)
-    {
-        if (team.WinorLossStreak && team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
-        if (team.WinorLossStreak && team.ConsecutiveWinLoss >= 5) return "text-danger";
-        if (!team.WinorLossStreak && team.ConsecutiveWinLoss > 3) return "text-success";
-        return "";
-    }
-
-    string GetLotteryMovementColor(Team team)
-    {
-        var color = string.Empty;
-
-
-        if (team.LotteryMovement != null && team.LotteryMovement != string.Empty)
-        {
-            switch (team.LotteryMovement.First().ToString())
-            {
-                case "+":
-                    color = "text-success";
-                    break;
-                case "-":
-                    color = "text-danger";
-                    break;
-            }
-
-
-        }
-        return color;
-
-    }
-
-    string GetLast10WinLossColor(Team team)
-    {
-        if (team.LastTenLosses >= 7) return "text-success";
-        if (team.LastTenLosses <= 3) return "text-danger";
-        return "";
-    }
-
-}

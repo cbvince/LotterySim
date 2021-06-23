@@ -1,0 +1,105 @@
+﻿@using LotterySim.Business
+@using System.Text
+
+@model Team
+
+
+<tr>
+    <td>@Model.PickNumber</td>
+    <td align="right"><span class=@GetLotteryMovementColor(Model)>@Model.LotteryMovement</span></td>
+
+    <td>@Html.Raw(GetTeamName(Model)) @DisplayHelper.DisplayLockIcon(Model)</td>
+    <td>@Model.WinLossRecord</td>
+    <td>@Model.WinPercentage</td>
+    <td> @Model.LotteryGamesBack</td>
+    <td><span class="@GetWinLossStreakColor(@Model)">@Model.WinLossStreak</span></td>
+    <td><span class="@GetLast10WinLossColor(@Model)">@Model.LastTenGamesRecord</span></td>
+    <td>@Model.TopFourPickOdds</td>
+    <td>@Model.TopPickOdds</td>
+</tr>
+
+@{
+
+
+    string GetTeamImage(string teamname)
+    {
+        return "~/Content/Images/" + teamname.Replace(" ", "") + ".svg";
+
+    }
+
+    string GetTeamName(Team team)
+    {
+
+
+        if (team.NewTeamName == null)
+        {
+            return BuildTeamAndImageString(team.TeamName);
+        }
+
+        else
+        {
+            var result = BuildTeamAndImageString(team.OriginalTeamName) + " to " + BuildTeamAndImageString(team.NewTeamName);
+            return result;
+
+
+        }
+
+    }
+
+    string BuildTeamAndImageString(string teamname)
+    {
+        var teamImageUrl = Url.Content(GetTeamImage(teamname));
+
+
+        StringBuilder sb = new StringBuilder();
+        sb.Append("<img src =");
+        sb.Append(teamImageUrl);
+        sb.Append(" width = \"30\" height = \"30\" />");
+        //sb.Append(teamname);
+        sb.Append(@Html.ActionLink(teamname, "TeamDetail", new { teamname = teamname }, new { @class = "teamlink" }));
+        return sb.ToString();
+
+
+
+
+    }
+
+    string GetWinLossStreakColor(Team team)
+    {
+        if (team.WinorLossStreak && team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
+        if (team.WinorLossStreak && team.ConsecutiveWinLoss >= 5) return "text-danger";
+        if (!team.WinorLossStreak && team.ConsecutiveWinLoss > 3) return "text-success";
+        return "";
+    }
+
+    string GetLotteryMovementColor(Team team)
+    {
+        var color = string.Empty;
+
+
+        if (team.LotteryMovement != null && team.LotteryMovement != string.Empty)
+        {
+            switch (team.LotteryMovement.First().ToString())
+            {
+                case "+":
+                    color = "text-success";
+                    break;
+                case "-":
+                    color = "text-danger";
+                    break;
+            }
+
+
+        }
+        return color;
+
+    }
+
+    string GetLast10WinLossColor(Team team)
+    {
+        if (team.LastTenLosses >= 7) return "text-success";
+        if (team.LastTenLosses <= 3) return "text-danger";
+        return "";
+    }
+
+}
