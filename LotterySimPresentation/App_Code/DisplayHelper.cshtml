@@ -1,0 +1,18 @@
+﻿@using LotterySim.Business
+@using System.Text
+
+@model List<LotterySim.Business.Team>
+
+
+   
+
+    }
+
+    @helper DisplayLockIcon(Team team)
+    {
+        if (team.PickSwapType == PickSwapType.Protected)
+        {
+
+            <i class="bi bi-shield-lock" style="font-size: 1.4rem; color:black"></i>
+        }
+    }

@@ -10,12 +10,14 @@ namespace LotterySimPresentation.Controllers
     public class HomeController : Controller
     {
         // GET: Home
+
+
+        
         public ActionResult Index()
         {
             var lotteryTeams = GetTeams.GetLotteryTeams();
             return View(lotteryTeams);
         }
-
 
         public ActionResult GenerateLottery()
         {

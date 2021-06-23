@@ -1,5 +1,6 @@
 ﻿@using LotterySim.Business
 
+
 @model LotterySim.Business.Team
 
 
@@ -50,10 +51,10 @@
                 <div class="col">
                     <div class="card" style="width: 18rem;">
                         <a href="@Url.Action("TeamDetail", "Home",  new { teamname = team.OriginalTeamName })">
-                        <img class="card-img-top" src=@GetTeamImageHelper(team.OriginalTeamName) alt="@team.OriginalTeamName" width="150" height="150" />
+                            <img class="card-img-top" src=@GetTeamImageHelper(team.OriginalTeamName) alt="@team.OriginalTeamName" width="150" height="150" />
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title">Pick# @team.PickNumber</h5>
+                            <h5 class="card-title">Pick# @team.PickNumber @DisplayHelper.DisplayLockIcon(team)</h5>
                             <p class="card-text"></p>
 
                         </div>
@@ -91,11 +92,11 @@
                         <a href="@Url.Action("TeamDetail", "Home",  new { teamname = team.NewTeamName })">
                             <img class="card-img-top" src=@GetTeamImageHelper(@team.NewTeamName) alt="@team.NewTeamName" width="150" height="150">
                         </a>
-                            <div class="card-body">
-                                <h5 class="card-title">Pick# @team.PickNumber</h5>
-                                <p class="card-text"></p>
+                        <div class="card-body">
+                            <h5 class="card-title">Pick# @team.PickNumber</h5>
+                            <p class="card-text"></p>
 
-                            </div>
+                        </div>
                     </div>
                 </div>
             }
@@ -129,11 +130,11 @@
                         <a href="@Url.Action("TeamDetail", "Home",  new { teamname = team.OriginalTeamName })">
                             <img class="card-img-top" src=@GetTeamImageHelper(@team.OriginalTeamName) alt="@team.OriginalTeamName" width="150" height="150">
                         </a>
-                            <div class="card-body">
-                                <h5 class="card-title">Pick# @team.PickNumber</h5>
-                                <p class="card-text"></p>
+                        <div class="card-body">
+                            <h5 class="card-title">Pick# @team.PickNumber @DisplayHelper.DisplayLockIcon(team)</h5>
+                            <p class="card-text"></p>
 
-                            </div>
+                        </div>
                     </div>
                 </div>
             }
@@ -142,11 +143,15 @@
 
 </div>
 
+
+
+
 @helper GetTeamImageHelper(string teamname)
 {
     var imageString = "~/Content/Images/" + teamname.Replace(" ", "") + ".svg";
     @Url.Content(imageString)
 }
+
 
 @{
 

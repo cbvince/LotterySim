@@ -64,7 +64,7 @@
                     <td>@team.PickNumber</td>
                     <td align="right"><span class=@GetLotteryMovementColor(team)>@team.LotteryMovement</span></td>
 
-                    <td>@Html.Raw(GetTeamName(team))</td>
+                    <td>@Html.Raw(GetTeamName(team)) @DisplayHelper.DisplayLockIcon(team)</td>
                     <td>@team.WinLossRecord</td>
                     <td>@team.WinPercentage</td>
                     <td> @team.LotteryGamesBack</td>
@@ -86,7 +86,7 @@
                     <td>@team.PickNumber</td>
                     <td align="right"><span class=@GetLotteryMovementColor(team)>@team.LotteryMovement</span></td>
 
-                    <td>@Html.Raw(GetTeamName(team))</td>
+                    <td>@Html.Raw(GetTeamName(team)) @DisplayHelper.DisplayLockIcon(team)</td>
                     <td>@team.WinLossRecord</td>
                     <td>@team.WinPercentage</td>
                     <td> @team.LotteryGamesBack</td>
