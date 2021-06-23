@@ -38,14 +38,14 @@
 <div class="container">
     <div class="row"><h2>Incoming Picks</h2><hr /></div>
 
-    @if (IncomingPicks().Count == 0)
+    @if (GetTeams.IncomingPicks(Model).Count == 0)
     {
         <h5>None</h5>
     }
 
     <div class="card-deck">
         <div class="row">
-            @foreach (var team in IncomingPicks())
+            @foreach (var team in GetTeams.IncomingPicks(Model))
 
             {
                 <div class="col">
@@ -73,7 +73,7 @@
 
     <div class="row"><h2>Outgoing Picks</h2><hr /></div>
 
-    @if (OutGoingPicks().Count == 0)
+    @if (GetTeams.OutGoingPicks(Model).Count == 0)
     {
         <h5>None</h5>
     }
@@ -82,9 +82,9 @@
     <div class="card-deck">
         <div class="row">
 
+            
 
-
-            @foreach (var team in OutGoingPicks())
+            @foreach (var team in GetTeams.OutGoingPicks(Model))
 
             {
                 <div class="col">
@@ -111,7 +111,7 @@
 <div class="container">
     <div class="row"><h2>Non-Conveyed Picks</h2><hr /></div>
 
-    @if (NonConveyedPicks().Count == 0)
+    @if (@LotterySim.Business.GetTeams.NonConveyedPicks(Model).Count == 0)
     {
         <h5>None</h5>
     }
@@ -122,7 +122,7 @@
 
 
 
-            @foreach (var team in NonConveyedPicks())
+            @foreach (var team in @LotterySim.Business.GetTeams.NonConveyedPicks(Model))
 
             {
                 <div class="col">
@@ -153,25 +153,6 @@
 }
 
 
-@{
-
-    List<Team> OutGoingPicks()
-    {
-        return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.OriginalTeamName == Model.OriginalTeamName && p.NewTeamName != null).ToList();
-    }
-
-
-    List<Team> IncomingPicks()
-    {
-        return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => (p.OriginalTeamName == Model.OriginalTeamName && p.NewTeamName == null) || p.NewTeamName == Model.OriginalTeamName).OrderBy(p => p.PickNumber).ToList();
-    }
-
-    List<Team> NonConveyedPicks()
-    {
-        return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.TeamPickOwedToName == Model.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
-    }
-
-}
 
 
 

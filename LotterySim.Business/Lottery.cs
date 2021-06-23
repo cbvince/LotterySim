@@ -26,6 +26,10 @@ namespace LotterySim.Business
             PickProtections.PickProtection(teams);
             DetermineLotteryMovement(teams);
         }
+
+
+
+
         private static void RunLotteryRound(List<Team> teams, int pickValue, int pickNumber)
         {
             var winner = teams.FirstOrDefault(p => p.TeamRank == pickValue && p.Assigned == false);

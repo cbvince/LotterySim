@@ -332,6 +332,23 @@ namespace LotterySim.Business
             }
         }
 
+
+        public static List<Team> OutGoingPicks(Team team)
+        {
+            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName != null).ToList();
+        }
+
+
+        public static List<Team> IncomingPicks(Team team)
+        {
+            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => (p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName == null) || p.NewTeamName == team.OriginalTeamName).OrderBy(p => p.PickNumber).ToList();
+        }
+
+        public static List<Team> NonConveyedPicks(Team team)
+        {
+            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.TeamPickOwedToName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
+        }
+
     }
 
      
