@@ -1,14 +1,11 @@
 ﻿@using LotterySim.Business
-@using System.Text
-
 @model Team
-
 
 <tr>
     <td>@Model.PickNumber</td>
     <td align="right"><span class=@GetLotteryMovementColor(Model)>@Model.LotteryMovement</span></td>
 
-    <td>@Html.Raw(GetTeamName(Model)) @DisplayHelper.DisplayLockIcon(Model)</td>
+    <td>@DisplayTeamNameAndImage(Model)  @DisplayHelper.DisplayLockIcon(Model)</td>
     <td>@Model.WinLossRecord</td>
     <td>@Model.WinPercentage</td>
     <td> @Model.LotteryGamesBack</td>
@@ -19,51 +16,7 @@
 </tr>
 
 @{
-
-
-    string GetTeamImage(string teamname)
-    {
-        return "~/Content/Images/" + teamname.Replace(" ", "") + ".svg";
-
-    }
-
-    string GetTeamName(Team team)
-    {
-
-
-        if (team.NewTeamName == null)
-        {
-            return BuildTeamAndImageString(team.TeamName);
-        }
-
-        else
-        {
-            var result = BuildTeamAndImageString(team.OriginalTeamName) + " to " + BuildTeamAndImageString(team.NewTeamName);
-            return result;
-
-
-        }
-
-    }
-
-    string BuildTeamAndImageString(string teamname)
-    {
-        var teamImageUrl = Url.Content(GetTeamImage(teamname));
-
-
-        StringBuilder sb = new StringBuilder();
-        sb.Append("<img src =");
-        sb.Append(teamImageUrl);
-        sb.Append(" width = \"30\" height = \"30\" />");
-        //sb.Append(teamname);
-        sb.Append(@Html.ActionLink(teamname, "TeamDetail", new { teamname = teamname }, new { @class = "teamlink" }));
-        return sb.ToString();
-
-
-
-
-    }
-
+   
     string GetWinLossStreakColor(Team team)
     {
         if (team.WinorLossStreak && team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
@@ -102,4 +55,46 @@
         return "";
     }
 
+}
+
+@helper DisplayTeamNameAndImage(Team team)
+{
+    if (team.PickSwapType == PickSwapType.Swapped)
+    {
+        <span>
+            @GetURLTeamName(team.OriginalTeamName)
+            @GetTeamImage(team.OriginalTeamName)
+            @DisplayArrow()
+            @GetURLTeamName(team.NewTeamName)
+            @GetTeamImage(team.NewTeamName)
+        </span>
+    }
+    else
+    {
+        <span>
+            @GetURLTeamName(team.OriginalTeamName)
+            @GetTeamImage(team.OriginalTeamName)
+        </span>
+    }
+
+
+
+}
+
+@helper GetTeamImage(string teamname)
+{
+
+    var imageString = "~/Content/Images/" + teamname.Replace(" ", "") + ".svg";
+
+    <img src="@Url.Content(imageString)" width="30" height="30" />
+}
+
+@helper DisplayArrow()
+{
+    <i class="bi bi-arrow-right"  style="font-size: 1rem"></i>
+}
+
+@helper GetURLTeamName(string teamname)
+{
+    @Html.ActionLink(teamname, "TeamDetail", new { teamname = teamname }, new { @class = "teamlink" })
 }

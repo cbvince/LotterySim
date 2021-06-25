@@ -69,8 +69,6 @@
 
 <p></p>
 <div class="container">
-
-
     <div class="row"><h2>Outgoing Picks</h2><hr /></div>
 
     @if (GetTeams.OutGoingPicks(Model).Count == 0)
@@ -78,11 +76,8 @@
         <h5>None</h5>
     }
 
-
     <div class="card-deck">
         <div class="row">
-
-            
 
             @foreach (var team in GetTeams.OutGoingPicks(Model))
 
@@ -116,11 +111,8 @@
         <h5>None</h5>
     }
 
-
     <div class="card-deck">
         <div class="row">
-
-
 
             @foreach (var team in @LotterySim.Business.GetTeams.NonConveyedPicks(Model))
 
@@ -142,8 +134,6 @@
     </div>
 
 </div>
-
-
 
 
 @helper GetTeamImageHelper(string teamname)

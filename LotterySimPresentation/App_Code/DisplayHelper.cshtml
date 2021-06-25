@@ -1,5 +1,5 @@
 ﻿@using LotterySim.Business
-@using System.Text
+@using System.Web.Mvc
 
 @model List<LotterySim.Business.Team>
 
@@ -12,7 +12,11 @@
     {
         if (team.PickSwapType == PickSwapType.Protected)
         {
-   
-            <i class="bi bi-lock-fill" style="font-size: 1.2rem; color:black"></i>
+
+            <i class="bi bi-lock-fill" style="font-size: 1.2rem; color:darkorange"></i>
         }
     }
+
+
+
+
