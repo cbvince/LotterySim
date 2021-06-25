@@ -13,7 +13,33 @@ namespace LotterySim.Business
     public class GetTeams
     {
 
-     
+        public static List<Team> GetLotteryTeams()
+        {
+            var lotteryTeams = new List<Team>();
+            var i = 14;
+            var x = 30;
+            foreach (var team in ConvertTeamData().Where(p => p.ConferenceRank > 8).OrderByDescending(p => p.Wins).ThenByDescending(p => p.TieBreakerGroupPosition))
+
+
+            {
+                team.TeamRank = i--;
+                lotteryTeams.Add(team);
+            }
+
+            foreach (var team in ConvertTeamData().Where(p => p.ConferenceRank <= 8).OrderByDescending(p => p.Wins).ThenByDescending(p => p.TieBreakerGroupPosition))
+
+
+            {
+                team.TeamRank = x--;
+                lotteryTeams.Add(team);
+            }
+
+
+            SetPickNumberFromRanking(lotteryTeams);
+            UpdateStandingsData(lotteryTeams);
+            PickProtections.PickProtection(lotteryTeams);
+            return lotteryTeams;
+        }
 
         private static string GetTeamData()
         {
@@ -44,8 +70,6 @@ namespace LotterySim.Business
 
             
         }
-
-    
 
         private static List<Team> ConvertTeamData()
         {
@@ -94,64 +118,48 @@ namespace LotterySim.Business
             return teams;
 
         }
-        public static List<Team> GetLotteryTeams()
+
+        private static void SetPickNumberFromRanking(List<Team> teams)
         {
-            var lotteryTeams = new List<Team>();
-            var i = 14;
-            var x = 30;
-            foreach (var team in ConvertTeamData().Where(p => p.ConferenceRank > 8).OrderByDescending(p => p.Wins).ThenByDescending(p => p.TieBreakerGroupPosition))
-                
-                
+            foreach (var team in teams)
             {
-                team.TeamRank = i--;
-                lotteryTeams.Add(team);
+                team.PickNumber = team.TeamRank;
             }
+        }
 
-            foreach (var team in ConvertTeamData().Where(p => p.ConferenceRank <= 8).OrderByDescending(p => p.Wins).ThenByDescending(p => p.TieBreakerGroupPosition))
+        #region StandingsDataHelperMethods
 
-
-            {
-                team.TeamRank = x--;
-                lotteryTeams.Add(team);
-            }
-
-
-
-            //lotteryTeams.Reverse();
-
-            DetermineGamesBack(lotteryTeams);
-            DetermineWinLossStreak(lotteryTeams);
-            SetPickNumberFromRanking(lotteryTeams);
-            AddTopFourPickOdds(lotteryTeams);
-            AddTopOnePickOdds(lotteryTeams);
-            GetTeamImages(lotteryTeams);
-            PickProtections.PickProtection(lotteryTeams);
-            return lotteryTeams;
+        private static void UpdateStandingsData(List<Team> teams)
+        {
+            DetermineGamesBack(teams);
+            DetermineWinLossStreak(teams);
+            AddTopFourPickOdds(teams);
+            AddTopOnePickOdds(teams);
         }
 
         private static void DetermineGamesBack(List<Team> teams)
         {
-            
+
             var highestNumberOfLosses = teams.OrderByDescending(p => p.Losses).FirstOrDefault().Losses;
             var lowestNumberOfWins = teams.OrderBy(p => p.Wins).FirstOrDefault().Wins;
-            var winLostDifferenceForWorstTeam =  highestNumberOfLosses - lowestNumberOfWins;
-          
+            var winLostDifferenceForWorstTeam = highestNumberOfLosses - lowestNumberOfWins;
+
 
             foreach (var team in teams)
-            {      
+            {
                 var teamWinLossDifference = team.Losses - team.Wins;
-  
+
                 team.LotteryGamesBack = (winLostDifferenceForWorstTeam - teamWinLossDifference) / 2;
             }
 
-            
+
         }
 
         private static void DetermineWinLossStreak(List<Team> teams)
         {
             foreach (var team in teams)
             {
-            
+
                 var streakType = (team.WinorLossStreak) ? "Won" : "Lost";
                 var streakNumber = team.ConsecutiveWinLoss;
                 var streak = streakType + " " + streakNumber.ToString();
@@ -165,7 +173,7 @@ namespace LotterySim.Business
             foreach (var team in teams)
             {
 
-                                 
+
                 switch (team.TeamRank)
                 {
                     case 1:
@@ -175,7 +183,7 @@ namespace LotterySim.Business
                         break;
                     case 4:
                     case 5:
-                         team.TopFourPickOdds = "45.1%";
+                        team.TopFourPickOdds = "45.1%";
                         break;
                     case 6:
                         team.TopFourPickOdds = "37.2%";
@@ -245,35 +253,28 @@ namespace LotterySim.Business
                         team.TopPickOdds = "0.5%";
                         break;
 
-                    
-                }
-            }
-        }
 
-        private static void SetPickNumberFromRanking(List<Team> teams)
-        {
-            foreach (var team in teams)
-            {
-                team.PickNumber = team.TeamRank;
+                }
             }
         }
 
         private static int SetTieBreakerGroups(string teamname)
         {
             var tieBreakerPosition = 0;
-                
-                    
-                    switch (teamname)
-                
-                {
-                    case "Chicago": tieBreakerPosition = 1;
-                        break;
-                    case "Sacramento":
-                        tieBreakerPosition = 2;
-                        break;
-                    case "New Orleans":
-                        tieBreakerPosition = 3;
-                        break;
+
+
+            switch (teamname)
+
+            {
+                case "Chicago":
+                    tieBreakerPosition = 1;
+                    break;
+                case "Sacramento":
+                    tieBreakerPosition = 2;
+                    break;
+                case "New Orleans":
+                    tieBreakerPosition = 3;
+                    break;
                 case "Charlotte":
                     tieBreakerPosition = 4;
                     break;
@@ -304,50 +305,26 @@ namespace LotterySim.Business
                 default:
                     tieBreakerPosition = 0;
                     break;
-                        
 
-                    
-                
+
+
+
             }
             return tieBreakerPosition;
-            
+
         }
 
-        public static void SetPickNumberFromLotteryNumber(List<Team> teams)
-        {
-             foreach (var team in teams)
-            {
-                team.PickNumber = team.LotteryNumber;
-            }
-}
+        #endregion
 
-        public static void GetTeamImages(List<Team> teams)
-        {
 
-            var teamName = string.Empty;
-            foreach (var team in teams)
-               
-            {
-               teamName =  (team.NewTeamName == null) ? team.TeamName : team.NewTeamName;
-                team.TeamImage = string.Format("~/Content/Images/{0}.svg", teamName.Replace(" ", ""));
-              
-            }
-        }
 
-        public static List<Team> OutGoingPicks(Team team)
-        {
-            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName != null).ToList();
-        }
 
-        public static List<Team> IncomingPicks(Team team)
-        {
-            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => (p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName == null) || p.NewTeamName == team.OriginalTeamName).OrderBy(p => p.PickNumber).ToList();
-        }
 
-        public static List<Team> NonConveyedPicks(Team team)
-        {
-            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.TeamPickOwedToName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
-        }
+
+
+      
+
+
 
     }
 

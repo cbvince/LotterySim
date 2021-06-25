@@ -13,7 +13,9 @@
 
     <div class="row">
         <div class="col">
-            <img src=@Url.Content(@Model.TeamImage) width="150" height="150" />
+            
+                <img  src=@GetTeamImageHelper(Model.OriginalTeamName) alt="@Model.OriginalTeamName" width="150" height="150" />
+            
         </div>
     </div>
     <div class="row">
@@ -38,14 +40,14 @@
 <div class="container">
     <div class="row"><h2>Incoming Picks</h2><hr /></div>
 
-    @if (GetTeams.IncomingPicks(Model).Count == 0)
+    @if (PickProtections.IncomingPicks(Model).Count == 0)
     {
         <h5>None</h5>
     }
 
     <div class="card-deck">
         <div class="row">
-            @foreach (var team in GetTeams.IncomingPicks(Model))
+            @foreach (var team in PickProtections.IncomingPicks(Model))
 
             {
                 <div class="col">
@@ -71,7 +73,7 @@
 <div class="container">
     <div class="row"><h2>Outgoing Picks</h2><hr /></div>
 
-    @if (GetTeams.OutGoingPicks(Model).Count == 0)
+    @if (PickProtections.OutGoingPicks(Model).Count == 0)
     {
         <h5>None</h5>
     }
@@ -79,7 +81,7 @@
     <div class="card-deck">
         <div class="row">
 
-            @foreach (var team in GetTeams.OutGoingPicks(Model))
+            @foreach (var team in PickProtections.OutGoingPicks(Model))
 
             {
                 <div class="col">
@@ -106,7 +108,7 @@
 <div class="container">
     <div class="row"><h2>Non-Conveyed Picks</h2><hr /></div>
 
-    @if (@LotterySim.Business.GetTeams.NonConveyedPicks(Model).Count == 0)
+    @if (PickProtections.NonConveyedPicks(Model).Count == 0)
     {
         <h5>None</h5>
     }
@@ -114,7 +116,7 @@
     <div class="card-deck">
         <div class="row">
 
-            @foreach (var team in @LotterySim.Business.GetTeams.NonConveyedPicks(Model))
+            @foreach (var team in PickProtections.NonConveyedPicks(Model))
 
             {
                 <div class="col">

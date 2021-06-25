@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LotterySim.Business
 {
-    class PickProtections
+    public class PickProtections
     {
         public static void PickProtection(List<Team> teams)
         {
@@ -93,8 +93,19 @@ namespace LotterySim.Business
             fromteam.TeamName = string.Format("{0} to {1}", fromteam.OriginalTeamName, toteam.OriginalTeamName);
             fromteam.PickSwapType = PickSwapType.Swapped;
         }
-        
-        
+
+        public static List<Team> OutGoingPicks(Team team)
+        {
+            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName != null).ToList();
+        }
+        public static List<Team> IncomingPicks(Team team)
+        {
+            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => (p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName == null) || p.NewTeamName == team.OriginalTeamName).OrderBy(p => p.PickNumber).ToList();
+        }
+        public static List<Team> NonConveyedPicks(Team team)
+        {
+            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.TeamPickOwedToName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
+        }
 
 
     }

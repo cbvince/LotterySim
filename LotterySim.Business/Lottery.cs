@@ -22,13 +22,10 @@ namespace LotterySim.Business
                 }
             }
             FillRemainingLotteryOrder(teams);
-            GetTeams.SetPickNumberFromLotteryNumber(teams);
+            SetPickNumberFromLotteryNumber(teams);
             PickProtections.PickProtection(teams);
             DetermineLotteryMovement(teams);
         }
-
-
-
 
         private static void RunLotteryRound(List<Team> teams, int pickValue, int pickNumber)
         {
@@ -102,7 +99,15 @@ namespace LotterySim.Business
             }
         }
 
-        
+        public static void SetPickNumberFromLotteryNumber(List<Team> teams)
+        {
+            foreach (var team in teams)
+            {
+                team.PickNumber = team.LotteryNumber;
+            }
+        }
+
+
 
 
 
