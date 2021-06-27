@@ -59,7 +59,7 @@ namespace LotterySim.Business
                 .OrderByDescending(x => x.PickNumber).FirstOrDefault();
 
 
-            if (houston.PickNumber < 4)
+            if (houston.PickNumber <= 4)
             {
                 foreach (var team in teams.Where(p => p.OriginalTeamName == "Boston" || p.OriginalTeamName == "Oklahoma City" || p.OriginalTeamName == "Miami"))
                 {
