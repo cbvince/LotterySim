@@ -21,6 +21,7 @@ namespace LotterySim.Business
         public string OriginalTeamName { get; set; }
         public string NewTeamName { get; set; }
         public string TeamPickOwedToName { get; set; }
+        public string PickTradeDetails { get; set; }
         public PickSwapType PickSwapType { get; set; }
         public bool Assigned { get; set; }
         public int Wins { get; set; }

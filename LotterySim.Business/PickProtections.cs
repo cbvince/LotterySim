@@ -10,36 +10,37 @@ namespace LotterySim.Business
     {
         public static void PickProtection(List<Team> teams)
         {
-            DetermineProtection(teams, 4, "Houston", "Oklahoma City");
-            DetermineProtection(teams, 3, "Minnesota", "Golden State");
-            DetermineProtection(teams, 4, "Chicago", "Orlando");
-            DetermineProtection(teams, 14, "Portland", "Houston");
-            DetermineProtection(teams, 9, "Milwaukee", "Houston");
-            DetermineProtection(teams, 0, "Dallas", "New York");
-            DetermineProtection(teams, 16, "Detroit", "Houston");
+            DetermineProtection(teams, 4, "Houston", "Oklahoma City", "OKC gets 2 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN");
+            DetermineProtection(teams, 3, "Minnesota", "Golden State", "Protected 1-3 - Russell/Wiggins trade");
+            DetermineProtection(teams, 4, "Chicago", "Orlando", "Protected 1-4 - Vucevic/Carter trade");
+            DetermineProtection(teams, 14, "Portland", "Houston", "Protected 1-14 - Ariza/Covington trade");
+            DetermineProtection(teams, 9, "Milwaukee", "Houston", "Protected 1-9 - Housing can swap 2nd round pick with Milwaukee 1st");
+            DetermineProtection(teams, 0, "Dallas", "New York", "Unprotected - Kristaps Porzingis trade");
+            DetermineProtection(teams, 16, "Detroit", "Houston", "Protected 1-16 - Wood for Stewart/Ariza trade");
             //DetermineProtection(teams, 0, "Boston", "Oklahoma City");
             DetermineProtectionOKCSwaps(teams);
         }
 
 
-        private static void DetermineProtection(List<Team> teams, int protectionThreshold, string originalTeam, string newTeam)
+        private static void DetermineProtection(List<Team> teams, int protectionthreshold, string originalteam, string newteam, string picktradedetails = "")
         {
 
-            var teamToConvey = teams.FirstOrDefault(p => p.OriginalTeamName == originalTeam);
-            teamToConvey.TeamPickOwedToName = newTeam;
+            var teamToConvey = teams.FirstOrDefault(p => p.OriginalTeamName == originalteam);
+            teamToConvey.TeamPickOwedToName = newteam;
+            teamToConvey.PickTradeDetails = picktradedetails;
 
-            if (teamToConvey.PickNumber > protectionThreshold)
+            if (teamToConvey.PickNumber > protectionthreshold)
 
             {
-                teamToConvey.TeamName = string.Format("{0} to {1}", originalTeam, newTeam);
-                teamToConvey.NewTeamName = newTeam;
+                teamToConvey.TeamName = string.Format("{0} to {1}", originalteam, newteam);
+                teamToConvey.NewTeamName = newteam;
                 teamToConvey.PickSwapType = PickSwapType.Swapped;
             }
 
 
             else
             {
-                teamToConvey.TeamName = originalTeam;
+                teamToConvey.TeamName = originalteam;
                 teamToConvey.NewTeamName = null;
                 teamToConvey.PickSwapType = PickSwapType.Protected;
             }
@@ -64,6 +65,7 @@ namespace LotterySim.Business
                 foreach (var team in teams.Where(p => p.OriginalTeamName == "Boston" || p.OriginalTeamName == "Oklahoma City" || p.OriginalTeamName == "Miami"))
                 {
                     SwapPicks(team, okc);
+                    team.PickTradeDetails = "OKC gets 2 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN";
                 }
             }
 
@@ -72,7 +74,9 @@ namespace LotterySim.Business
                 foreach (var team in teams.Where(p => p.OriginalTeamName == "Boston" || p.OriginalTeamName == "Oklahoma City" || p.OriginalTeamName == "Miami" || p.OriginalTeamName == "Houston"))
                 {
                     SwapPicks(team, okc);
-                    
+                    team.PickTradeDetails = "OKC gets 2 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN";
+
+
                 }
                 SwapPicks(lowestPickSwapTeam, houston);
             }
