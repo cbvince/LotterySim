@@ -258,12 +258,12 @@ namespace LotterySim.Business
             }
         }
 
-        private static int SetTieBreakerGroups(string teamname)
+        private static int SetTieBreakerGroups(string teamName)
         {
             var tieBreakerPosition = 0;
 
 
-            switch (teamname)
+            switch (teamName)
 
             {
                 case "Chicago":

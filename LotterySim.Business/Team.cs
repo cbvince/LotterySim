@@ -51,4 +51,6 @@ namespace LotterySim.Business
         Protected
 
     }
+
+    
 }

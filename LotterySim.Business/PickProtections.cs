@@ -83,24 +83,24 @@ namespace LotterySim.Business
 
         }
 
-        private static void SwapPick(Team fromteam, Team toteam)
+        private static void SwapPick(Team fromTeam, Team toTeam)
         {
-            if (fromteam == toteam)
+            if (fromTeam == toTeam)
             {
                 return;
             }
 
 
-            fromteam.TeamPickOwedToName = toteam.OriginalTeamName;
-            fromteam.NewTeamName = toteam.OriginalTeamName;
-            fromteam.TeamName = string.Format("{0} to {1}", fromteam.OriginalTeamName, toteam.OriginalTeamName);
-            fromteam.PickSwapType = PickSwapType.Swapped;
+            fromTeam.TeamPickOwedToName = toTeam.OriginalTeamName;
+            fromTeam.NewTeamName = toTeam.OriginalTeamName;
+            fromTeam.TeamName = string.Format("{0} to {1}", fromTeam.OriginalTeamName, toTeam.OriginalTeamName);
+            fromTeam.PickSwapType = PickSwapType.Swapped;
         }
 
-        private static void ProtectPick(Team fromteam)
+        private static void ProtectPick(Team fromTeam)
         {
-            fromteam.NewTeamName = null;
-            fromteam.PickSwapType = PickSwapType.Protected;
+            fromTeam.NewTeamName = null;
+            fromTeam.PickSwapType = PickSwapType.Protected;
         }
 
     

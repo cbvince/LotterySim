@@ -138,9 +138,9 @@
 </div>
 
 
-@helper GetTeamImageHelper(string teamname)
+@helper GetTeamImageHelper(string teamName)
 {
-    var imageString = "~/Content/Images/" + teamname.Replace(" ", "") + ".svg";
+    var imageString = "~/Content/Images/" + teamName.Replace(" ", "") + ".svg";
     @Url.Content(imageString)
 }
 
