@@ -18,7 +18,7 @@ namespace LotterySimPresentation.Controllers
 
             try
             {
-                var lotteryTeams = GetTeams.GetLotteryTeams();
+                var lotteryTeams = GetNBATeams.GetLotteryTeams();
                 return View(lotteryTeams);
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace LotterySimPresentation.Controllers
         {
             try
             {
-                var lotteryTeams = GetTeams.GetLotteryTeams();
+                var lotteryTeams = GetNBATeams.GetLotteryTeams();
                 Lottery.RunLottery(lotteryTeams);
                 return View("Index", lotteryTeams);
             }
@@ -55,10 +55,10 @@ namespace LotterySimPresentation.Controllers
 
             if (teamname == null)
             {
-                return View("Index", GetTeams.GetLotteryTeams());
+                return View("Index", GetNBATeams.GetLotteryTeams());
             }
 
-            var teams = GetTeams.GetLotteryTeams();
+            var teams = GetNBATeams.GetLotteryTeams();
             var team = teams.FirstOrDefault(p => p.OriginalTeamName == teamname);
             return View(team);
         }

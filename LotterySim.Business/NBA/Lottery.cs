@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LotterySim.Business.NBA;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace LotterySim.Business
     {
 
 
-        public static void RunLottery(List<Team> teams)
+        public static void RunLottery(List<NBATeam> teams)
         {
 
             for (int i = 0; i < 5; i++)
@@ -27,7 +28,7 @@ namespace LotterySim.Business
             DetermineLotteryMovement(teams);
         }
 
-        private static void RunLotteryRound(List<Team> teams, int pickValue, int pickNumber)
+        private static void RunLotteryRound(List<NBATeam> teams, int pickValue, int pickNumber)
         {
             var winner = teams.FirstOrDefault(p => p.TeamRank == pickValue && p.Assigned == false);
 
@@ -64,7 +65,7 @@ namespace LotterySim.Business
 
         }
 
-        private static void FillRemainingLotteryOrder(List<Team> teams)
+        private static void FillRemainingLotteryOrder(List<NBATeam> teams)
         {
             var lotteryNumber = 5;
             foreach (var team in teams.Where(p => p.Assigned == false).OrderBy(p => p.TeamRank))
@@ -75,7 +76,7 @@ namespace LotterySim.Business
             }
         }
 
-        private static void DetermineLotteryMovement(List<Team> teams)
+        private static void DetermineLotteryMovement(List<NBATeam> teams)
         {
             foreach (var team in teams)
             {
@@ -99,7 +100,7 @@ namespace LotterySim.Business
             }
         }
 
-        public static void SetPickNumberFromLotteryNumber(List<Team> teams)
+        public static void SetPickNumberFromLotteryNumber(List<NBATeam> teams)
         {
             foreach (var team in teams)
             {

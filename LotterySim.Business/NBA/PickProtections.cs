@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LotterySim.Business.NBA;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace LotterySim.Business
 {
     public class PickProtections
     {
-        public static void PickProtection(List<Team> teams)
+        public static void PickProtection(List<NBATeam> teams)
         {
             DetermineProtection(teams, 30, 4, "Houston", "Oklahoma City", "OKC gets 2 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN");
             DetermineProtection(teams, 30, 3, "Minnesota", "Golden State", "Protected 1-3 - Russell/Wiggins trade");
@@ -24,7 +25,7 @@ namespace LotterySim.Business
         }
 
 
-        private static void DetermineProtection(List<Team> teams,int lowerprotectionthreshold, int upperprotectionthreshold, string originalteam, string newteam, string picktradedetails = "")
+        private static void DetermineProtection(List<NBATeam> teams,int lowerprotectionthreshold, int upperprotectionthreshold, string originalteam, string newteam, string picktradedetails = "")
         {
 
             var teamToConvey = teams.FirstOrDefault(p => p.OriginalTeamName == originalteam);
@@ -47,7 +48,7 @@ namespace LotterySim.Business
         }
 
         //OKC gets 3 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN
-        private static void DetermineProtectionOKCSwaps(List<Team> teams)
+        private static void DetermineProtectionOKCSwaps(List<NBATeam> teams)
         {
             var houston = teams.FirstOrDefault(p => p.OriginalTeamName == "Houston");
             var okc = teams.FirstOrDefault(p => p.OriginalTeamName == "Oklahoma City");
@@ -104,17 +105,17 @@ namespace LotterySim.Business
         }
 
     
-        public static List<Team> OutGoingPicks(Team team)
+        public static List<NBATeam> OutGoingPicks(NBATeam team)
         {
-            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.OriginalTeamName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Swapped).OrderBy(p => p.PickNumber).ToList();
+            return LotterySim.Business.GetNBATeams.GetLotteryTeams().Where(p => p.OriginalTeamName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Swapped).OrderBy(p => p.PickNumber).ToList();
         }
-        public static List<Team> IncomingPicks(Team team)
+        public static List<NBATeam> IncomingPicks(NBATeam team)
         {
-            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => (p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName == null) || p.NewTeamName == team.OriginalTeamName).OrderBy(p => p.PickNumber).ToList();
+            return LotterySim.Business.GetNBATeams.GetLotteryTeams().Where(p => (p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName == null) || p.NewTeamName == team.OriginalTeamName).OrderBy(p => p.PickNumber).ToList();
         }
-        public static List<Team> NonConveyedPicks(Team team)
+        public static List<NBATeam> NonConveyedPicks(NBATeam team)
         {
-            return LotterySim.Business.GetTeams.GetLotteryTeams().Where(p => p.TeamPickOwedToName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
+            return LotterySim.Business.GetNBATeams.GetLotteryTeams().Where(p => p.TeamPickOwedToName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
         }
 
 

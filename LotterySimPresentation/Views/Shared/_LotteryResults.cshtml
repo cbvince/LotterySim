@@ -1,5 +1,6 @@
-﻿@using LotterySim.Business
-@model Team
+﻿@using LotterySim.Business.NBA
+@using LotterySim.Business
+@model NBATeam
 
 <tr>
     <td>@Model.PickNumber</td>
@@ -17,7 +18,7 @@
 
 @{
    
-    string GetWinLossStreakColor(Team team)
+    string GetWinLossStreakColor(NBATeam team)
     {
         if (team.WinorLossStreak && team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
         if (team.WinorLossStreak && team.ConsecutiveWinLoss >= 5) return "text-danger";
@@ -25,7 +26,7 @@
         return "";
     }
 
-    string GetLotteryMovementColor(Team team)
+    string GetLotteryMovementColor(NBATeam team)
     {
         var color = string.Empty;
 
@@ -48,7 +49,7 @@
 
     }
 
-    string GetLast10WinLossColor(Team team)
+    string GetLast10WinLossColor(NBATeam team)
     {
         if (team.LastTenLosses >= 7) return "text-success";
         if (team.LastTenLosses <= 3) return "text-danger";
@@ -57,7 +58,7 @@
 
 }
 
-@helper DisplayTeamNameAndImage(Team team)
+@helper DisplayTeamNameAndImage(NBATeam team)
 {
     if (team.PickSwapType == PickSwapType.Swapped)
     {
