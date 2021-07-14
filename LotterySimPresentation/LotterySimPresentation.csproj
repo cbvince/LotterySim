@@ -187,6 +187,7 @@
     <Content Include="Views\Home\TeamDetail.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Shared\_LotteryResults.cshtml" />
+    <Content Include="Views\NFL\NFLStandings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

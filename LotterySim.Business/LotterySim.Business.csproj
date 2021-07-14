@@ -53,6 +53,7 @@
     <Compile Include="NBA\GetNBATeams.cs" />
     <Compile Include="NBA\Lottery.cs" />
     <Compile Include="NBA\NBATeam.cs" />
+    <Compile Include="NFL\NFLDraftOrder.cs" />
     <Compile Include="NFL\GetNFLTeams.cs" />
     <Compile Include="NFL\NFLTeam.cs" />
     <Compile Include="NBA\PickProtections.cs" />
