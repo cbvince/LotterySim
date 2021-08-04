@@ -24,7 +24,42 @@ namespace LotterySim.Business.NFL
             return GetNFLTeamDraftGroup(teams, 4, 6);
         }
 
+        //don't think this is needed - can get to team from entry
+        private static List<NFLTeam.Team> GetTeamsFromEntries(List<NFLTeam.Entry> entries)
+        {
+            var teams = new List<NFLTeam.Team>;
+           foreach (var entry in entries)
+	        {
+                teams.Add(entry.team);
+	        }
 
+           return teams;
+        }
+
+        private static List<NFLTeam.Entry> GetEntriesFromStandings(List<NFLTeam.Standings> standings)
+        {
+            
+            var entries = new List<NFLTeam.Entry>;
+            foreach (var standing in standings)
+	        {
+                entries.Add(standing.entries);
+	        }
+            return entries;
+        }
+
+        private static List<NFLTeam.Standings> GetStandingsFromChildren(List<NFLTeam.Child> children)
+
+        {
+            var overallStandings = new List<NFLTeam.Standings>;
+
+            foreach (var child in children)
+	        {
+                overallStandings.AddRange(child.standings)
+	        }
+            
+            return overallStandings;
+        }
+     
 
 
 
