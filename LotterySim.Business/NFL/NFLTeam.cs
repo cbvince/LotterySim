@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LotterySim.Business.NFL
 {
-    class NFLTeam
+    public class NFLTeam
     {
 
         public class Rootobject
@@ -15,7 +15,7 @@ namespace LotterySim.Business.NFL
             public string id { get; set; }
             public string name { get; set; }
             public string abbreviation { get; set; }
-            public List<Child> children { get; set; }
+            public Child[] children { get; set; }
             public Link2[] links { get; set; }
             public Season[] seasons { get; set; }
         }
@@ -26,7 +26,7 @@ namespace LotterySim.Business.NFL
             public string id { get; set; }
             public string name { get; set; }
             public string abbreviation { get; set; }
-            public List<Standings> standings { get; set; }
+            public Standings standings { get; set; }
         }
 
         public class Standings
@@ -37,7 +37,7 @@ namespace LotterySim.Business.NFL
             public Link[] links { get; set; }
             public int season { get; set; }
             public int seasonType { get; set; }
-            public List<Entry> entries { get; set; }
+            public Entry[] entries { get; set; }
         }
 
         public class Link
@@ -54,7 +54,7 @@ namespace LotterySim.Business.NFL
         public class Entry
         {
             public Team team { get; set; }
-            public List<Stat> stats { get; set; }
+            public Stat[] stats { get; set; }
         }
 
         public class Team
@@ -99,7 +99,7 @@ namespace LotterySim.Business.NFL
             public string description { get; set; }
             public string abbreviation { get; set; }
             public string type { get; set; }
-            public int value { get; set; }
+            public float value { get; set; }
             public string displayValue { get; set; }
             public string id { get; set; }
             public string summary { get; set; }

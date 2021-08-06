@@ -47,7 +47,7 @@ namespace LotterySim.Business
         {
             
             string endPoint = "http://data.nba.net/10s/prod/v1/current/standings_all.json";
-            string strJSON = GetTeamDataFromWeb.GetTeamDataFromCache(30, endPoint);
+            string strJSON = GetTeamDataFromWeb.GetTeamDataFromCache(30, endPoint, "nba");
             var teamdata = JsonConvert.DeserializeObject<dynamic>(strJSON);
 
       

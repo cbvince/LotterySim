@@ -1,7 +1,29 @@
-﻿
+﻿@using LotterySim.Business.NFL
+@using LotterySim.Business
+@model List<LotterySim.Business.NFL.NFLTeam.Entry>
 @{
     ViewBag.Title = "NFLStandings";
 }
 
 <h2>NFLStandings</h2>
 
+<table>
+    <tr>
+        <td>Team Name</td>
+    </tr>
+
+
+
+    @foreach (var entry in Model)
+    {
+
+        <tr>
+            <td>@entry.team.name</td>
+        </tr>
+
+
+
+
+    }
+
+</table>

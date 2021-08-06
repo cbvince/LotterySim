@@ -21,24 +21,26 @@ namespace LotterySim.Business
 
         }
 
-        public static string GetTeamDataFromCache(int cacheFrequencyMinutes, string endPoint)
+        public static string GetTeamDataFromCache(int cacheFrequencyMinutes, string endPoint, string teamType)
         {
 
             ObjectCache cache = MemoryCache.Default;
-            if (cache.Contains("teams"))
+            if (cache.Contains(teamType))
             {
-                var teams = cache.GetCacheItem("teams").Value.ToString();
+                var teams = cache.GetCacheItem(teamType).Value.ToString();
                 return teams;
             }
 
             else
             {
-                cache.Add("teams", GetTeamData(endPoint), DateTimeOffset.Now.AddMinutes(cacheFrequencyMinutes));
-                return GetTeamDataFromCache(cacheFrequencyMinutes, endPoint);
+                cache.Add(teamType, GetTeamData(endPoint), DateTimeOffset.Now.AddMinutes(cacheFrequencyMinutes));
+                return GetTeamDataFromCache(cacheFrequencyMinutes, endPoint, teamType);
             }
 
 
 
+        
+        
         }
     }
 }
