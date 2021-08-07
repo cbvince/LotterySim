@@ -1,0 +1,22 @@
+﻿@using LotterySim.Business.NFL
+@using LotterySim.Business
+@model LotterySim.Business.NFL.NFLTeam.Entry
+
+
+
+
+
+
+{
+
+    <tr>
+        <td>0</td>
+        <td>@Model.team.name</td>
+        <td>@GetNFLTeams.GetStatByName(Model.stats, "wins")-@GetNFLTeams.GetStatByName(Model.stats, "losses")</td>
+        <td>@GetNFLTeams.GetStatByName(Model.stats, "winPercent")</td>
+        <td>@GetNFLTeams.GetStatByName(Model.stats, "gamesBehind")</td>
+        <td>@GetNFLTeams.GetStatByName(Model.stats, "streak")</td>
+    </tr>
+
+}
+

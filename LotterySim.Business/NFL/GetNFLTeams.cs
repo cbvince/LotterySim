@@ -49,6 +49,7 @@ namespace LotterySim.Business.NFL
             foreach (var standing in GetStandingsFromChildren())
             {
                 entries.AddRange(standing.entries);
+                entries.OrderBy(p=> Get)
             }
             return entries;
         }
