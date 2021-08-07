@@ -55,6 +55,8 @@ namespace LotterySim.Business.NFL
         {
             public Team team { get; set; }
             public Stat[] stats { get; set; }
+
+                public int DraftPick { get; set; }
         }
 
         public class Team

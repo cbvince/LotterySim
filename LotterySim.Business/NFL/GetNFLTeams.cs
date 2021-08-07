@@ -46,12 +46,26 @@ namespace LotterySim.Business.NFL
         public static List<NFLTeam.Entry> GetEntriesFromStandings()
         {
             var entries = new List<NFLTeam.Entry>();
+            
             foreach (var standing in GetStandingsFromChildren())
             {
                 entries.AddRange(standing.entries);
-                entries.OrderBy(p=> Get)
             }
+            GenerateNFLDraftOrder(entries); 
             return entries;
+        }
+
+        private static void GenerateNFLDraftOrder(List<NFLTeam.Entry> entries)
+        {
+            var i = 1;
+            var orderedEntries = entries.OrderByDescending(p => GetStatByName(p.stats, "playoffSeed")).ThenBy(p => (GetStatByName(p.stats, "wins")));
+
+            foreach (var entry in orderedEntries)
+            {
+                entry.DraftPick = i++;
+            }
+
+            orderedEntries.OrderBy(p => p.DraftPick);
         }
 
         

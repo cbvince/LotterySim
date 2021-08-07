@@ -4,19 +4,41 @@
 
 
 
-
-
-
-{
-
     <tr>
-        <td>0</td>
-        <td>@Model.team.name</td>
+        <td>@Model.DraftPick</td>
+        <td><img src="@Url.Content(Model.team.logos[0].href)" width="30" height="30" /> @Model.team.displayName</td>
         <td>@GetNFLTeams.GetStatByName(Model.stats, "wins")-@GetNFLTeams.GetStatByName(Model.stats, "losses")</td>
-        <td>@GetNFLTeams.GetStatByName(Model.stats, "winPercent")</td>
+        <td>@GetNFLTeams.GetStatByName(Model.stats, "winPercent").ToString("F3")</td>
         <td>@GetNFLTeams.GetStatByName(Model.stats, "gamesBehind")</td>
-        <td>@GetNFLTeams.GetStatByName(Model.stats, "streak")</td>
+        <td>@GetStreak(GetNFLTeams.GetStatByName(Model.stats, "streak"))</td>
     </tr>
 
-}
+ 
 
+
+    @helper GetStreak(float streak)
+    {
+    switch (streak)
+    {
+        case 0:
+        <span>--</span>;
+        break;
+        case var expression when streak >= 2:
+        <span class="text-success"><text>L</text>@Math.Abs(streak)</span>;
+        break;
+        case var expression when streak <= -2:
+        <span class="text-warning"><text>L</text>@streak</span>
+            break;
+        case 1:
+         <span><text>W</text>@streak</span>;
+            break;
+        case -1:
+            <span><text>L</text>@Math.Abs(streak)</span>;
+            break;
+
+        default:
+
+            break;
+    }
+
+    }
