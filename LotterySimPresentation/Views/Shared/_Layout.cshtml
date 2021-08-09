@@ -4,13 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - NBA Lottery Generator</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
-
-
 </head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link h4" href='@Url.Action("Index", "Home")'>NBA</a>
+            <a class="nav-item nav-link h4" href='@Url.Action("NFLStandings", "NFL")'>NFL</a>
+        </div>
+    </div>
+</nav>
+<p></p>
+
+
+
 <body>
     <div class="container body-content">
         @RenderBody()
@@ -18,7 +27,7 @@
         <footer>
         </footer>
     </div>
- 
+
     <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>
