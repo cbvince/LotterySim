@@ -55,6 +55,7 @@ namespace LotterySim.Business.NFL
             return entries;
         }
 
+    
         private static void GenerateNFLDraftOrder(List<NFLTeam.Entry> entries)
         {
             var i = 1;
@@ -74,28 +75,29 @@ namespace LotterySim.Business.NFL
         
 
 
-        public static int GetStatByName(NFLTeam.Stat[] stats, string statName)
+        public static float GetStatByName(NFLTeam.Stat[] stats, string statName)
 
         {
             var statsList = new List<NFLTeam.Stat>();
             statsList.AddRange(stats);
-            return (int)statsList.FirstOrDefault(p => p.name == statName).value;
+            return statsList.FirstOrDefault(p => p.name == statName).value;
         }
 
-
-        private static List<NFLTeam.Entry> GetNFLTeamDraftGroup(List<NFLTeam.Entry> teams, int lowerSeedThreshold, int upperSeedThreshold)
+        
+        public static List<NFLTeam.Entry> GetNFLTeamDraftGroup(List<NFLTeam.Entry> teams, int lowerSeedThreshold, int upperSeedThreshold)
         {
             var teamsDraftGroup = new List<NFLTeam.Entry>();
             
-            foreach (var team in teams.Where(p => GetStatByName(p.stats, "playoffSeed") > lowerSeedThreshold && GetStatByName(p.stats, "playoffSeed") <= upperSeedThreshold))
+            foreach (var team in teams.Where(p => p.DraftPick > lowerSeedThreshold && p.DraftPick <= upperSeedThreshold))
             {
 
                 teamsDraftGroup.Add(team);
+                teamsDraftGroup.OrderBy(p => p.DraftPick);
             }
 
             return teamsDraftGroup;
         }
-
+        
     }
 }
 
