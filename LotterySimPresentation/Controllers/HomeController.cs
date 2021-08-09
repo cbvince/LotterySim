@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LotterySim.Business;
+using LotterySim.Business.NFL;
 
 namespace LotterySimPresentation.Controllers
 {
@@ -12,30 +13,30 @@ namespace LotterySimPresentation.Controllers
         // GET: Home
 
 
-        
+
         public ActionResult Index()
         {
 
             try
             {
-                var lotteryTeams = GetTeams.GetLotteryTeams();
+                var lotteryTeams = GetNBATeams.GetLotteryTeams();
                 return View(lotteryTeams);
             }
             catch (Exception ex)
             {
-               
+
 
                 return View("Error", new HandleErrorInfo(ex, "Index", "Home"));
             }
 
-            
+
         }
 
         public ActionResult GenerateLottery()
         {
             try
             {
-                var lotteryTeams = GetTeams.GetLotteryTeams();
+                var lotteryTeams = GetNBATeams.GetLotteryTeams();
                 Lottery.RunLottery(lotteryTeams);
                 return View("Index", lotteryTeams);
             }
@@ -44,9 +45,9 @@ namespace LotterySimPresentation.Controllers
 
                 return View("Error", new HandleErrorInfo(ex, "Index", "Home"));
             }
-            
-          
-        
+
+
+
         }
 
 
@@ -55,12 +56,15 @@ namespace LotterySimPresentation.Controllers
 
             if (teamname == null)
             {
-                return View("Index", GetTeams.GetLotteryTeams());
+                return View("Index", GetNBATeams.GetLotteryTeams());
             }
 
-            var teams = GetTeams.GetLotteryTeams();
+            var teams = GetNBATeams.GetLotteryTeams();
             var team = teams.FirstOrDefault(p => p.OriginalTeamName == teamname);
             return View(team);
         }
+
+
+       
     }
 }

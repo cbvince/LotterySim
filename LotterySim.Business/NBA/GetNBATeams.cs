@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using RestSharp;
-using LotterySim;
-using System.Runtime.Caching;
+
+using LotterySim.Business.NBA;
+
 
 namespace LotterySim.Business
 {
-    public class GetTeams
+    public class GetNBATeams
     {
 
-        public static List<Team> GetLotteryTeams()
+        public static List<NBATeam> GetLotteryTeams()
         {
-            var lotteryTeams = new List<Team>();
+            var lotteryTeams = new List<NBATeam>();
             var i = 14;
             var x = 30;
             foreach (var team in ConvertTeamData().Where(p => p.ConferenceRank > 8).OrderByDescending(p => p.Wins).ThenByDescending(p => p.TieBreakerGroupPosition))
@@ -41,45 +41,18 @@ namespace LotterySim.Business
             return lotteryTeams;
         }
 
-        private static string GetTeamData()
+      
+
+        private static List<NBATeam> ConvertTeamData()
         {
-            var client = new RestClient("http://data.nba.net/10s/prod/v1/current/standings_all.json");
-            client.Timeout = 20000;
-            var request = new RestRequest(Method.GET);
-            IRestResponse response = client.Execute(request);
-            return JsonConvert.DeserializeObject(response.Content).ToString();
-
-        }
-
-        private static string GetTeamDataFromCache()
-        {
-
-            ObjectCache cache = MemoryCache.Default;
-            if (cache.Contains("teams"))
-            {
-                var teams = cache.GetCacheItem("teams").Value.ToString();
-                return teams;
-            }
-
-            else
-            {
-                cache.Add("teams", GetTeamData(), DateTimeOffset.Now.AddMinutes(30));
-                return GetTeamDataFromCache();
-            }
-
-
             
-        }
-
-        private static List<Team> ConvertTeamData()
-        {
-            //string strJSON = GetTeamData();
-            string strJSON = GetTeamDataFromCache();
+            string endPoint = "http://data.nba.net/10s/prod/v1/current/standings_all.json";
+            string strJSON = GetTeamDataFromWeb.GetTeamDataFromCache(30, endPoint, "nba");
             var teamdata = JsonConvert.DeserializeObject<dynamic>(strJSON);
 
       
 
-            var teams = new List<Team>();
+            var teams = new List<NBATeam>();
 
             {
                 var i = 1;
@@ -87,7 +60,7 @@ namespace LotterySim.Business
                 {
                     string teamName = team.teamSitesOnly.teamName;
                     
-                    teams.Add(new Team()
+                    teams.Add(new NBATeam()
                     {
                         
                         TeamName = team.teamSitesOnly.teamName,   
@@ -119,7 +92,7 @@ namespace LotterySim.Business
 
         }
 
-        private static void SetPickNumberFromRanking(List<Team> teams)
+        private static void SetPickNumberFromRanking(List<NBATeam> teams)
         {
             foreach (var team in teams)
             {
@@ -129,7 +102,7 @@ namespace LotterySim.Business
 
         #region StandingsDataHelperMethods
 
-        private static void UpdateStandingsData(List<Team> teams)
+        private static void UpdateStandingsData(List<NBATeam> teams)
         {
             DetermineGamesBack(teams);
             DetermineWinLossStreak(teams);
@@ -137,7 +110,7 @@ namespace LotterySim.Business
             AddTopOnePickOdds(teams);
         }
 
-        private static void DetermineGamesBack(List<Team> teams)
+        private static void DetermineGamesBack(List<NBATeam> teams)
         {
 
             var highestNumberOfLosses = teams.OrderByDescending(p => p.Losses).FirstOrDefault().Losses;
@@ -155,7 +128,7 @@ namespace LotterySim.Business
 
         }
 
-        private static void DetermineWinLossStreak(List<Team> teams)
+        private static void DetermineWinLossStreak(List<NBATeam> teams)
         {
             foreach (var team in teams)
             {
@@ -168,7 +141,7 @@ namespace LotterySim.Business
             }
         }
 
-        private static void AddTopFourPickOdds(List<Team> teams)
+        private static void AddTopFourPickOdds(List<NBATeam> teams)
         {
             foreach (var team in teams)
             {
@@ -214,7 +187,7 @@ namespace LotterySim.Business
             }
         }
 
-        private static void AddTopOnePickOdds(List<Team> teams)
+        private static void AddTopOnePickOdds(List<NBATeam> teams)
         {
             foreach (var team in teams)
             {
