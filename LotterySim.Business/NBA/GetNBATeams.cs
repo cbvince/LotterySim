@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 using LotterySim.Business.NBA;
-
+using LotterySim.Business.Common;
 
 namespace LotterySim.Business
 {
@@ -122,7 +122,7 @@ namespace LotterySim.Business
             {
                 var teamWinLossDifference = team.Losses - team.Wins;
 
-                team.LotteryGamesBack = (winLostDifferenceForWorstTeam - teamWinLossDifference) / 2;
+                team.LotteryGamesBack = GenericStandingDataMethods.GetGamesBack(highestNumberOfLosses, lowestNumberOfWins, teamWinLossDifference);
             }
 
 

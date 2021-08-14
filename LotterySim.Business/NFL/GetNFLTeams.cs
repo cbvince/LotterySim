@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LotterySim.Business.Common;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,9 @@ namespace LotterySim.Business.NFL
 
         }
 
-       
 
-        
+
+
         private static List<NFLTeam.Standings> GetStandingsFromChildren()
         {
 
@@ -36,7 +37,7 @@ namespace LotterySim.Business.NFL
             foreach (var child in children)
             {
                 standings.Add(child.standings);
-          
+
             }
 
             return standings;
@@ -46,20 +47,24 @@ namespace LotterySim.Business.NFL
         public static List<NFLTeam.Entry> GetEntriesFromStandings()
         {
             var entries = new List<NFLTeam.Entry>();
-            
+
             foreach (var standing in GetStandingsFromChildren())
             {
                 entries.AddRange(standing.entries);
             }
-            GenerateNFLDraftOrder(entries); 
+            GenerateNFLDraftOrder(entries);
+            SetGamesBack(entries);
+
             return entries;
         }
 
-    
+
         private static void GenerateNFLDraftOrder(List<NFLTeam.Entry> entries)
         {
             var i = 1;
             var orderedEntries = entries.OrderByDescending(p => GetStatByName(p.stats, "playoffSeed")).ThenBy(p => (GetStatByName(p.stats, "wins")));
+
+
 
             foreach (var entry in orderedEntries)
             {
@@ -69,10 +74,10 @@ namespace LotterySim.Business.NFL
             orderedEntries.OrderBy(p => p.DraftPick);
         }
 
-        
-        
 
-        
+
+
+
 
 
         public static float GetStatByName(NFLTeam.Stat[] stats, string statName)
@@ -83,11 +88,11 @@ namespace LotterySim.Business.NFL
             return statsList.FirstOrDefault(p => p.name == statName).value;
         }
 
-        
+
         public static List<NFLTeam.Entry> GetNFLTeamDraftGroup(List<NFLTeam.Entry> teams, int lowerSeedThreshold, int upperSeedThreshold)
         {
             var teamsDraftGroup = new List<NFLTeam.Entry>();
-            
+
             foreach (var team in teams.Where(p => p.DraftPick > lowerSeedThreshold && p.DraftPick <= upperSeedThreshold))
             {
 
@@ -97,7 +102,21 @@ namespace LotterySim.Business.NFL
 
             return teamsDraftGroup;
         }
-        
+
+        private static void SetGamesBack(List<NFLTeam.Entry> teams)
+        {
+
+            var teamHighestLosses = teams.OrderByDescending(p => p.stats[2].value).FirstOrDefault().stats[2].value;
+            var teamLowestWins = teams.OrderBy(p => p.stats[1].value).FirstOrDefault().stats[1].value;
+
+
+            foreach (var team in teams)
+            {
+                var teamWinLossDifference = team.stats[2].value - team.stats[1].value;
+
+                team.stats[4].value = GenericStandingDataMethods.GetGamesBack((int)teamHighestLosses, (int)teamLowestWins, (int)teamWinLossDifference);
+            }
+
+        }
     }
 }
-

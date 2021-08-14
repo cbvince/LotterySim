@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\GenericStandingDataMethods.cs" />
     <Compile Include="GetTeamDataFromWeb.cs" />
     <Compile Include="NBA\GetNBATeams.cs" />
     <Compile Include="NBA\Lottery.cs" />
