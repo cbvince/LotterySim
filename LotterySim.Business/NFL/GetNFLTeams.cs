@@ -21,9 +21,6 @@ namespace LotterySim.Business.NFL
 
         }
 
-
-
-
         private static List<NFLTeam.Standings> GetStandingsFromChildren()
         {
 
@@ -43,7 +40,6 @@ namespace LotterySim.Business.NFL
             return standings;
         }
 
-
         public static List<NFLTeam.Entry> GetEntriesFromStandings()
         {
             var entries = new List<NFLTeam.Entry>();
@@ -52,41 +48,33 @@ namespace LotterySim.Business.NFL
             {
                 entries.AddRange(standing.entries);
             }
-            GenerateNFLDraftOrder(entries);
+            SetNonPlayOffTeamDraftOrder(entries);
+            SetPlayOffTeamDraftOrder(entries);
             SetGamesBack(entries);
 
             return entries;
         }
 
 
-        private static void GenerateNFLDraftOrder(List<NFLTeam.Entry> entries)
+
+        private static void SetPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
         {
-            var i = 1;
-            var orderedEntries = entries.OrderByDescending(p => GetStatByName(p.stats, "playoffSeed")).ThenBy(p => (GetStatByName(p.stats, "wins")));
-
-
-
-            foreach (var entry in orderedEntries)
+            var i = 19;
+            foreach (var entry in entries.Where(p => p.stats[0].value <= 7).OrderByDescending(p => p.stats[0].value).ThenBy(p => p.stats[1].value))
             {
                 entry.DraftPick = i++;
             }
-
-            orderedEntries.OrderBy(p => p.DraftPick);
         }
 
-
-
-
-
-
-
-        public static float GetStatByName(NFLTeam.Stat[] stats, string statName)
-
+        private static void SetNonPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
         {
-            var statsList = new List<NFLTeam.Stat>();
-            statsList.AddRange(stats);
-            return statsList.FirstOrDefault(p => p.name == statName).value;
+            var i = 1;
+            foreach (var entry in entries.Where(p => p.stats[0].value > 7).OrderByDescending(p => p.stats[2].value).ThenBy(p => p.stats[1].value))
+            {
+                entry.DraftPick = i++;
+            }
         }
+
 
 
         public static List<NFLTeam.Entry> GetNFLTeamDraftGroup(List<NFLTeam.Entry> teams, int lowerSeedThreshold, int upperSeedThreshold)
