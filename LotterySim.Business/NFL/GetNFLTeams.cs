@@ -105,8 +105,6 @@ namespace LotterySim.Business.NFL
 
         }
 
-
-
         public static List<NFLTeam.Entry> GetNFLTeamDraftGroup(List<NFLTeam.Entry> teams, int lowerSeedThreshold, int upperSeedThreshold)
         {
             var teamsDraftGroup = new List<NFLTeam.Entry>();
