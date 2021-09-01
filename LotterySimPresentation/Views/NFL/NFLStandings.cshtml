@@ -24,7 +24,7 @@
         <tbody>
 
 
-            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 0, 18).OrderBy(p => p.DraftPick))
+            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 0, 18).OrderBy(p => p.DraftPicks.Where(x => x.DraftRound == 1).FirstOrDefault().PickNumber))
 
             {
                 @Html.Partial("~/Views/NFL/_NFLStandingsData.cshtml", entry)

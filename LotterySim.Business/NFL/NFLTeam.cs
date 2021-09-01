@@ -56,6 +56,30 @@ namespace LotterySim.Business.NFL
             public Team team { get; set; }
             public Stat[] stats { get; set; }
             public int DraftPick { get; set; }
+            public List<NFLDraftPick> DraftPicks { get { return _draftPicks; }}
+
+            private readonly List<NFLDraftPick> _draftPicks = new List<NFLDraftPick>();
+
+            /*
+            public Entry()
+            {
+                var draftPicks = new List<NFLDraftPick>();
+                var i = 1;
+
+                while (i < 8)
+                {
+                    draftPicks.Add(new NFLDraftPick { DraftRound = i++, PickNumber = 0 }) ;
+                }
+                
+            }
+            */
+        }
+
+        public class NFLDraftPick
+        {
+            public int DraftRound { get; set; }
+            public int PickNumber { get; set; }
+
 
         }
 

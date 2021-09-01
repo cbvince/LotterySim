@@ -51,6 +51,8 @@ namespace LotterySim.Business.NFL
             SetNonPlayOffTeamDraftOrder(entries);
             SetPlayOffTeamDraftOrder(entries);
             SetGamesBack(entries);
+            SetRemainingRoundDraftOrder(entries);
+            entries.OrderBy(p => p.DraftPicks.OrderBy(x => x.PickNumber));
 
             return entries;
         }
@@ -60,19 +62,46 @@ namespace LotterySim.Business.NFL
         private static void SetPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
         {
             var i = 19;
+            var j = 19;
             foreach (var entry in entries.Where(p => p.stats[0].value <= 7).OrderByDescending(p => p.stats[0].value).ThenBy(p => p.stats[1].value))
             {
                 entry.DraftPick = i++;
+                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++ });
+              
+
             }
         }
 
         private static void SetNonPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
         {
             var i = 1;
+            var j = 1;
             foreach (var entry in entries.Where(p => p.stats[0].value > 7).OrderByDescending(p => p.stats[2].value).ThenBy(p => p.stats[1].value))
             {
                 entry.DraftPick = i++;
+                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++ });
+              
             }
+        }
+
+        private static void SetRemainingRoundDraftOrder(List<NFLTeam.Entry> entries)
+        {
+            foreach (var entry in entries)
+            {
+                var firstRoundPickNumber = entry.DraftPicks.Where(p => p.DraftRound == 1).FirstOrDefault().PickNumber;
+                var i = 2;
+                var currentPickNumber = firstRoundPickNumber + 32;
+
+                while (i < 8)
+                {
+                    entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = i++, PickNumber = currentPickNumber });
+                    currentPickNumber += 32;
+
+                }
+
+
+            }
+
         }
 
 
@@ -81,11 +110,13 @@ namespace LotterySim.Business.NFL
         {
             var teamsDraftGroup = new List<NFLTeam.Entry>();
 
-            foreach (var team in teams.Where(p => p.DraftPick > lowerSeedThreshold && p.DraftPick <= upperSeedThreshold))
+            
+
+            foreach (var team in teams.Where(p => p.DraftPicks.Where
+                                                (x => x.PickNumber > lowerSeedThreshold && x.PickNumber <= upperSeedThreshold).Any() ))
             {
 
                 teamsDraftGroup.Add(team);
-                teamsDraftGroup.OrderBy(p => p.DraftPick);
             }
 
             return teamsDraftGroup;
