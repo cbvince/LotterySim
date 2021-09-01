@@ -24,7 +24,7 @@
         <tbody>
 
 
-            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 0, 18).OrderBy(p => p.DraftPicks.Where(x => x.DraftRound == 1).FirstOrDefault().PickNumber))
+            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 0, 18))
 
             {
                 @Html.Partial("~/Views/NFL/_NFLStandingsData.cshtml", entry)
@@ -32,7 +32,7 @@
             <tr>
                 <td colspan="10" align="center"><strong>WILD CARD ROUND LOSERS</strong></td>
             </tr>
-            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 18, 24).OrderBy(p => p.DraftPick))
+            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 18, 24))
             {
                 @Html.Partial("~/Views/NFL/_NFLStandingsData.cshtml", entry)
             }
@@ -40,7 +40,7 @@
                 <td colspan="10" align="center"><strong>DIVISION ROUND LOSERS</strong></td>
             </tr>
 
-            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 24, 28).OrderBy(p => p.DraftPick))
+            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 24, 28))
             {
                 @Html.Partial("~/Views/NFL/_NFLStandingsData.cshtml", entry)
             }
@@ -49,7 +49,7 @@
                 <td colspan="10" align="center"><strong>CONFERENCE CHAMPIONSHIP LOSERS</strong></td>
             </tr>
 
-            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 28, 30).OrderBy(p => p.DraftPick))
+            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 28, 30))
             {
                 @Html.Partial("~/Views/NFL/_NFLStandingsData.cshtml", entry)
             }
@@ -58,7 +58,7 @@
                 <td colspan="10" align="center"><strong>SUPERBOWL TEAMS</strong></td>
             </tr>
 
-            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 30, 32).OrderBy(p => p.DraftPick))
+            @foreach (var entry in GetNFLTeams.GetNFLTeamDraftGroup(Model, 30, 32))
             {
                 @Html.Partial("~/Views/NFL/_NFLStandingsData.cshtml", entry)
             }

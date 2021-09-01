@@ -48,24 +48,25 @@ namespace LotterySim.Business.NFL
             {
                 entries.AddRange(standing.entries);
             }
+
             SetNonPlayOffTeamDraftOrder(entries);
             SetPlayOffTeamDraftOrder(entries);
             SetGamesBack(entries);
             SetRemainingRoundDraftOrder(entries);
-            entries.OrderBy(p => p.DraftPicks.OrderBy(x => x.PickNumber));
+            List<NFLTeam.Entry> sortedEntries = entries.OrderBy(p => p.DraftPicks.FirstOrDefault().PickNumber).ToList();
 
-            return entries;
+            return sortedEntries;
         }
 
 
 
         private static void SetPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
         {
-            var i = 19;
+            
             var j = 19;
             foreach (var entry in entries.Where(p => p.stats[0].value <= 7).OrderByDescending(p => p.stats[0].value).ThenBy(p => p.stats[1].value))
             {
-                entry.DraftPick = i++;
+                
                 entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++ });
               
 
@@ -74,11 +75,11 @@ namespace LotterySim.Business.NFL
 
         private static void SetNonPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
         {
-            var i = 1;
+          
             var j = 1;
             foreach (var entry in entries.Where(p => p.stats[0].value > 7).OrderByDescending(p => p.stats[2].value).ThenBy(p => p.stats[1].value))
             {
-                entry.DraftPick = i++;
+                
                 entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++ });
               
             }
