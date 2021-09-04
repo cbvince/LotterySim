@@ -1,5 +1,7 @@
-﻿@using LotterySim.Business
+﻿@using LotterySim.Business.NBA
+@using LotterySim.Business
 @using System.Web.Mvc
+
 
 @model List<LotterySim.Business.Team>
 
@@ -8,9 +10,9 @@
 
     }
 
-    @helper DisplayLockIcon(Team team)
+    @helper DisplayLockIcon(NBATeam team)
     {
-        if (team.PickSwapType == PickSwapType.Protected)
+        if (team.PickSwapType == LotterySim.Business.PickSwapType.Protected)
         {
 
             <i class="bi bi-lock-fill" style="font-size: 1.2rem; color:darkorange"></i>

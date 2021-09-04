@@ -1,36 +1,40 @@
 ﻿@using LotterySim.Business.NFL
 @using LotterySim.Business
-@model LotterySim.Business.NFL.NFLTeam.Entry
+@model LotterySim.Business.NFL.NFLTeam.NFLDraftPick
+
+@{ 
+    var data = (int)ViewData["Round"];
+} 
 
 
 
-    <tr>
-        <td>@Model.DraftPick</td>
-        <td><img src="@Url.Content(Model.team.logos[0].href)" width="30" height="30" /> @Model.team.displayName</td>
-        <td>@Model.stats[1].value-@Model.stats[2].value</td>
-        <td>@Model.stats[3].displayValue</td>
-        <td>@Model.stats[4].value</td>
-        <td>@GetStreak(Model)</td>
-    </tr>
-
- 
+<tr>
+    <td>@Model.PickNumber</td>
+    <td><img src="@Url.Content(Model.OriginalTeam.team.logos[0].href)" width="30" height="30" /> @Model.OriginalTeam.team.displayName</td>
+    <td>@Model.OriginalTeam.stats[1].value-@Model.OriginalTeam.stats[2].value</td>
+    <td>@Model.OriginalTeam.stats[3].displayValue</td>
+    <td>@Model.OriginalTeam.stats[4].value</td>
+    <td>@GetStreak(Model.OriginalTeam)</td>
+</tr>
 
 
-    @helper GetStreak(NFLTeam.Entry entry)
-    {
+
+
+@helper GetStreak(NFLTeam.Entry entry)
+{
     switch (entry.stats[9].value)
     {
-        
+
         case var expression when entry.stats[9].value >= 2:
-        <span class="text-danger">@entry.stats[9].displayValue</span>;
-        break;
+            <span class="text-danger">@entry.stats[9].displayValue</span>;
+            break;
         case var expression when entry.stats[9].value <= -2:
-        <span class="text-success">@entry.stats[9].displayValue</span>
-        break;
-    default:
+            <span class="text-success">@entry.stats[9].displayValue</span>
+            break;
+        default:
             <span>@entry.stats[9].displayValue</span>
 
-        break;
-}
-
+            break;
     }
+
+}
