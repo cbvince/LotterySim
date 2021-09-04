@@ -1,8 +1,9 @@
 ﻿@using LotterySim.Business.NFL
 @using LotterySim.Business
-@model List<LotterySim.Business.NFL.NFLTeam.Entry>
+@model List<LotterySim.Business.NFL.NFLTeam.NFLDraftPick>
 @{
     ViewBag.Title = "NFL Draft Order";
+    var data = (int)ViewData["Round"];
 }
 
 <div align="center">
@@ -11,13 +12,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL")'>Round 1</a>
-            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL")'>Round 2</a>
-            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL")'>Round 3</a>
-            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL")'>Round 4</a>
-            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL")'>Round 5</a>
-            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL")'>Round 6</a>
-            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL")'>Round 7</a>
+
+            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL", new { round = 1 })'>Round 1</a>
+            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL", new { round = 2 })'>Round 2</a>
+            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL", new { round = 3 })'>Round 3</a>
+            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL", new { round = 4 })'>Round 4</a>
+            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL", new { round = 5 })'>Round 5</a>
+            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL", new { round = 6 })'>Round 6</a>
+            <a class="nav-item nav-link" href='@Url.Action("NFLStandings", "NFL", new { round = 7 })'>Round 7</a>
 
         </div>
     </div>
@@ -38,10 +40,23 @@
         </thead>
         <tbody>
 
-            @Html.Partial("~/Views/NFL/_FirstRoundStandings.cshtml", Model)
+            @if ((int)ViewData["Round"] > 1)
+            {
+                foreach (var draftPick in Model)
+                {
+                    @Html.Partial("~/Views/NFL/_NFLStandingsData.cshtml", draftPick);
+                }
+            }
+
+            else
+            {
+            @Html.Partial("~/Views/NFL/_FirstRoundStandings.cshtml", Model);
+            }
 
 
-           
+
+
+
         </tbody>
     </table>
 </div>

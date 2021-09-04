@@ -67,6 +67,12 @@ namespace LotterySim.Business.NFL
             public int DraftRound { get; set; }
             public int PickNumber { get; set; }
 
+            public Entry OriginalTeam { get; set; }
+
+            public Entry NewTeam { get; set; }
+
+            public PickSwapType PickSwapType
+            { get; set; }
 
         }
 

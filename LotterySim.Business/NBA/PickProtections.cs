@@ -84,7 +84,7 @@ namespace LotterySim.Business
 
         }
 
-        private static void SwapPick(Team fromTeam, Team toTeam)
+        private static void SwapPick(NBATeam fromTeam, NBATeam toTeam)
         {
             if (fromTeam == toTeam)
             {
@@ -98,7 +98,7 @@ namespace LotterySim.Business
             fromTeam.PickSwapType = PickSwapType.Swapped;
         }
 
-        private static void ProtectPick(Team fromTeam)
+        private static void ProtectPick(NBATeam fromTeam)
         {
             fromTeam.NewTeamName = null;
             fromTeam.PickSwapType = PickSwapType.Protected;
