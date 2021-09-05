@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace LotterySim.Business
 {
-    public class Team
-    {
-
-        
-    }
+   
 
     public enum PickSwapType
     {

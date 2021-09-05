@@ -50,16 +50,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\GenericStandingDataMethods.cs" />
-    <Compile Include="GetTeamDataFromWeb.cs" />
+    <Compile Include="Common\GetTeamDataFromWeb.cs" />
     <Compile Include="NBA\GetNBATeams.cs" />
     <Compile Include="NBA\Lottery.cs" />
     <Compile Include="NBA\NBATeam.cs" />
-    <Compile Include="NFL\NFLDraftOrder.cs" />
     <Compile Include="NFL\GetNFLTeams.cs" />
     <Compile Include="NFL\NFLTeam.cs" />
     <Compile Include="NBA\PickProtections.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Team.cs" />
+    <Compile Include="Common\PickSwapType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

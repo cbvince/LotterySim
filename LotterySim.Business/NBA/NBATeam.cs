@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LotterySim.Business.NBA
 {
-    public class NBATeam : Team
+    public class NBATeam
     {
         public int LotteryNumber { get; set; }
         public string LotteryMovement { get; set; }

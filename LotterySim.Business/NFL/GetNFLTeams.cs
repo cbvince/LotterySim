@@ -40,7 +40,7 @@ namespace LotterySim.Business.NFL
             return standings;
         }
 
-        public static List<NFLTeam.Entry> GetEntriesFromStandings()
+        private static List<NFLTeam.Entry> GetEntriesFromStandings()
         {
             var entries = new List<NFLTeam.Entry>();
 
@@ -58,30 +58,28 @@ namespace LotterySim.Business.NFL
             return sortedEntries;
         }
 
-
-
         private static void SetPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
         {
-            
+
             var j = 19;
             foreach (var entry in entries.Where(p => p.stats[0].value <= 7).OrderByDescending(p => p.stats[0].value).ThenBy(p => p.stats[1].value))
             {
-                
+
                 entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++, OriginalTeam = entry });
-              
+
 
             }
         }
 
         private static void SetNonPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
         {
-          
+
             var j = 1;
             foreach (var entry in entries.Where(p => p.stats[0].value > 7).OrderByDescending(p => p.stats[2].value).ThenBy(p => p.stats[1].value))
             {
 
-                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++, OriginalTeam = entry }) ;
-              
+                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++, OriginalTeam = entry });
+
             }
         }
 
@@ -105,22 +103,6 @@ namespace LotterySim.Business.NFL
 
         }
 
-        public static List<NFLTeam.Entry> GetNFLTeamDraftGroup(List<NFLTeam.Entry> teams, int lowerSeedThreshold, int upperSeedThreshold)
-        {
-            var teamsDraftGroup = new List<NFLTeam.Entry>();
-
-            
-
-            foreach (var team in teams.Where(p => p.DraftPicks.Where
-                                                (x => x.PickNumber > lowerSeedThreshold && x.PickNumber <= upperSeedThreshold).Any() ))
-            {
-
-                teamsDraftGroup.Add(team);
-            }
-
-            return teamsDraftGroup;
-        }
-
         public static List<NFLTeam.NFLDraftPick> GetNFlDraftPicksByRound(int roundNumber)
         {
 
@@ -129,7 +111,6 @@ namespace LotterySim.Business.NFL
             foreach (var entry in GetEntriesFromStandings())
             {
                 roundPicks.AddRange(entry.DraftPicks.Where(p => p.DraftRound == roundNumber).ToList());
-                //entry.DraftPicks.Where(p => p.DraftRound == roundNumber).ToList().AddRange(roundPicks);
 
             }
 
