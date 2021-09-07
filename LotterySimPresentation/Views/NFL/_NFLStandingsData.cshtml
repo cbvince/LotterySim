@@ -2,23 +2,38 @@
 @using LotterySim.Business
 @model LotterySim.Business.NFL.NFLTeam.NFLDraftPick
 
-@{ 
+@{
     var data = (int)ViewData["Round"];
-} 
+}
 
 
 
 <tr>
     <td>@Model.PickNumber</td>
-    <td><img src="@Url.Content(Model.OriginalTeam.team.logos[0].href)" width="30" height="30" /> @Model.OriginalTeam.team.displayName</td>
-    <td>@Model.OriginalTeam.stats[1].value-@Model.OriginalTeam.stats[2].value</td>
-    <td>@Model.OriginalTeam.stats[3].displayValue</td>
-    <td>@Model.OriginalTeam.stats[4].value</td>
-    <td>@GetStreak(Model.OriginalTeam)</td>
+    <td>@ReturnSwapTeamInfo(Model)<img src="@Url.Content(Model.Team.team.logos[0].href)" width="30" height="30" />
+        @Html.ActionLink(Model.Team.team.displayName, "NFLTeamDetail", new { teamID = Model.Team.team.id }, new { @class = "teamlink" })
+</td>
+    <td>@Model.Team.stats[1].value-@Model.Team.stats[2].value</td>
+    <td>@Model.Team.stats[3].displayValue</td>
+    <td>@Model.Team.stats[4].value</td>
+    <td>@GetStreak(Model.Team)</td>
 </tr>
 
 
+@helper ReturnSwapTeamInfo(NFLTeam.NFLDraftPick pick)
+{
+    if (pick.PickSwapType == PickSwapType.Swapped)
+    {
+<td>
+    <img src="@Url.Content(pick.OriginalTeam.team.logos[0].href)" width="30" height="30" />
+    
+    @Html.ActionLink(pick.OriginalTeam.team.displayName, "NFLTeamDetail", new { teamID = pick.OriginalTeam.team.id })
 
+        @pick.OriginalTeam.team.displayName
+    <i class="bi bi-arrow-right" style="font-size: 1rem"></i>
+</td>
+    }
+}
 
 @helper GetStreak(NFLTeam.Entry entry)
 {

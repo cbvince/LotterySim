@@ -69,7 +69,7 @@ namespace LotterySim.Business.NFL
 
             public Entry OriginalTeam { get; set; }
 
-            public Entry NewTeam { get; set; }
+            public Entry Team { get; set; }
 
             public PickSwapType PickSwapType
             { get; set; }

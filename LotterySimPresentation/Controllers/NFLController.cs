@@ -16,8 +16,6 @@ namespace LotterySimPresentation.Controllers
             try
             {
                 ViewData["Round"] = round;
-                //var nflTeamEntries = GetNFLTeams.GetEntriesFromStandings();
-                //return View("NFLStandings", nflTeamEntries);
                 var nflTeamPicks = GetNFLTeams.GetNFlDraftPicksByRound(round);
                 return View("NFLStandings", nflTeamPicks);
 
@@ -28,5 +26,29 @@ namespace LotterySimPresentation.Controllers
                 return View("Error", new HandleErrorInfo(ex, "NFLStandings", "NFL"));
             }
         }
+
+
+        public ActionResult NFLTeamDetail(int teamID)
+        {
+
+            
+
+            var teams = GetNFLTeams.GetEntriesFromStandings();
+            var team = teams.Where(p => int.Parse(p.team.id) == teamID).FirstOrDefault();
+
+            if (team == null)
+            {
+                return View("NFLStandings", GetNFLTeams.GetNFlDraftPicksByRound(1));
+            }
+
+            else
+            {
+                return View(team);
+            }
+
+
+            
+        }
+
     }
 }

@@ -40,7 +40,7 @@ namespace LotterySim.Business.NFL
             return standings;
         }
 
-        private static List<NFLTeam.Entry> GetEntriesFromStandings()
+        public static List<NFLTeam.Entry> GetEntriesFromStandings()
         {
             var entries = new List<NFLTeam.Entry>();
 
@@ -65,7 +65,7 @@ namespace LotterySim.Business.NFL
             foreach (var entry in entries.Where(p => p.stats[0].value <= 7).OrderByDescending(p => p.stats[0].value).ThenBy(p => p.stats[1].value))
             {
 
-                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++, OriginalTeam = entry });
+                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++, OriginalTeam = entry, Team = entry });
 
 
             }
@@ -78,7 +78,7 @@ namespace LotterySim.Business.NFL
             foreach (var entry in entries.Where(p => p.stats[0].value > 7).OrderByDescending(p => p.stats[2].value).ThenBy(p => p.stats[1].value))
             {
 
-                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++, OriginalTeam = entry });
+                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++, OriginalTeam = entry, Team = entry });
 
             }
         }
@@ -93,7 +93,7 @@ namespace LotterySim.Business.NFL
 
                 while (i < 8)
                 {
-                    entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = i++, PickNumber = currentPickNumber, OriginalTeam = entry });
+                    entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = i++, PickNumber = currentPickNumber, OriginalTeam = entry, Team = entry });
                     currentPickNumber += 32;
 
                 }
@@ -116,6 +116,22 @@ namespace LotterySim.Business.NFL
 
 
             return roundPicks;
+
+        }
+
+        public static List<NFLTeam.NFLDraftPick> GetNFlDraftPicksByTeam(NFLTeam.Entry team)
+        {
+
+            var teamPicks = new List<NFLTeam.NFLDraftPick>();
+
+            foreach (var entry in GetEntriesFromStandings())
+            {
+                teamPicks.AddRange(entry.DraftPicks.Where(p => p.Team == team).ToList());
+
+            }
+
+
+            return teamPicks;
 
         }
 
