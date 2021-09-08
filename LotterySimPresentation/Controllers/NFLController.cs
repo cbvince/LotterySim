@@ -30,24 +30,9 @@ namespace LotterySimPresentation.Controllers
 
         public ActionResult NFLTeamDetail(int teamID)
         {
-
-            
-
-            var teams = GetNFLTeams.GetEntriesFromStandings();
-            var team = teams.Where(p => int.Parse(p.team.id) == teamID).FirstOrDefault();
-
-            if (team == null)
-            {
-                return View("NFLStandings", GetNFLTeams.GetNFlDraftPicksByRound(1));
-            }
-
-            else
-            {
-                return View(team);
-            }
-
-
-            
+ 
+                return View(GetNFLTeams.GetNFlDraftPicksByTeam(teamID));
+  
         }
 
     }
