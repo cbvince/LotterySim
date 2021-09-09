@@ -69,32 +69,35 @@ namespace LotterySim.Business.NFL
             return orderedEntries;
         }
 
-        private static List<NFLTeam.Entry> GenerateDraftPicks()
+        private static List<NFLTeam.NFLDraftPick> GenerateDraftPicks()
         {
 
             var startingPick = 1;
             var entries = GetOrderedEntries();
+            var draftPicks = new List<NFLTeam.NFLDraftPick>();
 
             foreach (var entry in entries)
             {
-                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick { DraftRound = 1, OriginalTeam = entry, Team = entry, PickNumber = startingPick++ });
-                SetRemainingRoundDraftOrder(entry);
+                draftPicks.Add(new NFLTeam.NFLDraftPick { DraftRound = 1, OriginalTeam = entry, Team = entry, PickNumber = startingPick++ });
+                SetRemainingRoundDraftOrder(draftPicks, entry);
+                
             }
 
-            return entries;
+            NFLPickSwap.NFLSeasonPickSwaps(draftPicks);
+            return draftPicks;
 
         }
 
-        private static void SetRemainingRoundDraftOrder(NFLTeam.Entry entry)
+        private static void SetRemainingRoundDraftOrder(List<NFLTeam.NFLDraftPick> picks, NFLTeam.Entry entry)
         {
 
-            var firstRoundPickNumber = entry.DraftPicks.Where(p => p.DraftRound == 1).FirstOrDefault().PickNumber;
+            var firstRoundPickNumber = picks.Where(p => p.DraftRound == 1 && p.Team == entry).FirstOrDefault().PickNumber;
             var i = 2;
             var currentPickNumber = firstRoundPickNumber + 32;
 
             while (i < 8)
             {
-                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = i++, PickNumber = currentPickNumber, OriginalTeam = entry, Team = entry });
+                picks.Add(new NFLTeam.NFLDraftPick() { DraftRound = i++, PickNumber = currentPickNumber, OriginalTeam = entry, Team = entry });
                 currentPickNumber += 32;
 
             }
@@ -107,14 +110,7 @@ namespace LotterySim.Business.NFL
         public static List<NFLTeam.NFLDraftPick> GetNFlDraftPicksByRound(int roundNumber)
         {
 
-            var roundPicks = new List<NFLTeam.NFLDraftPick>();
-
-            foreach (var entry in GenerateDraftPicks())
-            {
-                roundPicks.AddRange(entry.DraftPicks.Where(p => p.DraftRound == roundNumber).ToList());
-
-            }
-
+            var roundPicks = GenerateDraftPicks().Where(p => p.DraftRound == roundNumber).ToList();
 
             return roundPicks;
 
@@ -123,9 +119,9 @@ namespace LotterySim.Business.NFL
         public static List<NFLTeam.NFLDraftPick> GetNFlDraftPicksByTeam(int teamID)
         {
 
-            var team = GenerateDraftPicks().Where(p => int.Parse(p.team.id) == teamID).FirstOrDefault();
+            var picks = GenerateDraftPicks().Where(p => int.Parse(p.Team.team.id) == teamID).ToList();
 
-            return team.DraftPicks;
+            return picks;
 
         }
 
