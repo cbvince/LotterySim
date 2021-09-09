@@ -47,8 +47,8 @@
             {
                 <div class="col">
                     <div class="card" style="width: 7rem; height: 10rem">
-                        <a href="@Url.Action("TeamDetail", "Home",  new { teamid = pick.OriginalTeam.team.id })">
-                            <img class="card-img-top" src=@pick.OriginalTeam.team.logos[0].href alt="@pick.Team.team.displayName" width="50" height="100" />
+                        <a href="@Url.Action("NFLTeamDetail", "NFL",  new { teamID = pick.OriginalTeam.team.id })">
+                            <img class="card-img-top" src=@pick.OriginalTeam.team.logos[0].href alt="@pick.OriginalTeam.team.displayName" width="50" height="100" />
                         </a>
                         <div class="card-body">
                             <h6 class="card-title">Pick#@pick.PickNumber</h6>
