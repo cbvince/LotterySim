@@ -41,6 +41,7 @@ namespace LotterySim.Business.NFL
             SwapNFLPicks(picks, "Miami Dolphins", "New York Giants", 3);
             SwapNFLPicks(picks, "Carolina Panthers", "New York Jets", 3);
             SwapNFLPicks(picks, "San Francisco 49ers", "Miami Dolphins", 3);
+            SwapNFLPicks(picks, "New Orleans Saints", "Houston Texans", 3);
 
             SwapNFLPicks(picks, "Houston Texans", "Carolina Panthers", 4);
             SwapNFLPicks(picks, "Detroit Lions", "Cleveland Browns", 4);
