@@ -1,6 +1,6 @@
 ﻿@using LotterySim.Business.NFL
 @using LotterySim.Business
-@model LotterySim.Business.NFL.NFLTeam.Entry
+@model List<LotterySim.Business.NFL.NFLTeam.NFLDraftPick>
 
 
 
@@ -10,15 +10,16 @@
 
     <div class="row">
         <div class="col">
+            
+            
 
-
-            <img src=@Url.Content(Model.team.logos[0].href) alt="@Model.team.displayName" width="150" height="150" />
+            <img src=@Url.Content(Model.FirstOrDefault().Team.team.logos[0].href) alt="@Model.FirstOrDefault().Team.team.displayName" width="150" height="150" />
 
         </div>
     </div>
     <div class="row">
         <div class="col-10">
-            <h2>@Model.team.displayName</h2>
+            <h2>@Model.FirstOrDefault().Team.team.displayName</h2>
         </div>
         <div class="col">
             <input type="button" name="btnReset" class="btn btn-primary" value="Back to Draft Results" onclick="location.href='@Url.Action("NFLStandings", "NFL")'" />
@@ -28,7 +29,7 @@
     </div>
     <div class="row">
         <hr />
-        <h5>Record: @Model.stats[1].displayValue-@Model.stats[2].displayValue  |  Streak: @Model.stats[9].displayValue</h5>
+        <h5>Record: @Model.FirstOrDefault().Team.stats[1].displayValue-@Model.FirstOrDefault().Team.stats[2].displayValue  |  Streak: @Model.FirstOrDefault().Team.stats[9].displayValue</h5>
     </div>
 
 
@@ -41,16 +42,16 @@
 
     <div class="card-deck">
         <div class="row">
-            @foreach (var pick in Model.DraftPicks)
+            @foreach (var pick in Model.OrderBy(p => p.PickNumber))
 
             {
                 <div class="col">
-                    <div class="card" style="width: 10rem;">
+                    <div class="card" style="width: 7rem; height: 10rem">
                         <a href="@Url.Action("TeamDetail", "Home",  new { teamid = pick.OriginalTeam.team.id })">
-                            <img class="card-img-top" src=@pick.OriginalTeam.team.logos[0].href alt="@pick.Team.team.displayName" width="150" height="150" />
+                            <img class="card-img-top" src=@pick.OriginalTeam.team.logos[0].href alt="@pick.Team.team.displayName" width="50" height="100" />
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title">Pick#@pick.PickNumber</h5>
+                            <h6 class="card-title">Pick#@pick.PickNumber</h6>
                             
 
                         </div>

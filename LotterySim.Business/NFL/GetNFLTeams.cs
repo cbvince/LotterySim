@@ -49,89 +49,79 @@ namespace LotterySim.Business.NFL
                 entries.AddRange(standing.entries);
             }
 
-            SetNonPlayOffTeamDraftOrder(entries);
-            SetPlayOffTeamDraftOrder(entries);
+
             SetGamesBack(entries);
-            SetRemainingRoundDraftOrder(entries);
-            List<NFLTeam.Entry> sortedEntries = entries.OrderBy(p => p.DraftPicks.FirstOrDefault().PickNumber).ToList();
+            //SetRemainingRoundDraftOrder(entries);
+            //List<NFLTeam.Entry> sortedEntries = entries.OrderBy(p => p.DraftPicks.FirstOrDefault().PickNumber).ToList();
 
-            return sortedEntries;
+            //return sortedEntries;
+            return entries;
         }
 
-        private static void SetPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
+        private static List<NFLTeam.Entry> GetOrderedEntries()
         {
+            var orderedEntries = new List<NFLTeam.Entry>();
+            var entries = GetEntriesFromStandings();
 
-            var j = 19;
-            foreach (var entry in entries.Where(p => p.stats[0].value <= 7).OrderByDescending(p => p.stats[0].value).ThenBy(p => p.stats[1].value))
-            {
+            orderedEntries.AddRange(entries.Where(p => p.stats[0].value > 7).OrderByDescending(p => p.stats[2].value).ThenBy(p => p.stats[1].value));
+            orderedEntries.AddRange(entries.Where(p => p.stats[0].value <= 7).OrderByDescending(p => p.stats[0].value).ThenBy(p => p.stats[1].value));
 
-                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++, OriginalTeam = entry, Team = entry });
-
-
-            }
+            return orderedEntries;
         }
 
-        private static void SetNonPlayOffTeamDraftOrder(List<NFLTeam.Entry> entries)
+        private static List<NFLTeam.NFLDraftPick> GenerateDraftPicks()
         {
 
-            var j = 1;
-            foreach (var entry in entries.Where(p => p.stats[0].value > 7).OrderByDescending(p => p.stats[2].value).ThenBy(p => p.stats[1].value))
-            {
+            var startingPick = 1;
+            var entries = GetOrderedEntries();
+            var draftPicks = new List<NFLTeam.NFLDraftPick>();
 
-                entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = 1, PickNumber = j++, OriginalTeam = entry, Team = entry });
-
-            }
-        }
-
-        private static void SetRemainingRoundDraftOrder(List<NFLTeam.Entry> entries)
-        {
             foreach (var entry in entries)
             {
-                var firstRoundPickNumber = entry.DraftPicks.Where(p => p.DraftRound == 1).FirstOrDefault().PickNumber;
-                var i = 2;
-                var currentPickNumber = firstRoundPickNumber + 32;
+                draftPicks.Add(new NFLTeam.NFLDraftPick { DraftRound = 1, OriginalTeam = entry, Team = entry, PickNumber = startingPick++ });
+                SetRemainingRoundDraftOrder(draftPicks, entry);
+                
+            }
 
-                while (i < 8)
-                {
-                    entry.DraftPicks.Add(new NFLTeam.NFLDraftPick() { DraftRound = i++, PickNumber = currentPickNumber, OriginalTeam = entry, Team = entry });
-                    currentPickNumber += 32;
+            NFLPickSwap.NFLSeasonPickSwaps(draftPicks);
+            return draftPicks;
 
-                }
+        }
 
+        private static void SetRemainingRoundDraftOrder(List<NFLTeam.NFLDraftPick> picks, NFLTeam.Entry entry)
+        {
+
+            var firstRoundPickNumber = picks.Where(p => p.DraftRound == 1 && p.Team == entry).FirstOrDefault().PickNumber;
+            var i = 2;
+            var currentPickNumber = firstRoundPickNumber + 32;
+
+            while (i < 8)
+            {
+                picks.Add(new NFLTeam.NFLDraftPick() { DraftRound = i++, PickNumber = currentPickNumber, OriginalTeam = entry, Team = entry });
+                currentPickNumber += 32;
 
             }
+
+
+
 
         }
 
         public static List<NFLTeam.NFLDraftPick> GetNFlDraftPicksByRound(int roundNumber)
         {
 
-            var roundPicks = new List<NFLTeam.NFLDraftPick>();
-
-            foreach (var entry in GetEntriesFromStandings())
-            {
-                roundPicks.AddRange(entry.DraftPicks.Where(p => p.DraftRound == roundNumber).ToList());
-
-            }
-
+            var roundPicks = GenerateDraftPicks().Where(p => p.DraftRound == roundNumber).ToList();
 
             return roundPicks;
 
         }
 
-        public static List<NFLTeam.NFLDraftPick> GetNFlDraftPicksByTeam(NFLTeam.Entry team)
+        public static List<NFLTeam.NFLDraftPick> GetNFlDraftPicksByTeam(int teamID)
         {
 
-            var teamPicks = new List<NFLTeam.NFLDraftPick>();
+            var picks = GenerateDraftPicks().Where(p => int.Parse(p.Team.team.id) == teamID).ToList();
 
-            foreach (var entry in GetEntriesFromStandings())
-            {
-                teamPicks.AddRange(entry.DraftPicks.Where(p => p.Team == team).ToList());
-
-            }
-
-
-            return teamPicks;
+            return picks;
 
         }
 
@@ -152,3 +142,5 @@ namespace LotterySim.Business.NFL
         }
     }
 }
+
+
