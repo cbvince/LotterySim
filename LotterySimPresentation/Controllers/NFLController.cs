@@ -28,11 +28,34 @@ namespace LotterySimPresentation.Controllers
         }
 
 
-        public ActionResult NFLTeamDetail(int teamID)
+        public ActionResult NFLTeamDetail(int teamID = -1)
         {
- 
-                return View(SetNFLDraftPicks.GetNFlDraftPicksByTeam(teamID));
-  
+
+
+
+            if (teamID != -1)
+            {
+
+                try
+                {
+
+                    return View(GetNFLTeams.GetNFlDraftPicksByTeam(teamID));
+
+                }
+                catch (Exception ex)
+                {
+                    return View("Error", new HandleErrorInfo(ex, "NFLTeamDetail", "NFL"));
+
+                }
+
+            }
+
+            else
+            {
+
+                return NFLStandings();
+            }
+
         }
 
     }
