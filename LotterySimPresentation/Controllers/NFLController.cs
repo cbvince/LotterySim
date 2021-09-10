@@ -16,7 +16,7 @@ namespace LotterySimPresentation.Controllers
             try
             {
                 ViewData["Round"] = round;
-                var nflTeamPicks = GetNFLTeams.GetNFlDraftPicksByRound(round);
+                var nflTeamPicks = SetNFLDraftPicks.GetNFlDraftPicksByRound(round);
                 return View("NFLStandings", nflTeamPicks);
 
             }
@@ -31,7 +31,7 @@ namespace LotterySimPresentation.Controllers
         public ActionResult NFLTeamDetail(int teamID)
         {
  
-                return View(GetNFLTeams.GetNFlDraftPicksByTeam(teamID));
+                return View(SetNFLDraftPicks.GetNFlDraftPicksByTeam(teamID));
   
         }
 
