@@ -39,7 +39,7 @@ namespace LotterySimPresentation.Controllers
                 try
                 {
 
-                    return View(GetNFLTeams.GetNFlDraftPicksByTeam(teamID));
+                    return View(SetNFLDraftPicks.GetNFlDraftPicksByTeam(teamID));
 
                 }
                 catch (Exception ex)
