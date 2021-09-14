@@ -1,0 +1,80 @@
+﻿@using LotterySim.Business.NFL
+@using LotterySim.Business
+@model List<LotterySim.Business.NFL.NFLTeam.NFLDraftPick>
+
+
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col">
+            
+            
+
+            <img src=@Url.Content(Model.FirstOrDefault().Team.team.logos[0].href) alt="@Model.FirstOrDefault().Team.team.displayName" width="150" height="150" />
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <h2>@Model.FirstOrDefault().Team.team.displayName</h2>
+        </div>
+        <div class="col">
+            <input type="button" name="btnReset" class="btn btn-primary" value="Back to Draft Results" onclick="location.href='@Url.Action("NFLStandings", "NFL")'" />
+
+        </div>
+
+    </div>
+    <div class="row">
+        <hr />
+        <h5>Record: @Model.FirstOrDefault().Team.stats[1].displayValue-@Model.FirstOrDefault().Team.stats[2].displayValue  |  Streak: @Model.FirstOrDefault().Team.stats[9].displayValue</h5>
+    </div>
+
+
+</div>
+<p></p>
+
+<div class="container">
+    <div class="row"><h2>Draft Picks</h2><hr /></div>
+
+
+    <div class="card-deck">
+        <div class="row">
+            @foreach (var pick in Model.OrderBy(p => p.PickNumber))
+
+            {
+                <div class="col">
+                    <div class="card" style="width: 7rem; height: 10rem">
+                        <a href="@Url.Action("NFLTeamDetail", "NFL",  new { teamID = pick.OriginalTeam.team.id })">
+                            <img class="card-img-top" src=@pick.OriginalTeam.team.logos[0].href alt="@pick.OriginalTeam.team.displayName" width="50" height="100" />
+                        </a>
+                        <div class="card-body">
+                            <h6 class="card-title">Pick#@pick.PickNumber</h6>
+                            
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+<p></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
