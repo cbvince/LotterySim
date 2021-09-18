@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LotterySim.Business.NHL
 {
-    class NHLTeam
+    public class NHLTeam
     {
 
         public class Rootobject
@@ -47,6 +47,7 @@ namespace LotterySim.Business.NHL
 
         public class Teamrecord
         {
+            public int InitialLotteryRank { get; set; }
             public Team team { get; set; }
             public Leaguerecord leagueRecord { get; set; }
             public int regulationWins { get; set; }
@@ -82,6 +83,8 @@ namespace LotterySim.Business.NHL
             public int id { get; set; }
             public string name { get; set; }
             public string link { get; set; }
+
+            public string Image { get; set; }
         }
 
         public class Leaguerecord

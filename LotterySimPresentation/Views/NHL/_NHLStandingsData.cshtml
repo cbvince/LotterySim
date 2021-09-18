@@ -1,33 +1,30 @@
-﻿@using LotterySim.Business.NFL
+﻿@using LotterySim.Business.NHL
 @using LotterySim.Business
-@model LotterySim.Business.NFL.NFLTeam.NFLDraftPick
+@model LotterySim.Business.NHL.NHLDraftPick
 
-@{
-    var data = (int)ViewData["Round"];
-}
+
 
 
 
 <tr>
     <td>@Model.PickNumber</td>
-    <td>@ReturnSwapTeamInfo(Model)<img src="@Url.Content(Model.Team.team.logos[0].href)" width="30" height="30" />
-        @Html.ActionLink(Model.Team.team.displayName, "NFLTeamDetail", new { teamID = Model.Team.team.id }, new { @class = "teamlink" })
+    <td>@ReturnSwapTeamInfo(Model)<img src="@Url.Content(Model.Team.team.Image)" width="30" height="30" />
+        @Html.ActionLink(Model.Team.team.name, "NHLTeamDetail", new { teamID = Model.Team.team.id }, new { @class = "teamlink" })
 </td>
-    <td>@Model.OriginalTeam.stats[1].value-@Model.OriginalTeam.stats[2].value</td>
-    <td>@Model.OriginalTeam.stats[3].displayValue</td>
-    <td>@Model.OriginalTeam.stats[4].value</td>
+    <td>@Model.OriginalTeam.leagueRecord</td>
+    <td>@Model.OriginalTeam.points</td>
     <td>@GetStreak(Model.OriginalTeam)</td>
 </tr>
 
 
-@helper ReturnSwapTeamInfo(NFLTeam.NFLDraftPick pick)
+@helper ReturnSwapTeamInfo(NHLDraftPick pick)
 {
     if (pick.PickSwapType == PickSwapType.Swapped)
     {
 
-    <img src="@Url.Content(pick.OriginalTeam.team.logos[0].href)" width="30" height="30" />
+    <img src="@Url.Content(pick.OriginalTeam.team.Image)" width="30" height="30" />
     
-    @Html.ActionLink(pick.OriginalTeam.team.displayName, "NFLTeamDetail", new { teamID = pick.OriginalTeam.team.id })
+    @Html.ActionLink(pick.OriginalTeam.team.name, "NHLTeamDetail", new { teamID = pick.OriginalTeam.team.id })
 
        
     <i class="bi bi-arrow-right" style="font-size: 1rem"></i>
@@ -35,19 +32,19 @@
     }
 }
 
-@helper GetStreak(NFLTeam.Entry entry)
+@helper GetStreak(NHLTeam.Teamrecord teamRecord)
 {
-    switch (entry.stats[9].value)
+    switch (teamRecord.streak.streakNumber)
     {
 
-        case var expression when entry.stats[9].value >= 2:
-            <span class="text-danger">@entry.stats[9].displayValue</span>;
+        case var expression when teamRecord.streak.streakNumber >= 3 && teamRecord.streak.streakType == "wins":
+            <span class="text-danger">@teamRecord.streak.streakCode</span>;
             break;
-        case var expression when entry.stats[9].value <= -2:
-            <span class="text-success">@entry.stats[9].displayValue</span>
+        case var expression when teamRecord.streak.streakNumber >= 3 && teamRecord.streak.streakType == "losses":
+            <span class="text-success">@teamRecord.streak.streakCode</span>
             break;
         default:
-            <span>@entry.stats[9].displayValue</span>
+            <span>@teamRecord.streak.streakCode</span>
 
             break;
     }

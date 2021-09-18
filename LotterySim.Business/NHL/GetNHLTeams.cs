@@ -40,6 +40,7 @@ namespace LotterySim.Business.NHL
             {
 
                 teamRecords.AddRange(record.teamRecords);
+                SetNHLTeamImages(teamRecords);
             }
 
             return teamRecords;
@@ -58,7 +59,18 @@ namespace LotterySim.Business.NHL
             orderedTeams.AddRange(teams.Where(p => int.Parse(p.divisionRank) <= 3).OrderByDescending(p => p.conferenceRank));
 
 
+
             return orderedTeams;
+        }
+
+        private static void SetNHLTeamImages(List<NHLTeam.Teamrecord> teamRecords)
+        {
+            var images = GetNHLFranchise.GetNHLFranchiseLogos();
+
+            foreach (var teamRecord in teamRecords)
+            {
+                teamRecord.team.Image = images.Where(p => p.teamId == teamRecord.team.id).FirstOrDefault().url;
+            }
         }
 
 

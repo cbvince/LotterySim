@@ -59,8 +59,10 @@
     <Compile Include="NFL\NFLTeam.cs" />
     <Compile Include="NBA\PickProtections.cs" />
     <Compile Include="NFL\SetNFLDraftPicks.cs" />
+    <Compile Include="NHL\GetNHLFranchise.cs" />
     <Compile Include="NHL\GetNHLTeams.cs" />
     <Compile Include="NHL\NHLDraftPick.cs" />
+    <Compile Include="NHL\NHLFranchise.cs" />
     <Compile Include="NHL\NHLTeam.cs" />
     <Compile Include="NHL\SetNHLDraftOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
