@@ -3,7 +3,7 @@
 ### Summary
 
 This application consumes NBA and NFL standings data from publicly available APIs.  
-That data is then updated based on the draft rules for each league to display the draft order bbased on the most recent or current season results.
+That data is then updated based on the draft rules for each league to display the draft order based on the most recent or current season results.
 The NBA draft hases a randomized lottery component and this application allows the user to simulate those lottery results.
 
 ![LotteryScreenShot1](https://user-images.githubusercontent.com/85378684/134108836-f5570817-63a7-4852-9e29-50f03443c16c.PNG)
