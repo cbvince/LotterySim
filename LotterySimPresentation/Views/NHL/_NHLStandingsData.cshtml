@@ -11,9 +11,10 @@
     <td>@ReturnSwapTeamInfo(Model)<img src="@Url.Content(Model.Team.team.Image)" width="30" height="30" />
         @Html.ActionLink(Model.Team.team.name, "NHLTeamDetail", new { teamID = Model.Team.team.id }, new { @class = "teamlink" })
 </td>
-    <td>@Model.OriginalTeam.leagueRecord</td>
+    <td>@Model.OriginalTeam.leagueRecord.wins-@Model.OriginalTeam.leagueRecord.losses-@Model.OriginalTeam.leagueRecord.ot</td>
     <td>@Model.OriginalTeam.points</td>
     <td>@GetStreak(Model.OriginalTeam)</td>
+    <td>@Model.OriginalTeam.</td>
 </tr>
 
 
@@ -37,8 +38,8 @@
     switch (teamRecord.streak.streakNumber)
     {
 
-        case var expression when teamRecord.streak.streakNumber >= 3 && teamRecord.streak.streakType == "wins":
-            <span class="text-danger">@teamRecord.streak.streakCode</span>;
+        case var expression when teamRecord.streak.streakNumber >= 3 && (teamRecord.streak.streakType == "wins" || teamRecord.streak.streakType == "ot"):
+            <span class="text-danger">@teamRecord.streak.streakCode.Replace("OT", "W")</span>;
             break;
         case var expression when teamRecord.streak.streakNumber >= 3 && teamRecord.streak.streakType == "losses":
             <span class="text-success">@teamRecord.streak.streakCode</span>

@@ -53,10 +53,12 @@ namespace LotterySim.Business.NHL
             var teams = GetTeamRecordsFromRecords();
             var orderedTeams = new List<NHLTeam.Teamrecord>();
 
-            orderedTeams.AddRange(teams.Where(p => int.Parse(p.divisionRank) > 3).OrderBy(p => p.points));
+            //orderedTeams.AddRange(teams.Where(p => int.Parse(p.divisionRank) > 3).OrderBy(p => p.points));
 
             //	Playoff teams that did not win their divisions and did not make the conference finals, sorted by points, are assigned the next picks
-            orderedTeams.AddRange(teams.Where(p => int.Parse(p.divisionRank) <= 3).OrderByDescending(p => p.conferenceRank));
+            //orderedTeams.AddRange(teams.Where(p => int.Parse(p.divisionRank) <= 3).OrderByDescending(p => p.conferenceRank));
+
+            orderedTeams.AddRange(teams.OrderByDescending(p => p.leagueRank));
 
 
 

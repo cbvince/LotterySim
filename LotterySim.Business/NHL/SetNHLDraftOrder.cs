@@ -20,12 +20,13 @@ namespace LotterySim.Business.NHL
 
 
             var i = 1;
+           
           
 
             foreach (var team in nhlOrderedTeams)
             {
                 nhlDraftPicksWithTeams.Add(new NHLDraftPick { PickNumber = i++, OriginalTeam = team, Team = team });
-                team.InitialLotteryRank = i++;
+                team.InitialLotteryRank = i;
             }
 
             return nhlDraftPicksWithTeams;
