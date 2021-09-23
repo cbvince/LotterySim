@@ -1,6 +1,6 @@
 ﻿@using LotterySim.Business.NFL
 @using LotterySim.Business
-@model List<LotterySim.Business.NFL.NFLTeam.NFLDraftPick>
+@model List<LotterySim.Business.NHL.NHLDraftPick>
 
 
 
@@ -13,23 +13,23 @@
             
             
 
-            <img src=@Url.Content(Model.FirstOrDefault().Team.team.logos[0].href) alt="@Model.FirstOrDefault().Team.team.displayName" width="150" height="150" />
+            <img src=@Url.Content(Model.FirstOrDefault().Team.team.Image) alt="@Model.FirstOrDefault().Team.team.name" width="150" height="150" />
 
         </div>
     </div>
     <div class="row">
         <div class="col-10">
-            <h2>@Model.FirstOrDefault().Team.team.displayName</h2>
+            <h2>@Model.FirstOrDefault().Team.team.name</h2>
         </div>
         <div class="col">
-            <input type="button" name="btnReset" class="btn btn-primary" value="Back to Draft Results" onclick="location.href='@Url.Action("NFLStandings", "NFL")'" />
+            <input type="button" name="btnReset" class="btn btn-primary" value="Back to Draft Results" onclick="location.href='@Url.Action("NHLStandings", "NHL")'" />
 
         </div>
 
     </div>
     <div class="row">
         <hr />
-        <h5>Record: @Model.FirstOrDefault().Team.stats[1].displayValue-@Model.FirstOrDefault().Team.stats[2].displayValue  |  Streak: @Model.FirstOrDefault().Team.stats[9].displayValue</h5>
+        <h5>Record: @Model.FirstOrDefault().Team.leagueRecord.wins-@Model.FirstOrDefault().Team.leagueRecord.losses-@Model.FirstOrDefault().Team.leagueRecord.ot  |  Streak: @Model.FirstOrDefault().Team.streak.streakCode.Replace("OT", "W")</h5>
     </div>
 
 
@@ -46,9 +46,9 @@
 
             {
                 <div class="col">
-                    <div class="card" style="width: 7rem; height: 10rem">
-                        <a href="@Url.Action("NFLTeamDetail", "NFL",  new { teamID = pick.OriginalTeam.team.id })">
-                            <img class="card-img-top" src=@pick.OriginalTeam.team.logos[0].href alt="@pick.OriginalTeam.team.displayName" width="50" height="100" />
+                    <div class="card" style="width: 10rem; height: 10rem">
+                        <a href="@Url.Action("NHLTeamDetail", "NHL",  new { teamID = pick.OriginalTeam.team.id })">
+                            <img class="card-img-top" src=@pick.OriginalTeam.team.Image alt="@pick.OriginalTeam.team.name" width="50" height="100" />
                         </a>
                         <div class="card-body">
                             <h6 class="card-title">Pick#@pick.PickNumber</h6>

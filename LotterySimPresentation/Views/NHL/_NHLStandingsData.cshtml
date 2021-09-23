@@ -8,13 +8,15 @@
 
 <tr>
     <td>@Model.PickNumber</td>
-    <td>@ReturnSwapTeamInfo(Model)<img src="@Url.Content(Model.Team.team.Image)" width="30" height="30" />
-        @Html.ActionLink(Model.Team.team.name, "NHLTeamDetail", new { teamID = Model.Team.team.id }, new { @class = "teamlink" })
+    <td align="right">@GetLotteryMovement(Model.LotteryMovement)</td>
+    <td>
+         @ReturnSwapTeamInfo(Model)<img src="@Url.Content(Model.Team.team.Image)" width="30" height="30" />
+    @Html.ActionLink(Model.Team.team.name, "NHLTeamDetail", new { teamID = Model.Team.team.id }, new { @class = "teamlink" })
 </td>
-    <td>@Model.OriginalTeam.leagueRecord.wins-@Model.OriginalTeam.leagueRecord.losses-@Model.OriginalTeam.leagueRecord.ot</td>
-    <td>@Model.OriginalTeam.points</td>
-    <td>@GetStreak(Model.OriginalTeam)</td>
-    <td>@Model.LotteryOdds</td>
+<td>@Model.OriginalTeam.leagueRecord.wins-@Model.OriginalTeam.leagueRecord.losses-@Model.OriginalTeam.leagueRecord.ot</td>
+<td>@Model.OriginalTeam.points</td>
+<td>@GetStreak(Model.OriginalTeam)</td>
+<td>@Model.LotteryOdds</td>
 </tr>
 
 
@@ -23,12 +25,12 @@
     if (pick.PickSwapType == PickSwapType.Swapped)
     {
 
-    <img src="@Url.Content(pick.OriginalTeam.team.Image)" width="30" height="30" />
-    
-    @Html.ActionLink(pick.OriginalTeam.team.name, "NHLTeamDetail", new { teamID = pick.OriginalTeam.team.id })
+        <img src="@Url.Content(pick.OriginalTeam.team.Image)" width="30" height="30" />
 
-       
-    <i class="bi bi-arrow-right" style="font-size: 1rem"></i>
+        @Html.ActionLink(pick.OriginalTeam.team.name, "NHLTeamDetail", new { teamID = pick.OriginalTeam.team.id })
+
+
+        <i class="bi bi-arrow-right" style="font-size: 1rem"></i>
 
     }
 }
@@ -45,9 +47,26 @@
             <span class="text-success">@teamRecord.streak.streakCode</span>
             break;
         default:
-            <span>@teamRecord.streak.streakCode</span>
+        <span>@teamRecord.streak.streakCode.Replace("OT", "W")</span>
 
             break;
     }
+
+}
+
+@helper GetLotteryMovement(int movement)
+    {
+var color = string.Empty;
+
+if (movement > 0)
+{
+<span class="text-success">+@movement</span>
+}
+if (movement < 0)
+{
+<span class="text-danger">@movement</span>
+}
+
+
 
 }

@@ -18,12 +18,18 @@
     <input type="button" name="btnReset" class="btn btn-primary" value="Reset" onclick="location.href='@Url.Action("NHLStandings", "NHL")'" />
 
 </div>
+<p></p>
+<div class="alert alert-warning text-center" role="alert">
+        Standings are currently ordered by points due to pending division realignment.<p></p>
+        Draft Lottery rules are based on previous year as clarifiction is needed on upcoming draft rules.
+</div>
 
 <div class="container">
     <table class="table table-striped table-sm">
         <thead>
             <tr>
                 <th scope="col">Pick</th>
+                <th scope="col"></th>
                 <th scope="col">Team</th>
                 <th scope="col">Record</th>
                 <th scope="col">Points</th>

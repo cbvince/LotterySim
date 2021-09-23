@@ -27,6 +27,8 @@ namespace LotterySim.Business.NHL
                 team.InitialLotteryRank = i;
             }
 
+            NHLPickSwap.NHLSeasonPickSwaps(nhlDraftPicksWithTeams);
+
             return nhlDraftPicksWithTeams;
 
         }

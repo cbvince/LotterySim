@@ -97,25 +97,6 @@ namespace LotterySim.Business.NFL
             SwapNFLPicks(picks, "Philadelphia Eagles", "Indianapolis Colts", 7);
             SwapNFLPicks(picks, "Detroit Lions", "Denver Broncos", 7);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
 

@@ -195,7 +195,6 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Views\NFL\_FirstRoundStandings.cshtml" />
     <Content Include="Views\NFL\NFLTeamDetail.cshtml" />
-    <Content Include="Views\NHL\_FirstRoundStandings.cshtml" />
     <Content Include="Views\NHL\_NHLStandingsData.cshtml" />
     <Content Include="Views\NHL\NHLTeamDetail.cshtml" />
     <Content Include="Views\NHL\NHLStandings.cshtml" />

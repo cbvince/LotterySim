@@ -47,7 +47,7 @@ namespace LotterySimPresentation.Controllers
             {
                 try
                 {
-                    var teamPicks = SetNHLDraftOrder.NHLDefaultDraftPicksFromCache().Where(p => p.Team.team.id.ToString() == teamID);
+                    var teamPicks = SetNHLDraftOrder.NHLDefaultDraftPicksFromCache().Where(p => p.Team.team.id.ToString() == teamID).ToList();
 
                     return View(teamPicks);
                 }

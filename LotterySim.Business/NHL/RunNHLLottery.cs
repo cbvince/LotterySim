@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace LotterySim.Business.NHL
 {
-    public class RunNHLLottery
+    public static class RunNHLLottery
     {
+
+        private static readonly Random random = new Random();
 
         private static int GetNHLWinningPickTeamRank()
         {
-            var random = new Random();
+
             var lotteryNumber = random.Next(1, 1001);
 
             return lotteryNumber switch
@@ -35,7 +37,6 @@ namespace LotterySim.Business.NHL
                 _ => throw new Exception("Unable to Determine Lottery Team"),
             };
         }
-
 
         private static void RunLotteryRound(List<NHLDraftPick> picks, int pickNumbertoDetermine)
         {
@@ -69,7 +70,7 @@ namespace LotterySim.Business.NHL
 
             RunLotteryRound(lotteryPicks, 1);
             RunLotteryRound(lotteryPicks, 2);
-            // Redo Pick Swaps as draft order will have changed
+            NHLPickSwap.NHLSeasonPickSwaps(lotteryPicks);
 
  
 

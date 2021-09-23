@@ -69,9 +69,10 @@
     <Compile Include="NFL\SetNFLDraftPicks.cs" />
     <Compile Include="NHL\GetNHLFranchise.cs" />
     <Compile Include="NHL\GetNHLTeams.cs" />
-    <Compile Include="NHL\NHLDraftPick.cs" />
-    <Compile Include="NHL\NHLFranchise.cs" />
-    <Compile Include="NHL\NHLTeam.cs" />
+    <Compile Include="NHL\Models\NHLDraftPick.cs" />
+    <Compile Include="NHL\Models\NHLFranchise.cs" />
+    <Compile Include="NHL\NHLPickSwap.cs" />
+    <Compile Include="NHL\Models\NHLTeam.cs" />
     <Compile Include="NHL\RunNHLLottery.cs" />
     <Compile Include="NHL\SetNHLDraftOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
