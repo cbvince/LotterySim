@@ -14,7 +14,8 @@ namespace LotterySimPresentation.Controllers
         {
             try
             {
-                var defaultPicks = SetNHLDraftOrder.NHLDefaultDraftPicksFromCache();
+                var defaultPicks = new List<NHLDraftPick>();
+               defaultPicks.AddRange(SetNHLDraftOrder.NHLDefaultDraftPicksFromCache());
                 return View("NHLStandings", defaultPicks);
             }
             catch (Exception ex)
@@ -23,6 +24,21 @@ namespace LotterySimPresentation.Controllers
                 return View("Error", new HandleErrorInfo(ex, "NHLStandings", "NHL"));
             }
         }
+
+        public ActionResult NHLLottery()
+        {
+            try
+            {
+                var lotteryPicks = RunNHLLottery.RunLottery();
+                return View("NHLStandings", lotteryPicks);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new HandleErrorInfo(ex, "NHLStandings", "NHL"));
+            }
+        }
+   
 
 
         public ActionResult NHLTeamDetail(string teamID)
@@ -48,7 +64,7 @@ namespace LotterySimPresentation.Controllers
             }
 
         }
-
+        
         }
 
 

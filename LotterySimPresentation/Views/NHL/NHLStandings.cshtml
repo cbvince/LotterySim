@@ -9,6 +9,15 @@
     <h1 class="mb-3">NHL Draft Order</h1>
 </div>
 
+<div class="container" align="center">
+
+    <p></p>
+
+    <input type="button" value="Generate" class="btn btn-primary" onclick="location.href='@Url.Action("NHLLottery", "NHL")'" />&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <input type="button" name="btnReset" class="btn btn-primary" value="Reset" onclick="location.href='@Url.Action("NHLStandings", "NHL")'" />
+
+</div>
 
 <div class="container">
     <table class="table table-striped table-sm">
@@ -26,7 +35,7 @@
         <tbody>
 
 
-            @foreach (var pick in Model)
+            @foreach (var pick in Model.OrderBy(p => p.PickNumber))
             {
                 @Html.Partial("~/Views/NHL/_NHLStandingsData.cshtml", pick);
             }
