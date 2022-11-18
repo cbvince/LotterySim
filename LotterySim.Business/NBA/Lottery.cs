@@ -9,16 +9,12 @@ namespace LotterySim.Business
 {
     public class Lottery
     {
-
-
         public static void RunLottery(List<NBATeam> teams)
         {
-
             for (int i = 0; i < 5; i++)
             {
                 while (teams.FirstOrDefault(p => p.LotteryNumber == i) == null)
                 {
-
                     RunLotteryRound(teams, DetermineWinningTeam(), i);
                 }
             }
@@ -37,8 +33,6 @@ namespace LotterySim.Business
                 winner.LotteryNumber = pickNumber;
                 winner.Assigned = true;
             }
-
-
         }
 
         private static int DetermineWinningTeam()
@@ -60,17 +54,14 @@ namespace LotterySim.Business
             if (lotteryNumber > 985 && lotteryNumber <= 995) return 13; //10
             if (lotteryNumber > 995) return 14;                         //5
 
-
             return 15;
-
         }
 
         private static void FillRemainingLotteryOrder(List<NBATeam> teams)
         {
             var lotteryNumber = 5;
             foreach (var team in teams.Where(p => p.Assigned == false).OrderBy(p => p.TeamRank))
-            {
-               
+            {         
                 team.LotteryNumber = lotteryNumber++;
                 team.Assigned = true;
             }

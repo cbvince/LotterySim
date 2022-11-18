@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LotterySim.Business;
+using LotterySim.Business.NBA;
 using LotterySim.Business.NFL;
 
 namespace LotterySimPresentation.Controllers
@@ -19,7 +20,8 @@ namespace LotterySimPresentation.Controllers
 
             try
             {
-                var lotteryTeams = GetNBATeams.GetLotteryTeams();
+                //var lotteryTeams = GetNBATeams.GetLotteryTeams();
+                List<NBATeam> lotteryTeams = GetNBATeams.GetTeams();
                 return View(lotteryTeams);
             }
             catch (Exception ex)

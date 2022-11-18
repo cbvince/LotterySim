@@ -59,9 +59,15 @@
   <ItemGroup>
     <Compile Include="Common\GenericStandingDataMethods.cs" />
     <Compile Include="Common\GetTeamDataFromWeb.cs" />
+    <Compile Include="Common\ILottery.cs" />
+    <Compile Include="Common\ITeam.cs" />
+    <Compile Include="Common\Lottery.cs" />
+    <Compile Include="Common\Team.cs" />
     <Compile Include="NBA\GetNBATeams.cs" />
+    <Compile Include="NBA\INBATeam.cs" />
     <Compile Include="NBA\Lottery.cs" />
     <Compile Include="NBA\NBATeam.cs" />
+    <Compile Include="NBA\NBATeamStandings.cs" />
     <Compile Include="NFL\GetNFLTeams.cs" />
     <Compile Include="NFL\NFLPickSwap.cs" />
     <Compile Include="NFL\NFLTeam.cs" />

@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 using LotterySim.Business.NBA;
 using LotterySim.Business.Common;
+using System.Data;
 
 namespace LotterySim.Business
 {
@@ -39,10 +40,7 @@ namespace LotterySim.Business
             UpdateStandingsData(lotteryTeams);
             PickProtections.PickProtection(lotteryTeams);
             return lotteryTeams;
-        }
-
-      
-
+        }      
         private static List<NBATeam> ConvertTeamData()
         {
             
@@ -91,8 +89,54 @@ namespace LotterySim.Business
             return teams;
 
         }
+		public static List<NBATeam> GetTeams()
+		{
+			string endPoint = "http://data.nba.net/10s/prod/v1/current/standings_all.json";
+			string strJSON = GetTeamDataFromWeb.GetTeamDataFromCache(30, endPoint, "nba");
+			NBATeamStandings.Rootobject nbaTeamStandingData = JsonConvert.DeserializeObject<NBATeamStandings.Rootobject>(strJSON);
+			List<NBATeam> teams = new List<NBATeam>();
 
-        private static void SetPickNumberFromRanking(List<NBATeam> teams)
+			foreach (var team in nbaTeamStandingData.league.standard.teams)
+			{
+				teams.Add(new NBATeam()
+				{
+					TeamName = team.teamSitesOnly.teamName,
+					TeamID = team.teamId,
+					TeamNickName = team.teamSitesOnly.teamNickname,
+					OriginalTeamName = team.teamSitesOnly.teamName,
+					Wins = team.win,
+					Losses = team.loss,
+					WinLossRecord = team.win + "-" + team.loss,
+					WinPercentage = team.winPct,
+					GamesBack = team.sortKey.gamesBehind,
+					LastTenGamesRecord = team.lastTenWin + "-" + team.lastTenLoss,
+					LastTenLosses = team.lastTenLoss,
+					LastTenWins = team.lastTenWin,
+					ConsecutiveWinLoss = team.streak,
+					WinorLossStreak = team.isWinStreak,
+					ConferenceRank = team.confRank,
+					//TieBreakerGroupPosition = SetTieBreakerGroups(teamName),
+				});
+			};
+
+			OrderTeams(teams);
+            UpdateStandingsData(teams);
+            SetPickNumberFromRanking(teams);
+			return teams;
+		}
+		private static void OrderTeams(List<NBATeam> teams)
+		{
+			teams.Where(p => p.ConferenceRank > 8).OrderBy(p => p.WinPercentage);
+			teams.Where(p => p.ConferenceRank < 8).OrderBy(p => p.WinPercentage);
+
+			int i = 1;
+
+			foreach (NBATeam team in teams)
+			{
+				team.TeamRank = i++;
+			}
+		}
+		private static void SetPickNumberFromRanking(List<NBATeam> teams)
         {
             foreach (var team in teams)
             {
@@ -132,7 +176,6 @@ namespace LotterySim.Business
         {
             foreach (var team in teams)
             {
-
                 var streakType = (team.WinorLossStreak) ? "Won" : "Lost";
                 var streakNumber = team.ConsecutiveWinLoss;
                 var streak = streakType + " " + streakNumber.ToString();
@@ -145,8 +188,6 @@ namespace LotterySim.Business
         {
             foreach (var team in teams)
             {
-
-
                 switch (team.TeamRank)
                 {
                     case 1:
@@ -181,8 +222,6 @@ namespace LotterySim.Business
                     case 14:
                         team.TopFourPickOdds = "2.4%";
                         break;
-
-
                 }
             }
         }
