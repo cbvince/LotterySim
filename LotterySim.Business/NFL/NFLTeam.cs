@@ -8,7 +8,6 @@ namespace LotterySim.Business.NFL
 {
     public class NFLTeam
     {
-
         public class Rootobject
         {
             public string uid { get; set; }

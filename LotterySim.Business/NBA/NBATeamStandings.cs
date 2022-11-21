@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LotterySim.Business.Common;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +10,9 @@ namespace LotterySim.Business.NBA
 {
 	public class NBATeamStandings
 	{
-		public class Rootobject
-		{
-			public _Internal _internal { get; set; }
-			public League league { get; set; }
-		}
+		#region Properties
+		public _Internal _internal { get; set; }
+		public League league { get; set; }
 
 		public class _Internal
 		{
@@ -313,6 +313,46 @@ namespace LotterySim.Business.NBA
 			public int awayWinLoss { get; set; }
 			public int lastTenWinLoss { get; set; }
 			public int streak { get; set; }
+		}
+
+		#endregion
+		public static NBATeamStandings GetStandings()
+		{
+			string endPoint = "http://data.nba.net/10s/prod/v1/current/standings_all.json";
+			string strJSON = GetTeamDataFromWeb.GetTeamDataFromCache(30, endPoint, "nba");
+			return JsonConvert.DeserializeObject<NBATeamStandings>(strJSON);
+		}
+
+		public static List<NBATeam> GetTeams()
+		{
+			NBATeamStandings nbaTeamStandingData = NBATeamStandings.GetStandings();
+			List<NBATeam> teams = new List<NBATeam>();
+
+			foreach (var team in nbaTeamStandingData.league.standard.teams)
+			{
+				teams.Add(new NBATeam()
+				{
+					TeamName = team.teamSitesOnly.teamName,
+					TeamID = team.teamId,
+					TeamNickName = team.teamSitesOnly.teamNickname,
+					OriginalTeamName = team.teamSitesOnly.teamName,
+					Wins = team.win,
+					Losses = team.loss,
+					WinLossRecord = team.win + "-" + team.loss,
+					WinPercentage = team.winPct,
+					GamesBack = team.sortKey.gamesBehind,
+					LastTenGamesRecord = team.lastTenWin + "-" + team.lastTenLoss,
+					LastTenLosses = team.lastTenLoss,
+					LastTenWins = team.lastTenWin,
+					ConsecutiveWinLoss = team.streak,
+					WinorLossStreak = team.isWinStreak,
+					ConferenceRank = team.confRank,
+					//TieBreakerGroupPosition = SetTieBreakerGroups(teamName),
+				});
+			};
+
+			NBAStandingsHelper.UpdateStandingsData(teams);
+			return teams;
 		}
 	}
 }

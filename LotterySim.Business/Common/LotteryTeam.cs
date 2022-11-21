@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace LotterySim.Business.Common
 {
-	public interface ILottery
+	public abstract class LotteryTeam : Team
 	{
 		public int LotteryNumber { get; set; }
 		public string LotteryMovement { get; set; }
 		public bool Assigned { get; set; }
-
-		void RunLottery();
 	}
-
-	
 }

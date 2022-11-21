@@ -12,61 +12,43 @@ namespace LotterySimPresentation.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-
-
-
         public ActionResult Index()
         {
-
             try
             {
-                //var lotteryTeams = GetNBATeams.GetLotteryTeams();
-                List<NBATeam> lotteryTeams = GetNBATeams.GetTeams();
+                List<NBATeam> lotteryTeams = NBATeamStandings.GetTeams();
                 return View(lotteryTeams);
             }
             catch (Exception ex)
             {
-
-
                 return View("Error", new HandleErrorInfo(ex, "Index", "Home"));
             }
-
-
         }
 
         public ActionResult GenerateLottery()
         {
             try
             {
-                var lotteryTeams = GetNBATeams.GetLotteryTeams();
+                var lotteryTeams = NBATeamStandings.GetTeams();
                 Lottery.RunLottery(lotteryTeams);
                 return View("Index", lotteryTeams);
             }
             catch (Exception ex)
             {
-
                 return View("Error", new HandleErrorInfo(ex, "Index", "Home"));
             }
-
-
-
         }
-
 
         public ActionResult TeamDetail(string teamname)
         {
-
             if (teamname == null)
             {
-                return View("Index", GetNBATeams.GetLotteryTeams());
+                return View("Index", NBATeamStandings.GetTeams());
             }
 
-            var teams = GetNBATeams.GetLotteryTeams();
+            var teams = NBATeamStandings.GetTeams();
             var team = teams.FirstOrDefault(p => p.OriginalTeamName == teamname);
             return View(team);
         }
-
-
-       
     }
 }

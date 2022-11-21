@@ -107,15 +107,15 @@ namespace LotterySim.Business
     
         public static List<NBATeam> OutGoingPicks(NBATeam team)
         {
-            return LotterySim.Business.GetNBATeams.GetLotteryTeams().Where(p => p.OriginalTeamName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Swapped).OrderBy(p => p.PickNumber).ToList();
+            return NBATeamStandings.GetTeams().Where(p => p.OriginalTeamName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Swapped).OrderBy(p => p.PickNumber).ToList();
         }
         public static List<NBATeam> IncomingPicks(NBATeam team)
         {
-            return LotterySim.Business.GetNBATeams.GetLotteryTeams().Where(p => (p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName == null) || p.NewTeamName == team.OriginalTeamName).OrderBy(p => p.PickNumber).ToList();
+            return NBATeamStandings.GetTeams().Where(p => (p.OriginalTeamName == team.OriginalTeamName && p.NewTeamName == null) || p.NewTeamName == team.OriginalTeamName).OrderBy(p => p.PickNumber).ToList();
         }
         public static List<NBATeam> NonConveyedPicks(NBATeam team)
         {
-            return LotterySim.Business.GetNBATeams.GetLotteryTeams().Where(p => p.TeamPickOwedToName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
+            return NBATeamStandings.GetTeams().Where(p => p.TeamPickOwedToName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
         }
 
 

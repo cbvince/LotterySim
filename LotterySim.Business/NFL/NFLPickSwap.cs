@@ -27,7 +27,7 @@ namespace LotterySim.Business.NFL
 
         public static void NFLSeasonPickSwaps(List<NFLTeam.NFLDraftPick> picks)
         {
-           
+           /*
             SwapNFLPicks(picks, "Chicago Bears", "New York Giants", 1);
             SwapNFLPicks(picks, "Indianapolis Colts", "Philadelphia Eagles", 1);
             SwapNFLPicks(picks, "Miami Dolphins", "Philadelphia Eagles", 1);
@@ -96,7 +96,7 @@ namespace LotterySim.Business.NFL
             SwapNFLPicks(picks, "New England Patriots", "Kansas City Chiefs", 7);
             SwapNFLPicks(picks, "Philadelphia Eagles", "Indianapolis Colts", 7);
             SwapNFLPicks(picks, "Detroit Lions", "Denver Broncos", 7);
-
+           */
         }
 
 
