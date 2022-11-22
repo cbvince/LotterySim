@@ -13,15 +13,19 @@ namespace LotterySim.Business
             OrderTeams(teams);
             SetPickNumberFromRanking(teams);
             DetermineGamesBack(teams);
-            DetermineWinLossStreak(teams);
             AddTopFourPickOdds(teams);
             AddTopOnePickOdds(teams);
+            PickProtections.PickProtection(teams);
         }
 
 		private static void OrderTeams(List<NBATeam> teams)
 		{
-			teams.Where(p => p.ConferenceRank > 8).OrderBy(p => p.WinPercentage);
-			teams.Where(p => p.ConferenceRank < 8).OrderBy(p => p.WinPercentage);
+			List<NBATeam> lotteryTeams = teams.Where(p => p.ConferenceRank > 8).OrderBy(p => p.WinPercentage).ToList();
+			List<NBATeam> playoffTeams = teams.Where(p => p.ConferenceRank <= 8).OrderBy(p => p.WinPercentage).ToList();
+
+            teams.Clear();
+            teams.AddRange(lotteryTeams);
+            teams.AddRange(playoffTeams);
 
 			int i = 1;
 
@@ -41,31 +45,15 @@ namespace LotterySim.Business
 
 		private static void DetermineGamesBack(List<NBATeam> teams)
         {
-
             var highestNumberOfLosses = teams.OrderByDescending(p => p.Losses).FirstOrDefault().Losses;
             var lowestNumberOfWins = teams.OrderBy(p => p.Wins).FirstOrDefault().Wins;
             var winLostDifferenceForWorstTeam = highestNumberOfLosses - lowestNumberOfWins;
-
 
             foreach (var team in teams)
             {
                 var teamWinLossDifference = team.Losses - team.Wins;
 
                 team.LotteryGamesBack = GenericStandingDataMethods.GetGamesBack(highestNumberOfLosses, lowestNumberOfWins, teamWinLossDifference);
-            }
-
-
-        }
-
-        private static void DetermineWinLossStreak(List<NBATeam> teams)
-        {
-            foreach (var team in teams)
-            {
-                var streakType = (team.WinorLossStreak) ? "Won" : "Lost";
-                var streakNumber = team.ConsecutiveWinLoss;
-                var streak = streakType + " " + streakNumber.ToString();
-                team.WinLossStreak = streak;
-
             }
         }
 
@@ -154,5 +142,20 @@ namespace LotterySim.Business
                 }
             }
         }
-    }
+
+		public static string GetWinLossStreakColor(NBATeam team)
+		{
+			if (team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
+			if (team.ConsecutiveWinLoss >= 5) return "text-danger";
+			if (team.ConsecutiveWinLoss < -3) return "text-success";
+			return "";
+		}
+
+		public static string GetLast10WinLossColor(NBATeam team)
+		{
+			if (team.LastTenLosses >= 7) return "text-success";
+			if (team.LastTenLosses <= 3) return "text-danger";
+			return "";
+		}
+	}
 }

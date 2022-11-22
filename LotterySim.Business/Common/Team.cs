@@ -18,7 +18,7 @@ namespace LotterySim.Business.Common
 		public int Losses { get; set; }
 		public int Ties { get; set; }
 		public string Streak { get; set; }
-		public double WinPercentage { get; set; }
+		public decimal WinPercentage { get; set; }
 		public double GamesBack { get; set; }
 		public string ImageUrl { get; set; }
 		public int TeamRank { get; set; }

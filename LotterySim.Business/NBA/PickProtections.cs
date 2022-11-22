@@ -21,7 +21,6 @@ namespace LotterySim.Business
             DetermineProtection(teams, 8, 0, "Los Angeles", "New Orleans", "Protected 8-30 - Anthony Davis for Ingram/Ball/Hart trade");
             DetermineProtection(teams, 14, 8, "Utah", "Memphis", "Protected 1-7, 15-30 - Mike Conley trade");
             DetermineProtection(teams, 30, 20, "Golden State", "Oklahoma City", "Protected 1-20 - Kelly Oubre trade");
-            DetermineProtectionOKCSwaps(teams);
         }
 
 
@@ -31,7 +30,7 @@ namespace LotterySim.Business
             var teamToConvey = teams.FirstOrDefault(p => p.OriginalTeamName == originalteam);
             var newTeam = teams.FirstOrDefault(p => p.OriginalTeamName == newteam);
 
-            teamToConvey.TeamPickOwedToName = newteam;
+            //teamToConvey.TeamPickOwedToName = newteam;
             teamToConvey.PickTradeDetails = picktradedetails;
 
             if (teamToConvey.PickNumber > upperprotectionthreshold && teamToConvey.PickNumber <= lowerprotectionthreshold)
@@ -48,41 +47,7 @@ namespace LotterySim.Business
         }
 
         //OKC gets 3 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN
-        private static void DetermineProtectionOKCSwaps(List<NBATeam> teams)
-        {
-            var houston = teams.FirstOrDefault(p => p.OriginalTeamName == "Houston");
-            var okc = teams.FirstOrDefault(p => p.OriginalTeamName == "Oklahoma City");
-            var miami = teams.FirstOrDefault(p => p.OriginalTeamName == "Miami");
-            var boston = teams.FirstOrDefault(p => p.OriginalTeamName == "Boston");
-            var highestPickSwapTeam = teams.FirstOrDefault(p => p.OriginalTeamName == "Boston" || p.OriginalTeamName == "Houston" || p.OriginalTeamName == "Oklahoma City" || p.OriginalTeamName == "Miami");
-            var lowestPickSwapTeam =
-                teams.Where(p => p.OriginalTeamName == "Boston" || p.OriginalTeamName == "Houston" || p.OriginalTeamName == "Oklahoma City" || p.OriginalTeamName == "Miami")
-                .OrderByDescending(x => x.PickNumber).FirstOrDefault();
-
-
-            if (houston.PickNumber <= 4)
-            {
-                foreach (var team in teams.Where(p => p.OriginalTeamName == "Boston" || p.OriginalTeamName == "Oklahoma City" || p.OriginalTeamName == "Miami"))
-                {
-                    SwapPick(team, okc);
-                    team.PickTradeDetails = "OKC gets 2 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN";
-                }
-            }
-
-            else
-            {
-                foreach (var team in teams.Where(p => p.OriginalTeamName == "Boston" || p.OriginalTeamName == "Oklahoma City" || p.OriginalTeamName == "Miami" || p.OriginalTeamName == "Houston"))
-                {
-                    SwapPick(team, okc);
-                    team.PickTradeDetails = "OKC gets 2 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN";
-
-
-                }
-                SwapPick(lowestPickSwapTeam, houston);
-            }
-
-
-        }
+        
 
         private static void SwapPick(NBATeam fromTeam, NBATeam toTeam)
         {

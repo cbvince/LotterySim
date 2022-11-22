@@ -1,4 +1,5 @@
 ﻿using LotterySim.Business.Common;
+using System;
 
 namespace LotterySim.Business.NBA
 {
@@ -19,5 +20,12 @@ namespace LotterySim.Business.NBA
 		public int LastTenWins { get; set; }
 		public int LastTenLosses { get; set; }
 		public string LastTenGamesRecord { get; set; }
+
+		public void SetLastTenWinLoss()
+		{
+			string[] lastTenWinLoss = this.LastTenGamesRecord.Split('-');
+			this.LastTenWins = Convert.ToInt32(lastTenWinLoss[0]);
+			this.LastTenLosses = Convert.ToInt32(lastTenWinLoss[1]);
+		}
 	}
 }

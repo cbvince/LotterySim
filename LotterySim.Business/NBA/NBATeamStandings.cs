@@ -10,315 +10,137 @@ namespace LotterySim.Business.NBA
 {
 	public class NBATeamStandings
 	{
-		#region Properties
-		public _Internal _internal { get; set; }
-		public League league { get; set; }
 
-		public class _Internal
+			public string uid { get; set; }
+			public string id { get; set; }
+			public string name { get; set; }
+			public string abbreviation { get; set; }
+			public string shortName { get; set; }
+			public Child[] children { get; set; }
+			public Link2[] links { get; set; }
+			public Season[] seasons { get; set; }
+		
+
+		public class Child
 		{
-			public string pubDateTime { get; set; }
-			public string igorPath { get; set; }
-			public string xslt { get; set; }
-			public string xsltForceRecompile { get; set; }
-			public string xsltInCache { get; set; }
-			public string xsltCompileTimeMillis { get; set; }
-			public string xsltTransformTimeMillis { get; set; }
-			public string consolidatedDomKey { get; set; }
-			public string endToEndTimeMillis { get; set; }
+			public string uid { get; set; }
+			public string id { get; set; }
+			public string name { get; set; }
+			public string abbreviation { get; set; }
+			public Standings standings { get; set; }
 		}
 
-		public class League
+		public class Standings
 		{
-			public Standard standard { get; set; }
-			public Africa africa { get; set; }
-			public Sacramento sacramento { get; set; }
-			public Vegas vegas { get; set; }
-			public Utah utah { get; set; }
+			public string id { get; set; }
+			public string name { get; set; }
+			public string displayName { get; set; }
+			public Link[] links { get; set; }
+			public int season { get; set; }
+			public int seasonType { get; set; }
+			public Entry[] entries { get; set; }
 		}
 
-		public class Standard
+		public class Link
 		{
-			public int seasonYear { get; set; }
-			public int seasonStageId { get; set; }
-			public Team[] teams { get; set; }
+			public string language { get; set; }
+			public string[] rel { get; set; }
+			public string href { get; set; }
+			public string text { get; set; }
+			public string shortText { get; set; }
+			public bool isExternal { get; set; }
+			public bool isPremium { get; set; }
+		}
+
+		public class Entry
+		{
+			public Team team { get; set; }
+			public Stat[] stats { get; set; }
 		}
 
 		public class Team
 		{
-			public int teamId { get; set; }
-			public int win { get; set; }
-			public int loss { get; set; }
-			public double winPct { get; set; }
-			public string winPctV2 { get; set; }
-			public string lossPct { get; set; }
-			public string lossPctV2 { get; set; }
-			public double gamesBehind { get; set; }
-			public string divGamesBehind { get; set; }
-			public string clinchedPlayoffsCode { get; set; }
-			public string clinchedPlayoffsCodeV2 { get; set; }
-			public int confRank { get; set; }
-			public string confWin { get; set; }
-			public string confLoss { get; set; }
-			public string divWin { get; set; }
-			public string divLoss { get; set; }
-			public string homeWin { get; set; }
-			public string homeLoss { get; set; }
-			public string awayWin { get; set; }
-			public string awayLoss { get; set; }
-			public int lastTenWin { get; set; }
-			public int lastTenLoss { get; set; }
-			public int streak { get; set; }
-			public string divRank { get; set; }
-			public bool isWinStreak { get; set; }
-			public Teamsitesonly teamSitesOnly { get; set; }
-			public string tieBreakerPts { get; set; }
-			public Sortkey sortKey { get; set; }
+			public string id { get; set; }
+			public string uid { get; set; }
+			public string location { get; set; }
+			public string name { get; set; }
+			public string abbreviation { get; set; }
+			public string displayName { get; set; }
+			public string shortDisplayName { get; set; }
+			public bool isActive { get; set; }
+			public Logo[] logos { get; set; }
+			public Link1[] links { get; set; }
 		}
 
-		public class Teamsitesonly
+		public class Logo
 		{
-			public string teamKey { get; set; }
-			public string teamName { get; set; }
-			public string teamCode { get; set; }
-			public string teamNickname { get; set; }
-			public string teamTricode { get; set; }
-			public string clinchedConference { get; set; }
-			public string clinchedDivision { get; set; }
-			public string clinchedPlayoffs { get; set; }
-			public string streakText { get; set; }
+			public string href { get; set; }
+			public int width { get; set; }
+			public int height { get; set; }
+			public string alt { get; set; }
+			public string[] rel { get; set; }
+			public string lastUpdated { get; set; }
 		}
 
-		public class Sortkey
+		public class Link1
 		{
-			public int defaultOrder { get; set; }
-			public int nickname { get; set; }
-			public int win { get; set; }
-			public int loss { get; set; }
-			public int winPct { get; set; }
-			public int gamesBehind { get; set; }
-			public int confWinLoss { get; set; }
-			public int divWinLoss { get; set; }
-			public int homeWinLoss { get; set; }
-			public int awayWinLoss { get; set; }
-			public int lastTenWinLoss { get; set; }
-			public int streak { get; set; }
+			public string language { get; set; }
+			public string[] rel { get; set; }
+			public string href { get; set; }
+			public string text { get; set; }
+			public string shortText { get; set; }
+			public bool isExternal { get; set; }
+			public bool isPremium { get; set; }
 		}
 
-		public class Africa
+		public class Stat
 		{
-			public int seasonYear { get; set; }
-			public int seasonStageId { get; set; }
-			public object[] teams { get; set; }
+			public string name { get; set; }
+			public string displayName { get; set; }
+			public string shortDisplayName { get; set; }
+			public string description { get; set; }
+			public string abbreviation { get; set; }
+			public string type { get; set; }
+			public float value { get; set; }
+			public string displayValue { get; set; }
+			public string id { get; set; }
+			public string summary { get; set; }
 		}
 
-		public class Sacramento
+		public class Link2
 		{
-			public int seasonYear { get; set; }
-			public int seasonStageId { get; set; }
-			public Team1[] teams { get; set; }
+			public string language { get; set; }
+			public string[] rel { get; set; }
+			public string href { get; set; }
+			public string text { get; set; }
+			public string shortText { get; set; }
+			public bool isExternal { get; set; }
+			public bool isPremium { get; set; }
 		}
 
-		public class Team1
+		public class Season
 		{
-			public string teamId { get; set; }
-			public string win { get; set; }
-			public string loss { get; set; }
-			public string winPct { get; set; }
-			public string winPctV2 { get; set; }
-			public string lossPct { get; set; }
-			public string lossPctV2 { get; set; }
-			public string gamesBehind { get; set; }
-			public string divGamesBehind { get; set; }
-			public string clinchedPlayoffsCode { get; set; }
-			public string clinchedPlayoffsCodeV2 { get; set; }
-			public string confRank { get; set; }
-			public string confWin { get; set; }
-			public string confLoss { get; set; }
-			public string divWin { get; set; }
-			public string divLoss { get; set; }
-			public string homeWin { get; set; }
-			public string homeLoss { get; set; }
-			public string awayWin { get; set; }
-			public string awayLoss { get; set; }
-			public string lastTenWin { get; set; }
-			public string lastTenLoss { get; set; }
-			public string streak { get; set; }
-			public string divRank { get; set; }
-			public bool isWinStreak { get; set; }
-			public Teamsitesonly1 teamSitesOnly { get; set; }
-			public string tieBreakerPts { get; set; }
-			public Sortkey1 sortKey { get; set; }
+			public int year { get; set; }
+			public string startDate { get; set; }
+			public string endDate { get; set; }
+			public string displayName { get; set; }
+			public Type[] types { get; set; }
 		}
 
-		public class Teamsitesonly1
+		public class Type
 		{
-			public string teamKey { get; set; }
-			public string teamName { get; set; }
-			public string teamCode { get; set; }
-			public string teamNickname { get; set; }
-			public string teamTricode { get; set; }
-			public string clinchedConference { get; set; }
-			public string clinchedDivision { get; set; }
-			public string clinchedPlayoffs { get; set; }
-			public string streakText { get; set; }
+			public string id { get; set; }
+			public string name { get; set; }
+			public string abbreviation { get; set; }
+			public string startDate { get; set; }
+			public string endDate { get; set; }
+			public bool hasStandings { get; set; }
 		}
 
-		public class Sortkey1
-		{
-			public int defaultOrder { get; set; }
-			public int nickname { get; set; }
-			public int win { get; set; }
-			public int loss { get; set; }
-			public int winPct { get; set; }
-			public int gamesBehind { get; set; }
-			public int confWinLoss { get; set; }
-			public int divWinLoss { get; set; }
-			public int homeWinLoss { get; set; }
-			public int awayWinLoss { get; set; }
-			public int lastTenWinLoss { get; set; }
-			public int streak { get; set; }
-		}
-
-		public class Vegas
-		{
-			public int seasonYear { get; set; }
-			public int seasonStageId { get; set; }
-			public Team2[] teams { get; set; }
-		}
-
-		public class Team2
-		{
-			public string teamId { get; set; }
-			public string win { get; set; }
-			public string loss { get; set; }
-			public string winPct { get; set; }
-			public string winPctV2 { get; set; }
-			public string lossPct { get; set; }
-			public string lossPctV2 { get; set; }
-			public string gamesBehind { get; set; }
-			public string divGamesBehind { get; set; }
-			public string clinchedPlayoffsCode { get; set; }
-			public string clinchedPlayoffsCodeV2 { get; set; }
-			public string confRank { get; set; }
-			public string confWin { get; set; }
-			public string confLoss { get; set; }
-			public string divWin { get; set; }
-			public string divLoss { get; set; }
-			public string homeWin { get; set; }
-			public string homeLoss { get; set; }
-			public string awayWin { get; set; }
-			public string awayLoss { get; set; }
-			public string lastTenWin { get; set; }
-			public string lastTenLoss { get; set; }
-			public string streak { get; set; }
-			public string divRank { get; set; }
-			public bool isWinStreak { get; set; }
-			public Teamsitesonly2 teamSitesOnly { get; set; }
-			public string tieBreakerPts { get; set; }
-			public Sortkey2 sortKey { get; set; }
-		}
-
-		public class Teamsitesonly2
-		{
-			public string teamKey { get; set; }
-			public string teamName { get; set; }
-			public string teamCode { get; set; }
-			public string teamNickname { get; set; }
-			public string teamTricode { get; set; }
-			public string clinchedConference { get; set; }
-			public string clinchedDivision { get; set; }
-			public string clinchedPlayoffs { get; set; }
-			public string streakText { get; set; }
-		}
-
-		public class Sortkey2
-		{
-			public int defaultOrder { get; set; }
-			public int nickname { get; set; }
-			public int win { get; set; }
-			public int loss { get; set; }
-			public int winPct { get; set; }
-			public int gamesBehind { get; set; }
-			public int confWinLoss { get; set; }
-			public int divWinLoss { get; set; }
-			public int homeWinLoss { get; set; }
-			public int awayWinLoss { get; set; }
-			public int lastTenWinLoss { get; set; }
-			public int streak { get; set; }
-		}
-
-		public class Utah
-		{
-			public int seasonYear { get; set; }
-			public int seasonStageId { get; set; }
-			public Team3[] teams { get; set; }
-		}
-
-		public class Team3
-		{
-			public string teamId { get; set; }
-			public string win { get; set; }
-			public string loss { get; set; }
-			public string winPct { get; set; }
-			public string winPctV2 { get; set; }
-			public string lossPct { get; set; }
-			public string lossPctV2 { get; set; }
-			public string gamesBehind { get; set; }
-			public string divGamesBehind { get; set; }
-			public string clinchedPlayoffsCode { get; set; }
-			public string clinchedPlayoffsCodeV2 { get; set; }
-			public string confRank { get; set; }
-			public string confWin { get; set; }
-			public string confLoss { get; set; }
-			public string divWin { get; set; }
-			public string divLoss { get; set; }
-			public string homeWin { get; set; }
-			public string homeLoss { get; set; }
-			public string awayWin { get; set; }
-			public string awayLoss { get; set; }
-			public string lastTenWin { get; set; }
-			public string lastTenLoss { get; set; }
-			public string streak { get; set; }
-			public string divRank { get; set; }
-			public bool isWinStreak { get; set; }
-			public Teamsitesonly3 teamSitesOnly { get; set; }
-			public string tieBreakerPts { get; set; }
-			public Sortkey3 sortKey { get; set; }
-		}
-
-		public class Teamsitesonly3
-		{
-			public string teamKey { get; set; }
-			public string teamName { get; set; }
-			public string teamCode { get; set; }
-			public string teamNickname { get; set; }
-			public string teamTricode { get; set; }
-			public string clinchedConference { get; set; }
-			public string clinchedDivision { get; set; }
-			public string clinchedPlayoffs { get; set; }
-			public string streakText { get; set; }
-		}
-
-		public class Sortkey3
-		{
-			public int defaultOrder { get; set; }
-			public int nickname { get; set; }
-			public int win { get; set; }
-			public int loss { get; set; }
-			public int winPct { get; set; }
-			public int gamesBehind { get; set; }
-			public int confWinLoss { get; set; }
-			public int divWinLoss { get; set; }
-			public int homeWinLoss { get; set; }
-			public int awayWinLoss { get; set; }
-			public int lastTenWinLoss { get; set; }
-			public int streak { get; set; }
-		}
-
-		#endregion
 		public static NBATeamStandings GetStandings()
 		{
-			string endPoint = "http://data.nba.net/10s/prod/v1/current/standings_all.json";
+			//string endPoint = "http://data.nba.net/10s/prod/v1/current/standings_all.json";
+			string endPoint = "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings";
 			string strJSON = GetTeamDataFromWeb.GetTeamDataFromCache(30, endPoint, "nba");
 			return JsonConvert.DeserializeObject<NBATeamStandings>(strJSON);
 		}
@@ -328,27 +150,34 @@ namespace LotterySim.Business.NBA
 			NBATeamStandings nbaTeamStandingData = NBATeamStandings.GetStandings();
 			List<NBATeam> teams = new List<NBATeam>();
 
-			foreach (var team in nbaTeamStandingData.league.standard.teams)
+			List<Child> children = nbaTeamStandingData.children.ToList();
+			List<Entry> entries = new List<Entry>();
+
+			foreach (Child child in children)
 			{
-				teams.Add(new NBATeam()
-				{
-					TeamName = team.teamSitesOnly.teamName,
-					TeamID = team.teamId,
-					TeamNickName = team.teamSitesOnly.teamNickname,
-					OriginalTeamName = team.teamSitesOnly.teamName,
-					Wins = team.win,
-					Losses = team.loss,
-					WinLossRecord = team.win + "-" + team.loss,
-					WinPercentage = team.winPct,
-					GamesBack = team.sortKey.gamesBehind,
-					LastTenGamesRecord = team.lastTenWin + "-" + team.lastTenLoss,
-					LastTenLosses = team.lastTenLoss,
-					LastTenWins = team.lastTenWin,
-					ConsecutiveWinLoss = team.streak,
-					WinorLossStreak = team.isWinStreak,
-					ConferenceRank = team.confRank,
-					//TieBreakerGroupPosition = SetTieBreakerGroups(teamName),
-				});
+				entries.AddRange(child.standings.entries);
+			}
+
+			foreach (Entry entry in entries)
+			{
+				NBATeam team = new NBATeam();
+
+				team.TeamName = entry.team.location;
+				team.TeamID = Convert.ToInt32(entry.team.id);
+				team.TeamNickName = entry.team.name;
+				team.OriginalTeamName = entry.team.location;
+				team.Wins = Convert.ToInt32(entry.stats[10].displayValue);
+				team.Losses = Convert.ToInt32(entry.stats[6].displayValue);
+				team.WinLossRecord = team.Wins + "-" + team.Losses;
+				team.WinPercentage = Decimal.Parse(entry.stats[9].displayValue);
+				team.GamesBack = Convert.ToDouble(entry.stats[4].value);
+				team.LastTenGamesRecord = entry.stats[16].displayValue;
+				team.SetLastTenWinLoss();
+				team.ConsecutiveWinLoss = Convert.ToInt32(entry.stats[8].value);
+				team.WinLossStreak = entry.stats[8].displayValue;
+				team.ConferenceRank = Convert.ToInt32(entry.stats[7].displayValue);
+				team.ImageUrl = entry.team.logos[0].href;
+				teams.Add(team);
 			};
 
 			NBAStandingsHelper.UpdateStandingsData(teams);

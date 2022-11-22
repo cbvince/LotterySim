@@ -5,31 +5,22 @@
 <tr>
     <td>@Model.PickNumber</td>
     <td align="right"><span class=@GetLotteryMovementColor(Model)>@Model.LotteryMovement</span></td>
-
     <td>@DisplayTeamNameAndImage(Model)  @DisplayHelper.DisplayLockIcon(Model)</td>
     <td>@Model.WinLossRecord</td>
-    <td>@Model.WinPercentage</td>
+	<td>@Model.WinPercentage.ToString(".000")</td>
     <td> @Model.LotteryGamesBack</td>
-    <td><span class="@GetWinLossStreakColor(@Model)">@Model.WinLossStreak</span></td>
-    <td><span class="@GetLast10WinLossColor(@Model)">@Model.LastTenGamesRecord</span></td>
+    <td><span class="@NBAStandingsHelper.GetWinLossStreakColor(Model)">@Model.WinLossStreak</span></td>
+    <td><span class="@NBAStandingsHelper.GetLast10WinLossColor(@Model)">@Model.LastTenGamesRecord</span></td>
     <td>@Model.TopFourPickOdds</td>
     <td>@Model.TopPickOdds</td>
 </tr>
 
 @{
    
-    string GetWinLossStreakColor(NBATeam team)
-    {
-        if (team.WinorLossStreak && team.ConsecutiveWinLoss > 3 && team.ConsecutiveWinLoss < 5) return "text-warning";
-        if (team.WinorLossStreak && team.ConsecutiveWinLoss >= 5) return "text-danger";
-        if (!team.WinorLossStreak && team.ConsecutiveWinLoss > 3) return "text-success";
-        return "";
-    }
 
     string GetLotteryMovementColor(NBATeam team)
     {
         var color = string.Empty;
-
 
         if (team.LotteryMovement != null && team.LotteryMovement != string.Empty)
         {
@@ -42,20 +33,9 @@
                     color = "text-danger";
                     break;
             }
-
-
         }
         return color;
-
     }
-
-    string GetLast10WinLossColor(NBATeam team)
-    {
-        if (team.LastTenLosses >= 7) return "text-success";
-        if (team.LastTenLosses <= 3) return "text-danger";
-        return "";
-    }
-
 }
 
 @helper DisplayTeamNameAndImage(NBATeam team)
@@ -77,9 +57,6 @@
             @GetTeamImage(team.OriginalTeamName)
         </span>
     }
-
-
-
 }
 
 @helper GetTeamImage(string teamName)
@@ -87,7 +64,7 @@
 
     var imageString = "~/Content/Images/" + teamName.Replace(" ", "") + ".svg";
 
-    <img src="@Url.Content(imageString)" width="30" height="30" />
+    <img src="@Url.Content(Model.ImageUrl)" width="30" height="30" />
 }
 
 @helper DisplayArrow()
