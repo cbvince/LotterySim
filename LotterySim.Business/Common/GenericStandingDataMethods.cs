@@ -9,10 +9,10 @@ namespace LotterySim.Business.Common
 {
     class GenericStandingDataMethods
     {
-        public static int GetGamesBack(int highestNumberOfLosses, int lowestNumberOfWins, int teamWinLossDifference)
+        public static double GetGamesBack(int highestNumberOfLosses, int lowestNumberOfWins, int teamWinLossDifference)
         {
             var winLostDifferenceForWorstTeam = highestNumberOfLosses - lowestNumberOfWins;
-            var gamesBack = (winLostDifferenceForWorstTeam - teamWinLossDifference) / 2;
+            var gamesBack = (winLostDifferenceForWorstTeam - teamWinLossDifference) / 2.0;
             return gamesBack;
         }
 

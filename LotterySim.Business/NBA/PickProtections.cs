@@ -1,4 +1,5 @@
-﻿using LotterySim.Business.NBA;
+﻿using LotterySim.Business.Common;
+using LotterySim.Business.NBA;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,15 @@ namespace LotterySim.Business
 {
     public class PickProtections
     {
+        public static List<PickProtection> NBAPickProtections()
+        {
+            List<PickProtection> pickProtections = new List<PickProtection>();
+
+            pickProtections.Add(new Common.PickProtection { FromTeam = "Los Angeles", ToTeam = "New Orleans", LowerPickProtectionThreshold = 0, UpperPickProtectionThreshold = 30 });
+
+            return pickProtections;
+
+        }
         public static void PickProtection(List<NBATeam> teams)
         {
             DetermineProtection(teams, 30, 4, "Houston", "Oklahoma City", "OKC gets 2 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN");
@@ -46,7 +56,6 @@ namespace LotterySim.Business
 
         }
 
-        //OKC gets 3 best of OKC/HOU/MIA, HOU gets worst & can swap with BKN
         
 
         private static void SwapPick(NBATeam fromTeam, NBATeam toTeam)
@@ -56,7 +65,7 @@ namespace LotterySim.Business
                 return;
             }
 
-
+            fromTeam.TeamPickOwedTo = toTeam;
             fromTeam.TeamPickOwedToName = toTeam.OriginalTeamName;
             fromTeam.NewTeamName = toTeam.OriginalTeamName;
             fromTeam.TeamName = string.Format("{0} to {1}", fromTeam.OriginalTeamName, toTeam.OriginalTeamName);
@@ -69,7 +78,7 @@ namespace LotterySim.Business
             fromTeam.PickSwapType = PickSwapType.Protected;
         }
 
-    
+    /*
         public static List<NBATeam> OutGoingPicks(NBATeam team)
         {
             return NBATeamStandings.GetTeams().Where(p => p.OriginalTeamName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Swapped).OrderBy(p => p.PickNumber).ToList();
@@ -80,9 +89,9 @@ namespace LotterySim.Business
         }
         public static List<NBATeam> NonConveyedPicks(NBATeam team)
         {
-            return NBATeamStandings.GetTeams().Where(p => p.TeamPickOwedToName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
+            //return NBATeamStandings.GetTeams().Where(p => p.TeamPickOwedToName == team.OriginalTeamName && p.PickSwapType == PickSwapType.Protected).ToList();
         }
 
-
+        */
     }
 }

@@ -99,7 +99,7 @@ namespace LotterySim.Business.NFL
             {
                 var teamWinLossDifference = team.stats[2].value - team.stats[1].value;
 
-                team.stats[4].value = GenericStandingDataMethods.GetGamesBack((int)teamHighestLosses, (int)teamLowestWins, (int)teamWinLossDifference);
+                //team.stats[4].value = GenericStandingDataMethods.GetGamesBack((int)teamHighestLosses, (int)teamLowestWins, (int)teamWinLossDifference);
             }
 
         }

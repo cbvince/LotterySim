@@ -183,5 +183,18 @@ namespace LotterySim.Business.NBA
 			NBAStandingsHelper.UpdateStandingsData(teams);
 			return teams;
 		}
+
+		public static List<IDraftPick> GetDraftPicks()
+		{
+			List<IDraftPick> picks = new List<IDraftPick>();
+			//List<ITeam> teams = GetTeams();
+			List<ITeam> teams = GetTeams().Cast<ITeam>().ToList();
+
+			picks = DraftPickHelper.GenerateDraftPicks<NBADraftPick>(teams, 1);
+
+			DraftPickHelper.CheckPickProtections(PickProtections.NBAPickProtections(), picks);
+
+			return picks;
+		}
 	}
 }

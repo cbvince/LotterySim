@@ -1,70 +1,72 @@
 ﻿@using LotterySim.Business.NBA
 @using LotterySim.Business
-@model NBATeam
+@model NBADraftPick
 
 <tr>
-    <td>@Model.PickNumber</td>
-    <td align="right"><span class=@GetLotteryMovementColor(Model)>@Model.LotteryMovement</span></td>
-    <td>@DisplayTeamNameAndImage(Model)  @DisplayHelper.DisplayLockIcon(Model)</td>
-    <td>@Model.WinLossRecord</td>
-	<td>@Model.WinPercentage.ToString(".000")</td>
-    <td> @Model.LotteryGamesBack</td>
-    <td><span class="@NBAStandingsHelper.GetWinLossStreakColor(Model)">@Model.WinLossStreak</span></td>
-    <td><span class="@NBAStandingsHelper.GetLast10WinLossColor(@Model)">@Model.LastTenGamesRecord</span></td>
-    <td>@Model.TopFourPickOdds</td>
-    <td>@Model.TopPickOdds</td>
+	<td>@Model.PickNumber</td>
+	<td align="right"><span class=@GetLotteryMovementColor(Model)>@Model.LotteryMovement</span></td>
+	<td>@DisplayTeamNameAndImage(Model)  @DisplayHelper.DisplayLockIcon(Model)</td>
+	<td>@Model.Team.WinLossRecord</td>
+	<td>@Model.Team.WinPercentage.ToString(".000")</td>
+	<td> @Model.Team.InverseGamesBack</td>
+
+	@if (Model.Team is NBATeam t)
+	{
+		<td><span class="@NBAStandingsHelper.GetWinLossStreakColor(t)">@t.WinLossStreak</span></td>
+		<td><span class="@NBAStandingsHelper.GetLast10WinLossColor(t)">@t.LastTenGamesRecord</span></td>
+		<td>@t.TopFourPickOdds</td>
+		<td>@t.TopPickOdds</td>
+	}
+
 </tr>
 
 @{
-   
 
-    string GetLotteryMovementColor(NBATeam team)
-    {
-        var color = string.Empty;
 
-        if (team.LotteryMovement != null && team.LotteryMovement != string.Empty)
-        {
-            switch (team.LotteryMovement.First().ToString())
-            {
-                case "+":
-                    color = "text-success";
-                    break;
-                case "-":
-                    color = "text-danger";
-                    break;
-            }
-        }
-        return color;
-    }
+	string GetLotteryMovementColor(NBADraftPick draftPick)
+	{
+		var color = string.Empty;
+
+		if (draftPick.LotteryMovement > 0)
+		{
+			color = "text-success";
+
+		}
+		else if (draftPick.LotteryMovement < 0)
+		{
+			color = "text-danger";
+		}
+		return color;
+	}
+
+
 }
 
-@helper DisplayTeamNameAndImage(NBATeam team)
+@helper DisplayTeamNameAndImage(LotterySim.Business.Common.IDraftPick draftPick)
 {
-    if (team.PickSwapType == PickSwapType.Swapped)
+    if (draftPick.PickSwapType == PickSwapType.Swapped)
     {
         <span>
-            @GetURLTeamName(team.OriginalTeamName)
-            @GetTeamImage(team.OriginalTeamName)
+            @GetURLTeamName(draftPick.Team.TeamName)
+            @GetTeamImage(draftPick.Team)
             @DisplayArrow()
-            @GetURLTeamName(team.NewTeamName)
-            @GetTeamImage(team.NewTeamName)
+            @GetURLTeamName(draftPick.TeamPickOwedTo.TeamName)
+            @GetTeamImage(draftPick.TeamPickOwedTo)
         </span>
     }
     else
     {
         <span>
-            @GetURLTeamName(team.OriginalTeamName)
-            @GetTeamImage(team.OriginalTeamName)
+            @GetURLTeamName(draftPick.Team.TeamName)
+            @GetTeamImage(draftPick.Team)
         </span>
     }
 }
 
-@helper GetTeamImage(string teamName)
+@helper GetTeamImage(LotterySim.Business.Common.ITeam team)
 {
 
-    var imageString = "~/Content/Images/" + teamName.Replace(" ", "") + ".svg";
-
-    <img src="@Url.Content(Model.ImageUrl)" width="30" height="30" />
+    <img src="@Url.Content(team.ImageUrl)" width="30" height="30" />
 }
 
 @helper DisplayArrow()

@@ -57,10 +57,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DraftPick.cs" />
+    <Compile Include="Common\IDraftPick.cs" />
+    <Compile Include="Common\DraftPickHelper.cs" />
     <Compile Include="Common\GenericStandingDataMethods.cs" />
     <Compile Include="Common\GetTeamDataFromWeb.cs" />
+    <Compile Include="Common\LotteryDraftPick.cs" />
     <Compile Include="Common\LotteryTeam.cs" />
-    <Compile Include="Common\Team.cs" />
+    <Compile Include="Common\PickProtection.cs" />
+    <Compile Include="Common\ITeam.cs" />
+    <Compile Include="NBA\NBADraftPick.cs" />
     <Compile Include="NBA\NBAStandingsHelper.cs" />
     <Compile Include="NBA\Lottery.cs" />
     <Compile Include="NBA\NBATeam.cs" />

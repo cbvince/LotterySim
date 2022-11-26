@@ -10,9 +10,9 @@
 
     }
 
-    @helper DisplayLockIcon(NBATeam team)
+    @helper DisplayLockIcon(NBADraftPick draftPick)
     {
-        if (team.PickSwapType == LotterySim.Business.PickSwapType.Protected)
+        if (draftPick.PickSwapType == LotterySim.Business.PickSwapType.Protected)
         {
 
             <i class="bi bi-lock-fill" style="font-size: 1.2rem; color:darkorange"></i>

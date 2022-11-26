@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LotterySim.Business;
+using LotterySim.Business.Common;
 using LotterySim.Business.NBA;
 using LotterySim.Business.NFL;
 
@@ -16,8 +17,8 @@ namespace LotterySimPresentation.Controllers
         {
             try
             {
-                List<NBATeam> lotteryTeams = NBATeamStandings.GetTeams();
-                return View(lotteryTeams);
+                List<IDraftPick> draftPicks = NBATeamStandings.GetDraftPicks();
+                return View(draftPicks);
             }
             catch (Exception ex)
             {
@@ -30,7 +31,7 @@ namespace LotterySimPresentation.Controllers
             try
             {
                 var lotteryTeams = NBATeamStandings.GetTeams();
-                Lottery.RunLottery(lotteryTeams);
+                //Lottery.RunLottery(lotteryTeams);
                 return View("Index", lotteryTeams);
             }
             catch (Exception ex)

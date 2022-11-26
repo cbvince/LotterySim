@@ -15,7 +15,6 @@ namespace LotterySim.Business
             DetermineGamesBack(teams);
             AddTopFourPickOdds(teams);
             AddTopOnePickOdds(teams);
-            PickProtections.PickProtection(teams);
         }
 
 		private static void OrderTeams(List<NBATeam> teams)
@@ -45,15 +44,17 @@ namespace LotterySim.Business
 
 		private static void DetermineGamesBack(List<NBATeam> teams)
         {
-            var highestNumberOfLosses = teams.OrderByDescending(p => p.Losses).FirstOrDefault().Losses;
-            var lowestNumberOfWins = teams.OrderBy(p => p.Wins).FirstOrDefault().Wins;
+            NBATeam teamWithMostLosses = teams.OrderByDescending(p => p.Losses).FirstOrDefault();
+
+            var highestNumberOfLosses = teamWithMostLosses.Losses;
+            var lowestNumberOfWins = teamWithMostLosses.Wins;
             var winLostDifferenceForWorstTeam = highestNumberOfLosses - lowestNumberOfWins;
 
             foreach (var team in teams)
             {
                 var teamWinLossDifference = team.Losses - team.Wins;
 
-                team.LotteryGamesBack = GenericStandingDataMethods.GetGamesBack(highestNumberOfLosses, lowestNumberOfWins, teamWinLossDifference);
+                team.InverseGamesBack = GenericStandingDataMethods.GetGamesBack(highestNumberOfLosses, lowestNumberOfWins, teamWinLossDifference);
             }
         }
 
